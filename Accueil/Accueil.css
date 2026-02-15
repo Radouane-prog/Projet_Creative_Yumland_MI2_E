@@ -12,7 +12,7 @@ body{
     margin: 0;
     padding: 0;
     font-family: "Source Code Pro";
-    background-color: var(--details-color);
+    background-image: url("icones/wallpaper.png");
     color: var(--text-color);
 }
 
