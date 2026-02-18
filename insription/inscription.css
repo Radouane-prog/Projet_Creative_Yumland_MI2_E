@@ -1,6 +1,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
 
+<<<<<<< HEAD
 
 :root{
     --background-color: #111111;
@@ -145,3 +146,13 @@ input{
 textarea{
     background-color: var(--details-color);
 }
+=======
+body{
+
+font-family: "Source Code Pro";
+}
+
+h1{
+    
+}
+>>>>>>> 7bcb0d610a56cdecaf3a62e146ced05b32b5f93b
