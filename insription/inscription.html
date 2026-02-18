@@ -1,0 +1,47 @@
+<!DOCTYPE html> 
+<html lang="fr"> 
+<head>
+  <meta charset="UTF-8">
+  <title>Inscription Silicon Carne</title>
+  <meta name="description" content="Page d'inscription">
+  <link rel="stylesheet" href="inscription.css"/>
+</head>
+
+<body>
+    <nav>
+        <a href="index.html">Accueil</a> | 
+        <a href="connexion.html">Connexion</a>
+    </nav>
+
+    <h2>Inscription</h2>
+    <h3>Créez votre compte Silicon Carne</h3>
+    
+    <form action="inscription.html" method="POST"> 
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom" required><br>
+
+        <label for="prenom">Prénom :</label>
+        <input type="text" id="prenom" name="prenom" required><br>
+
+        <label for="adresse">Adresse de livraison :</label>
+        <input type="text" id="adresse" name="adresse" placeholder="ex: 12 rue du Processeur" required><br>
+
+        <label for="tel">Numéro de téléphone :</label>
+        <input type="tel" id="tel" name="tel" placeholder="06 00 00 00 00"><br>
+
+        <label for="infos">Informations complémentaires :</label>
+        <textarea id="infos" name="infos" placeholder="Digicode, étage..."></textarea><br>
+        
+        <hr> <label for="user">Nom d'utilisateur :</label>
+        <input type="text" id="user" name="user" placeholder="kikoudu95" required><br>
+
+        <label for="password">Mot de passe :</label>
+        <input type="password" id="password" name="password" placeholder="••••••••" required><br>
+
+        <label for="confirmpassword">Confirmez le mot de passe :</label>
+        <input type="password" id="confirmpassword" name="confirmpassword" placeholder="••••••••" required><br>
+
+        <input class="styled" type="submit" value="S'inscrire" />
+    </form>
+</body>
+</html>
