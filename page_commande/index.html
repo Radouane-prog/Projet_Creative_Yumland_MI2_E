@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commandes - Silicon Carne</title>
+</head>
+<body>
+    <nav>
+        <div id="container_nav">
+        <div class="container_center">
+            <img id="logo" src="../Accueil/icones/logo.png" alt="image du logo" width="80dvh"/>
+            <h1 id="nom_resto">Silicon Carne</h1>
+        </div>
+
+        <ul>
+            <li><a href="../Accueil/Accueil.html">Accueil</a></li>
+            <li><a href="">Présentation</a></li>
+            <li><a href="../page_admin/index.html">Administrateur</a></li>
+            <li><a href="../page_livraison/index.html">Livraison</a></li>
+            <li><a href="index.html">Commandes</a></li>
+            <li><a href="">Notation</a></li>
+        </ul>
+
+        <div class="container_center" id="container_login">
+            <img src="../Accueil/icones/utilisateur.png" id="profil" alt="image profil" width="35dvh"/>
+            <button id="button_connexion" class="button_log">connexion</button>
+            <button id="button_inscription" class="button_log">inscription</button>
+        </div>
+        </div>
+    </nav>
+
+    <main class="page">
+        <header class="header">
+            <div>
+                <h1><span class="commentaires">//</span> Gestion des Commandes</h1>
+                <p>Suivez et gérez vos commandes en temps réel</p>
+            </div>
+            <button class="action-btn">+ Nouvelle commande</button>
+        </header>
+
+        <section class="card">
+            <div class="commandes-container">
+                <div class="commande-item">
+                    <div class="commande-header">
+                        <span class="commande-id">#CMD-001</span>
+                        <span class="statut en-cours">En cours</span>
+                    </div>
+                    <div class="commande-details">
+                        <p><strong>Client:</strong> Jean Dupont</p>
+                        <p><strong>Date:</strong> 18/02/2026 - 14:30</p>
+                        <p><strong>Montant:</strong> 45.90 €</p>
+                        <p><strong>Articles:</strong> 3</p>
+                    </div>
+                </div>
+
+                <div class="commande-item">
+                    <div class="commande-header">
+                        <span class="commande-id">#CMD-002</span>
+                        <span class="statut livree">Livrée</span>
+                    </div>
+                    <div class="commande-details">
+                        <p><strong>Client:</strong> Marie Martin</p>
+                        <p><strong>Date:</strong> 18/02/2026 - 12:15</p>
+                        <p><strong>Montant:</strong> 32.50 €</p>
+                        <p><strong>Articles:</strong> 2</p>
+                    </div>
+                </div>
+
+                <div class="commande-item">
+                    <div class="commande-header">
+                        <span class="commande-id">#CMD-003</span>
+                        <span class="statut preparation">En préparation</span>
+                    </div>
+                    <div class="commande-details">
+                        <p><strong>Client:</strong> Pierre Durand</p>
+                        <p><strong>Date:</strong> 18/02/2026 - 15:00</p>
+                        <p><strong>Montant:</strong> 58.75 €</p>
+                        <p><strong>Articles:</strong> 5</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div id="container_footer">
+            <p id="copyright"><span class="commentaires">//</span> © 2026 Silicon Carne. auteurs : Radouane HADJ RABAH, Rayene FREJ, Matthieu VANNEREAU</p>
+        </div>
+    </footer>
+</body>
+</html>

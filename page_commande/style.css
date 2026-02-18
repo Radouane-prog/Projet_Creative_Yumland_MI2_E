@@ -1,0 +1,268 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+:root{
+    --background-color: #111111;
+    --main-color: #ff3333;
+    --details-color: #b0b0b0;
+    --text-color: #f5f5f5;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: "Source Code Pro";
+    background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url("../Accueil/icones/wallpaper.png");
+    background-size: cover;
+    background-attachment: fixed;
+    color: var(--text-color);
+}
+
+/* Styles Navbar */
+nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 15vh;
+    width: 100%;
+}
+
+#container_nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh;
+    width: 95%;
+    background-color: var(--background-color);
+    border-radius: 10px;
+    border-bottom: solid var(--main-color) 5px;
+}
+
+#logo{
+    margin: 10px;
+}
+
+#nom_resto{
+    color: var(--main-color);
+}
+
+#profil{
+    border-radius: 50%;
+    box-shadow: 0px 0px 8px 2px var(--main-color);
+    padding: 5px;
+    margin: 10px;
+    transition-duration: 0.5s;
+}
+
+#profil:hover{
+    transform: scale(1.03);
+}
+
+nav ul{
+    text-decoration: none;
+}
+
+nav ul li{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: left;
+    text-align: center;
+    margin: 30px;
+}
+
+nav ul li a{
+    text-decoration: none;
+    text-align: center;
+    font-size: 20px;
+    transition-duration: 0.5s;
+    color: var(--text-color);
+}
+
+nav ul li a:hover{
+    transform: scale(1.1);
+    color: var(--main-color);
+}
+
+.container_center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button_log{
+    display: block;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 51, 51, 0.1);
+    box-shadow: 0px 0px 8px 2px var(--main-color);
+    color: var(--text-color);
+    width:120px;
+    height: 40px;
+    margin: 10px;
+    font-size: 16px;
+    transition-duration: 0.5s;
+}
+
+.button_log:hover{
+    transform: scale(1.03);
+}
+
+/* Styles Footer */
+footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 15vh;
+    width: 100%;
+}
+
+#container_footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+    width: 95%;
+    background-color: var(--background-color);
+    border-radius: 10px;
+    border-bottom: solid var(--main-color) 5px;
+}
+
+.commentaires{
+    color: var(--main-color);
+}
+
+#copyright{
+    font-size: 18px;
+    color: var(--details-color);
+}
+
+/* Styles page Commandes */
+.page {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 16px;
+    min-height: 60vh;
+}
+
+.header {
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.header h1 {
+    font-size: 28px;
+    margin-bottom: 6px;
+    color: var(--text-color);
+}
+
+.header p {
+    color: var(--details-color);
+    font-size: 16px;
+}
+
+.action-btn {
+    background-color: rgba(255, 51, 51, 0.2);
+    box-shadow: 0px 0px 8px 2px var(--main-color);
+    color: var(--text-color);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition-duration: 0.5s;
+}
+
+.action-btn:hover {
+    transform: scale(1.03);
+    background-color: rgba(255, 51, 51, 0.3);
+}
+
+.card {
+    background: var(--background-color);
+    border: 1px solid var(--main-color);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.commandes-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.commande-item {
+    background: rgba(17, 17, 17, 0.8);
+    border: 1px solid var(--main-color);
+    border-radius: 8px;
+    padding: 15px;
+    transition-duration: 0.3s;
+}
+
+.commande-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 0px 15px 3px rgba(255, 51, 51, 0.3);
+}
+
+.commande-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--details-color);
+}
+
+.commande-id {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--main-color);
+}
+
+.statut {
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.statut.en-cours {
+    background-color: rgba(255, 165, 0, 0.2);
+    color: #ffa500;
+    box-shadow: 0px 0px 8px 1px rgba(255, 165, 0, 0.3);
+}
+
+.statut.livree {
+    background-color: rgba(0, 255, 0, 0.2);
+    color: #00ff00;
+    box-shadow: 0px 0px 8px 1px rgba(0, 255, 0, 0.3);
+}
+
+.statut.preparation {
+    background-color: rgba(255, 51, 51, 0.2);
+    color: var(--main-color);
+    box-shadow: 0px 0px 8px 1px rgba(255, 51, 51, 0.3);
+}
+
+.commande-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.commande-details p {
+    color: var(--text-color);
+    font-size: 14px;
+}
+
+.commande-details strong {
+    color: var(--details-color);
+}
