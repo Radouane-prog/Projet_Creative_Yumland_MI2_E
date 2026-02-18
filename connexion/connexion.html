@@ -9,9 +9,31 @@
 
 <body>
     <nav>
-        <a href="index.html">Accueil</a>
+        <div id="container_nav">
+        <div class="container_center">
+            <img id="logo" src="icones/logo.png" alt="image du logo" width="80dvh"/>
+            <h1 id="nom_resto">Silicon Carne</h1>
+        </div>
+
+        <ul>
+            <li><a href="Accueil.html">Accueil</a></li>
+            <li><a href="">Présentation</a></li>
+            <li><a href="../page_admin/index.html">Administrateur</a></li>
+            <li><a href="">Livraison</a></li>
+            <li><a href="">Commandes</a></li>
+            <li><a href="">Notation</a></li>
+        </ul>
+
+        <div class="container_center" id="container_login">
+            <img src="icones/utilisateur.png" id="profil" alt="image profil" width="35dvh"/>
+            <button id="button_connexion" class="button_log">connexion</button>
+            <button id="button_inscription" class="button_log">inscription</button>
+        </div>
+        </div>
     </nav>
 
+
+    <main>
     <h2>Connectez-vous !</h2>
     
     <form action="connexion.html" method="POST"> 
@@ -25,6 +47,12 @@
     </form>
 
     <p>Pas encore de compte ? <a href="inscription.html">Inscrivez-vous ici</a>.</p>
+    </main>
+<footer>
+        <div id="container_footer">
+            <p id="copyright"><span class="commentaires">//</span> © 2026 Silicon Carne. auteurs : Radouane HADJ RABAH, Rayene FREJ, Matthieu VANNEREAU</p>
+        </div>
+    </footer>
 
 </body>
 </html>
