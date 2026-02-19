@@ -1,18 +1,8 @@
-
 body{
     background-size: cover;
 }
 
 /*main*/
-
-main{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-    min-height: 70vh;
-}
 
 /*Barre de recherche*/
 
@@ -71,92 +61,22 @@ main{
 
 /*fin barre de recherche*/
 
-/*section plat du jour*/
+/*filtre*/
 
-#container_pdj{
+#container_filtres{
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    height: 80vh;
-    width: 95%;
-}
-
-#img_pdj{
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    background-image: url(icones/plat_du_jour.jpg);
-    width: 750px;
-    height: 450px;
-    background-size: 750 450;
-    box-shadow: 0px 0px 15px 2px var(--main-color);
-    border: solid var(--main-color) 2px;
-}
-
-#img_pdj h1{
-    display: block;
-    width: fit-content;
-    left: 8%;
-    margin: 0;
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    background-color: var(--background-color);
-    box-shadow: 0px 0px 15px 2px var(--main-color);
-    border: solid var(--main-color) 2px;
-    z-index: 999;
-}
-
-#details_pdj{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    width: 500px;
-    height: 425px;
-    background-color: var(--background-color);
-    box-shadow: 0px 0px 15px 2px var(--main-color);
-    border: solid var(--main-color) 2px;
-}
-
-.container_between{
-    display: flex;
-    justify-content: space-between;
     width: 80%;
-    height: 50px;
-    border-bottom: solid rgba(255, 51, 51, 0.5) 1px;
-}
-
-.container_between p{
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.type_description{
-    color: var(--details-color);
-}
-
-.acheter{
-    display: block;
-    border: none;
-    border-radius: 5px;
-    background-color: rgba(255, 51, 51, 0.1);
-    box-shadow: 0px 0px 8px 2px var(--main-color);
-    color: var(--text-color);
-    width:120px;
-    height: 40px;
-    margin: 10px;
-    font-size: 16px;
-}
-
-.acheter:hover{
+    height: 12vh;
+    margin: 30px;
+    background-color: var(--background-color);
     border: solid var(--main-color) 2px;
 }
 
-/*fin plat du jour*/
+/*fin filtre*/
 
-/*section fréquemment commandés*/
+/*produits*/
 
 #container_cards{
     display: flex;
@@ -217,10 +137,27 @@ main{
     font-size: 19px;
 }
 
+.acheter{
+    display: block;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 51, 51, 0.1);
+    box-shadow: 0px 0px 8px 2px var(--main-color);
+    color: var(--text-color);
+    width:120px;
+    height: 40px;
+    margin: 10px;
+    font-size: 16px;
+}
+
+.acheter:hover{
+    border: solid var(--main-color) 2px;
+}
+
 .acheter_card{
     align-self: flex-end;
 }
 
-/*fin section fréquemment commandés*/
+/*fin produit*/
 
 /*fin main*/
