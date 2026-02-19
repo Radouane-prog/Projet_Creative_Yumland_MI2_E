@@ -1,14 +1,14 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
 
-<<<<<<< HEAD
-
 :root{
     --background-color: #111111;
     --main-color: #ff3333;
     --details-color: #b0b0b0;
     --text-color: #f5f5f5;
 }
+
+
 body{
     margin: 0;
     padding: 0;
@@ -17,8 +17,7 @@ body{
     color: var(--text-color);
 }
 
-
-
+/*nav*/
 
 nav{
     display: flex;
@@ -110,6 +109,23 @@ nav ul li a:hover{
     transform: scale(1.03);
 }
 
+/*fin nav*/
+
+/*main*/
+
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    min-height: 70vh;
+}
+
+/*main*/
+
+/*footer*/
+
 footer{
     display: flex;
     justify-content: center;
@@ -138,21 +154,5 @@ footer{
     color: var(--details-color);
 }
 
+/*fin footer*/
 
-input{
-    background-color: var(--details-color);
-}
-
-textarea{
-    background-color: var(--details-color);
-}
-=======
-body{
-
-font-family: "Source Code Pro";
-}
-
-h1{
-    
-}
->>>>>>> 7bcb0d610a56cdecaf3a62e146ced05b32b5f93b

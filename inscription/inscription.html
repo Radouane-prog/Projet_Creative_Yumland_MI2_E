@@ -1,0 +1,79 @@
+<!DOCTYPE html> 
+<html lang="fr"> 
+<head>
+  <meta charset="UTF-8">
+  <title>Inscription Silicon Carne</title>
+  <meta name="description" content="Page d'inscription">
+  <link rel="stylesheet" href="inscription.css"/>
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+    
+    <nav>
+        <div id="container_nav">
+        <div class="container_center">
+            <img id="logo" src="../icones/logo.png" alt="image du logo" width="80dvh"/>
+            <h1 id="nom_resto">Silicon Carne</h1>
+        </div>
+
+        <ul>
+            <li><a href="../Accueil/Accueil.html">Accueil</a></li>
+            <li><a href="">Présentation</a></li>
+            <li><a href="../page_admin/index.html">Administrateur</a></li>
+            <li><a href="../page_livraison/index.html">Livraison</a></li>
+            <li><a href="../page_commande/index.html">Commandes</a></li>
+            <li><a href="">Notation</a></li>
+        </ul>
+
+        <div class="container_center" id="container_login">
+            <a href="../profil/profil.html"><img src="../icones/utilisateur.png" id="profil" alt="image profil" width="35dvh"/></a>
+            <button id="button_connexion" onclick="window.location='../connexion/connexion.html'" class="button_log">connexion</button>
+            <button id="button_inscription" onclick="window.location='../inscription/inscription.html'" class="button_log">inscription</button>
+        </div>
+        </div>
+    </nav>
+
+    <main>
+
+        <h2>Inscription</h2>
+        <h3>Créez votre compte Silicon Carne</h3>
+        
+        <form action="inscription.html" method="POST"> 
+            <label for="nom">Nom :</label>
+            <input type="text" id="nom" name="nom" required><br>
+
+            <label for="prenom">Prénom :</label>
+            <input type="text" id="prenom" name="prenom" required><br>
+
+            <label for="adresse">Adresse de livraison :</label>
+            <input type="text" id="adresse" name="adresse" placeholder="ex: 12 rue du Processeur" required><br>
+
+            <label for="tel">Numéro de téléphone :</label>
+            <input type="tel" id="tel" name="tel" placeholder="06 00 00 00 00"><br>
+
+            <label for="infos">Informations complémentaires :</label>
+            <textarea id="infos" name="infos" placeholder="Digicode, étage..."></textarea><br>
+
+            <hr> <label for="user">Nom d'utilisateur :</label>
+            <input type="text" id="user" name="user" placeholder="kikoudu95" required><br>
+
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" name="password" placeholder="••••••••" required><br>
+
+            <label for="confirmpassword">Confirmez le mot de passe :</label>
+            <input type="password" id="confirmpassword" name="confirmpassword" placeholder="••••••••" required><br>
+
+            <input class="styled" type="submit" value="S'inscrire" />
+        </form>
+
+</main>
+
+    <footer>
+        <div id="container_footer">
+            <p id="copyright"><span class="commentaires">//</span> © 2026 Silicon Carne. auteurs : Radouane HADJ RABAH, Rayene FREJ, Matthieu VANNEREAU</p>
+        </div>
+    </footer>
+
+</body>
+</html>

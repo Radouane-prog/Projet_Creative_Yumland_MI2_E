@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="Accueil.css">
+    <link rel="stylesheet" href="../style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil</title>
 </head>
@@ -10,26 +11,69 @@
     <nav>
         <div id="container_nav">
         <div class="container_center">
-            <img id="logo" src="icones/logo.png" alt="image du logo" width="80dvh"/>
+            <img id="logo" src="../icones/logo.png" alt="image du logo" width="80dvh"/>
             <h1 id="nom_resto">Silicon Carne</h1>
         </div>
 
         <ul>
-            <li><a href="Accueil.html">Accueil</a></li>
+            <li><a href="../Accueil/Accueil.html">Accueil</a></li>
             <li><a href="">Présentation</a></li>
             <li><a href="../page_admin/index.html">Administrateur</a></li>
-            <li><a href="">Livraison</a></li>
-            <li><a href="">Commandes</a></li>
+            <li><a href="../page_livraison/index.html">Livraison</a></li>
+            <li><a href="../page_commande/index.html">Commandes</a></li>
             <li><a href="">Notation</a></li>
         </ul>
 
         <div class="container_center" id="container_login">
-            <img src="icones/utilisateur.png" id="profil" alt="image profil" width="35dvh"/>
-            <button id="button_connexion" class="button_log">connexion</button>
-            <button id="button_inscription" class="button_log">inscription</button>
+            <a href="../profil/profil.html"><img src="../icones/utilisateur.png" id="profil" alt="image profil" width="35dvh"/></a>
+            <button id="button_connexion" onclick="window.location='../connexion/connexion.html'" class="button_log">connexion</button>
+            <button id="button_inscription" onclick="window.location='../inscription/inscription.html'" class="button_log">inscription</button>
         </div>
         </div>
     </nav>
+
+    <main>
+        <div id="search_bar">
+            <div class="container_center_text">
+                <span id="fleche">></span>
+                <input type="text" placeholder="Rechercher un composant à manger..." size="49" minlength="0" maxlength="70" id="input_search"/>
+            </div>
+            <img src="icones/search.png" id="button_search" width="40dvh" alt="icone Rechercher"/>
+        </div>
+
+        <h2>Fréquemment commandés</h2>
+        <div id="container_cards">
+
+            <div class="card">
+                <img class="img_card" src="icones/GeForceRTX5060.png" width="300dvh" alt="image carte graphique GeForceRTX5060"/>
+                <p class="titre">GEFORCE RTX 5090 - GOÛT CHOCOLAT</p>
+                <p class="description">Performance extrême, coeur fondant, refroidissement liquide overclockée.</p>
+                <p class="text_prix">Prix : <span class="prix">339.99€</span></p>
+            </div>
+
+            <div class="card">
+                <img class="img_card" src="icones/GeForceRTX5060.png" width="300dvh" alt="image carte graphique GeForceRTX5060"/>
+                <p class="titre">GEFORCE RTX 5090 - GOÛT CHOCOLAT</p>
+                <p class="description">Performance extrême, coeur fondant, refroidissement liquide overclockée.</p>
+                <p class="text_prix">Prix : <span class="prix">339.99€</span></p>
+            </div>
+
+            <div class="card">
+                <img class="img_card" src="icones/GeForceRTX5060.png" width="300dvh" alt="image carte graphique GeForceRTX5060"/>
+                <p class="titre">GEFORCE RTX 5090 - GOÛT CHOCOLAT</p>
+                <p class="description">Performance extrême, coeur fondant, refroidissement liquide overclockée.</p>
+                <p class="text_prix">Prix : <span class="prix">339.99€</span></p>
+            </div>
+
+            <div class="card">
+                <img class="img_card" src="icones/GeForceRTX5060.png" width="300dvh" alt="image carte graphique GeForceRTX5060"/>
+                <p class="titre">GEFORCE RTX 5090 - GOÛT CHOCOLAT</p>
+                <p class="description">Performance extrême, coeur fondant, refroidissement liquide overclockée.</p>
+                <p class="text_prix">Prix : <span class="prix">339.99€</span></p>
+            </div>
+
+        </div>
+    </main>
 
     <footer>
         <div id="container_footer">

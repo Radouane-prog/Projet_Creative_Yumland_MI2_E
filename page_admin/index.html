@@ -4,29 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../style.css">
     <title>Administrateur - Silicon Carne</title>
   </head>
   <body>
+    
     <nav>
         <div id="container_nav">
         <div class="container_center">
-            <img id="logo" src="icones/logo.png" alt="image du logo" width="80dvh"/>
+            <img id="logo" src="../icones/logo.png" alt="image du logo" width="80dvh"/>
             <h1 id="nom_resto">Silicon Carne</h1>
         </div>
 
         <ul>
-            <li><a href="Accueil.html">Accueil</a></li>
+            <li><a href="../Accueil/Accueil.html">Accueil</a></li>
             <li><a href="">Présentation</a></li>
             <li><a href="../page_admin/index.html">Administrateur</a></li>
-            <li><a href="">Livraison</a></li>
-            <li><a href="">Commandes</a></li>
+            <li><a href="../page_livraison/index.html">Livraison</a></li>
+            <li><a href="../page_commande/index.html">Commandes</a></li>
             <li><a href="">Notation</a></li>
         </ul>
 
         <div class="container_center" id="container_login">
-            <img src="icones/utilisateur.png" id="profil" alt="image profil" width="35dvh"/>
-            <button id="button_connexion" class="button_log">connexion</button>
-            <button id="button_inscription" class="button_log">inscription</button>
+            <a href="../profil/profil.html"><img src="../icones/utilisateur.png" id="profil" alt="image profil" width="35dvh"/></a>
+            <button id="button_connexion" onclick="window.location='../connexion/connexion.html'" class="button_log">connexion</button>
+            <button id="button_inscription" onclick="window.location='../inscription/inscription.html'" class="button_log">inscription</button>
         </div>
         </div>
     </nav>
