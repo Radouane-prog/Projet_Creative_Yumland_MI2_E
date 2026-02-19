@@ -1,4 +1,8 @@
 
+body{
+    background-size: cover;
+}
+
 /*main*/
 
 main{
@@ -16,8 +20,9 @@ main{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: var(--main-color);
     width: 40%;
+    background-color: var(--background-color);
+    color: var(--main-color);
     box-shadow: 0px 0px 8px 2px var(--main-color);
     border: solid var(--main-color) 1px;
     height: 5vh;
@@ -70,6 +75,7 @@ main{
 
 #container_pdj{
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
     height: 80vh;
@@ -77,6 +83,9 @@ main{
 }
 
 #img_pdj{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
     background-image: url(icones/plat_du_jour.jpg);
     width: 750px;
     height: 450px;
@@ -86,15 +95,16 @@ main{
 }
 
 #img_pdj h1{
-    position: absolute;
+    display: block;
     width: fit-content;
     left: 8%;
+    margin: 0;
     padding: 5px;
     padding-left: 10px;
     padding-right: 10px;
     background-color: var(--background-color);
     box-shadow: 0px 0px 15px 2px var(--main-color);
-    border: solid red 1px;
+    border: solid var(--main-color) 2px;
     z-index: 999;
 }
 
@@ -195,9 +205,12 @@ main{
 }
 
 .text_prix{
-    align-self: flex-end;
     font-weight: bold;
     font-size: 19px;
+}
+
+.acheter_card{
+    align-self: flex-end;
 }
 
 /*fin section fréquemment commandés*/
