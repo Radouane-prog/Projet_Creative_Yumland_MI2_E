@@ -51,11 +51,10 @@ nav{
     box-shadow: 0px 0px 8px 2px var(--main-color);
     padding: 5px;
     margin: 10px;
-    transition-duration: 0.5s;
 }
 
 #profil:hover{
-    transform: scale(1.03);
+    border: solid var(--main-color) 2px;
 }
 
 nav ul{
@@ -101,12 +100,10 @@ nav ul li a:hover{
     height: 40px;
     margin: 10px;
     font-size: 16px;
-    transition-duration: 0.5s;
-
 }
 
 .button_log:hover{
-    transform: scale(1.03);
+    border: solid var(--main-color) 2px;
 }
 
 /*fin nav*/
