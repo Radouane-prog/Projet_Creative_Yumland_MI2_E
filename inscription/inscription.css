@@ -1,4 +1,3 @@
-/* Même logique de conteneur que pour la connexion */
 .form-container {
     background-color: rgba(255, 255, 255, 0.05);
     padding: 40px;
@@ -25,7 +24,6 @@ form {
     gap: 12px;
 }
 
-/* Barre de séparation pour les identifiants */
 form hr {
     width: 100%;
     border: 1px solid var(--main-color);
@@ -48,9 +46,8 @@ form textarea {
     font-weight: bold;
 }
 
-/* Spécificité pour la zone de texte */
 form textarea {
-    resize: vertical; /* Empêche de déformer le formulaire en largeur */
+    resize: vertical; 
     min-height: 80px;
 }
 
