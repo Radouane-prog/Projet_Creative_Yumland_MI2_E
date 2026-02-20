@@ -1,12 +1,79 @@
-
-input{
-    background-color: var(--details-color);
+/* Même logique de conteneur que pour la connexion */
+.form-container {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 2px var(--main-color);
+    width: 100%;
+    max-width: 500px;
+    margin: 20px 0;
 }
 
-textarea{
-    background-color: var(--details-color);
+.form-container h2, .form-container h3 {
+    text-align: center;
+    margin-top: 0;
 }
 
-h1{
-    
+.form-container h3 {
+    color: var(--details-color);
+    margin-bottom: 25px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Barre de séparation pour les identifiants */
+form hr {
+    width: 100%;
+    border: 1px solid var(--main-color);
+    margin: 15px 0;
+    box-shadow: 0 0 5px var(--main-color);
+}
+
+form label {
+    font-weight: bold;
+}
+
+form input,
+form textarea {
+    background-color: var(--details-color);
+    color: var(--background-color);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: "Source Code Pro", monospace;
+    font-weight: bold;
+}
+
+/* Spécificité pour la zone de texte */
+form textarea {
+    resize: vertical; /* Empêche de déformer le formulaire en largeur */
+    min-height: 80px;
+}
+
+form input:focus,
+form textarea:focus {
+    outline: solid var(--main-color) 2px;
+}
+
+.styled {
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 51, 51, 0.1);
+    box-shadow: 0px 0px 8px 2px var(--main-color);
+    color: var(--text-color);
+    padding: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: "Source Code Pro", monospace;
+    margin-top: 15px;
+}
+
+.styled:hover {
+    border: solid var(--main-color) 2px;
+    background-color: rgba(255, 51, 51, 0.2);
 }

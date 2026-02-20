@@ -1,5 +1,75 @@
 
-/*main*/
+.form-container {
+    background-color: rgba(255, 255, 255, 0.05); /* Fond légèrement grisé et transparent */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 2px var(--main-color);
+    width: 100%;
+    max-width: 400px; 
+    margin: 20px 0;
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-top: 0;
+}
 
 
-/*main*/
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+}
+
+form label {
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+form input[type="text"],
+form input[type="password"] {
+    background-color: var(--details-color);
+    color: var(--background-color);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: "Source Code Pro", monospace;
+    font-weight: bold;
+}
+
+
+form input:focus {
+    outline: solid var(--main-color) 2px;
+}
+
+
+.styled {
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 51, 51, 0.1);
+    box-shadow: 0px 0px 8px 2px var(--main-color);
+    color: var(--text-color);
+    padding: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: "Source Code Pro", monospace;
+    margin-top: 10px;
+}
+
+.styled:hover {
+    border: solid var(--main-color) 2px;
+    background-color: rgba(255, 51, 51, 0.2);
+}
+
+
+main a {
+    color: var(--main-color);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+main a:hover {
+    text-decoration: underline;
+    text-shadow: 0 0 5px var(--main-color);
+}
