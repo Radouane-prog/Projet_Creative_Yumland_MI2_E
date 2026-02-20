@@ -39,8 +39,8 @@ Le planning a suivi les étapes clés de la Phase #1, de la définition du conce
 
 La distribution des tâches a été effectuée afin d’équilibrer la charge de travail.
 
-| Membre | Tâches Assignées | État |
-|---------|------------------|--------|
+| Membre | Tâches Assignées | 
+|---------|------------------|
 | Rayene  | Pages : Commandes, Administrateur, Livraison. Gestion du dépôt Git
 | Matthieu  | Global Header, Pages : Accueil, Présentation (Menu), Notation 
 | Radouane  | Pages : Inscription, Connexion, Profil 
