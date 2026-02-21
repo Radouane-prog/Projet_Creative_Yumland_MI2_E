@@ -2,7 +2,7 @@
 .profil-wrapper {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     gap: 40px;
     width: 100%;
     max-width: 1000px;
@@ -14,15 +14,33 @@
 
 .avatar-section {
     display: flex;
+    position: relative;
     flex-direction: column;
     align-items: center;
     gap: 15px;
+    margin: 30px;
+}
+
+.avatar-section a{
+    position: absolute;
+    background-color: var(--background-color);
+    border-radius: 50%;
+    border: solid var(--main-color) 3px;
+    box-shadow: 0 0 15px var(--main-color);
+    padding: 20px;
+    bottom: 5px;
+    right: 5px;
+}
+
+.avatar-section a:hover{
+    transform: none !important;
+    box-shadow: 0 0 25px var(--main-color);
 }
 
 
 .avatar {
-    width: 150px;
-    height: 150px;             
+    width: 350px;
+    height: 350px;             
     border-radius: 50%;
     object-fit: cover;        
     border: 3px solid var(--main-color);
@@ -117,8 +135,8 @@ main hr {
     }
 
     .avatar {
-        width: 100px;
-        height: 100px;
+        width: 300px;
+        height: 300px;
     }
 
     .profil-container {
