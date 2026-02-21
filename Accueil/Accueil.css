@@ -25,13 +25,15 @@ main{
     color: var(--main-color);
     box-shadow: 0px 0px 8px 2px var(--main-color);
     border: solid var(--main-color) 1px;
-    height: 5vh;
+    height: 50px;
+    padding: 0 20px;
 }
 
 .container_center_text{
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    flex-grow: 1;
     height: 100%;
 }
 
@@ -43,6 +45,7 @@ main{
 
 #input_search{
     display: flex;
+    flex-grow: 1;
     align-items: center;
     font-size: 20px;
     height: 100%;
@@ -50,6 +53,19 @@ main{
     color: var(--text-color);
     border: none;
     background: none;
+}
+
+#button_search{
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    margin-left: 10px;
+    transition-duration: 0.5s;
+}
+
+#button_search:hover{
+    transform: scale(1.1);
+    cursor: pointer;
 }
 
 #input_search::placeholder{
@@ -69,6 +85,18 @@ main{
     cursor: pointer;
 }
 
+@media (max-width: 768px) {
+    #search_bar {
+        width: 90%;
+        margin: 10px 0;
+    }
+    
+    #input_search {
+        font-size: 14px;
+    }
+
+}
+
 /*fin barre de recherche*/
 
 /*section plat du jour*/
@@ -78,7 +106,7 @@ main{
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    height: 80vh;
+    min-height: 80vh;
     width: 95%;
 }
 
@@ -87,9 +115,12 @@ main{
     justify-content: flex-start;
     align-items: flex-start;
     background-image: url(icones/plat_du_jour.jpg);
-    width: 750px;
-    height: 450px;
-    background-size: 750 450;
+    width: 100%;
+    max-width: 750px;
+    height: auto;             
+    aspect-ratio: 750 / 450;
+    margin: 20px;
+    background-size: cover;
     box-shadow: 0px 0px 15px 2px var(--main-color);
     border: solid var(--main-color) 2px;
 }
@@ -102,6 +133,7 @@ main{
     padding: 5px;
     padding-left: 10px;
     padding-right: 10px;
+    font-size: clamp(1rem, 5vw, 2rem);
     background-color: var(--background-color);
     box-shadow: 0px 0px 15px 2px var(--main-color);
     border: solid var(--main-color) 2px;
@@ -115,6 +147,7 @@ main{
     align-items: center;
     width: 500px;
     height: 425px;
+    margin: 20px;
     background-color: var(--background-color);
     box-shadow: 0px 0px 15px 2px var(--main-color);
     border: solid var(--main-color) 2px;
@@ -124,8 +157,12 @@ main{
     display: flex;
     justify-content: space-between;
     width: 80%;
-    height: 50px;
+    min-height: 50px;
     border-bottom: solid rgba(255, 51, 51, 0.5) 1px;
+}
+
+.container_between p:not([class]){
+    text-align: right;
 }
 
 .container_between p{
