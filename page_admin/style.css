@@ -1,17 +1,22 @@
 
 /* Styles page Admin */
-.page {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 0 16px;
-}
 
 .header {
   margin-bottom: 16px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  min-height: 120px;
+  min-width: 400px;
+}
+
+#container_text_btn{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: auto;
+  width: 100%;
 }
 
 .header h1 {
@@ -46,17 +51,24 @@
   border: 1px solid var(--main-color);
   border-radius: 8px;
   padding: 12px;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 .table {
+  display: block;
   border: 1px solid var(--main-color);
   border-radius: 6px;
   overflow: hidden;
+  overflow-x: auto;
 }
 
 .row {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 80px 1fr 110px;
+  grid-template-columns: 80px 1fr 1fr 60px 1fr 110px 100px;
+  border-bottom: 1px solid var(--details-color);
+  align-items: center;
+  min-width: 800px;
 }
 
 .row:not(.header-row) {
@@ -69,17 +81,33 @@
 
 .cell {
   padding: 10px 12px;
-  border-bottom: 1px solid var(--details-color);
   color: var(--text-color);
+  text-align: center;
 }
 
 .header-row .cell {
   font-weight: 700;
   background: rgba(255, 51, 51, 0.2);
-  border-bottom: 1px solid var(--main-color);
   color: var(--text-color);
 }
 
 .row:last-child .cell {
   border-bottom: none;
+}
+
+.btn-modifier {
+  display: block;
+  background-color: transparent;
+  color: var(--main-color);
+  border: 1px solid var(--main-color);
+  padding: 5px 10px;
+  border-radius: 4px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.btn-modifier:hover{
+  background-color: var(--main-color);
+  color: var(--background-color);
+  box-shadow: 0 0 10px var(--main-color);
 }
