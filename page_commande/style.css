@@ -13,6 +13,7 @@
 
 #container_text_btn{
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
     align-items: center;
     height: auto;
@@ -27,6 +28,13 @@
 .header p {
     color: var(--details-color);
     font-size: 16px;
+}
+
+.container_btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .action-btn {
