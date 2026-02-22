@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="Presentation.css">
+    <link rel="stylesheet" href="../style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Présentation</title>
+</head>
+<body>
+    
+    <nav>
+        <div id="container_nav">
+        <div class="container_center">
+            <img id="logo" src="../icones/logo.png" alt="image du logo" width="80dvh"/>
+            <h1 id="nom_resto">Silicon Carne</h1>
+        </div>
+
+        <ul id="menu_classique">
+            <li><a href="../Accueil/Accueil.html">Accueil</a></li>
+            <li><a href="../Presentation/Presentation.html">Présentation</a></li>
+            <li><a href="../page_admin/index.html">Administrateur</a></li>
+            <li><a href="../page_livraison/index.html">Livraison</a></li>
+            <li><a href="../page_commande/index.html">Commandes</a></li>
+            <li><a href="../notation/notation.html">Notation</a></li>
+        </ul>
+
+        <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+  
+        <label for="menu-toggle" class="hamburger">
+          <span class="line"></span>
+          <span class="line"></span>
+          <span class="line"></span>
+        </label>
+
+        <ul class="nav-menu">
+            <li><a href="../Accueil/Accueil.html">Accueil</a></li>
+            <li><a href="../Presentation/Presentation.html">Présentation</a></li>
+            <li><a href="../page_admin/index.html">Administrateur</a></li>
+            <li><a href="../page_livraison/index.html">Livraison</a></li>
+            <li><a href="../page_commande/index.html">Commandes</a></li>
+            <li><a href="../notation/notation.html">Notation</a></li>
+            <li><a href="../profil/profil.html">Profil</a></li>
+            <li><a href="../connexion/connexion.html">Connexion</a></li>
+            <li><a href="../inscription/inscription.html">Inscription</a></li>
+        </ul>
+
+        <div class="container_center" id="container_login">
+            <a href="../profil/profil.html"><img src="../icones/utilisateur.png" id="profil" alt="image profil" width="35dvh"/></a>
+            <button id="button_connexion" onclick="window.location='../connexion/connexion.html'" class="button_log">connexion</button>
+            <button id="button_inscription" onclick="window.location='../inscription/inscription.html'" class="button_log">inscription</button>
+        </div>
+        </div>
+    </nav>
+
+    <main>
+
+        <div id="search_bar">
+            <div class="container_center_text">
+                <span id="fleche">></span>
+                <input type="text" placeholder="Rechercher un composant..." minlength="0" maxlength="70" id="input_search"/>
+            </div>
+            <img src="icones/search.png" id="button_search" alt="icone Rechercher"/>
+        </div>
+
+        <div id="container_filtres">
+            <button class="acheter">GPU</button>
+            <button class="acheter">Carte mère</button>
+            <button class="acheter">+16 Go RAM</button>
+            <button class="acheter">Chocolat</button>
+            <button class="acheter">Menthe</button>
+            <button class="acheter">Café</button>
+            <button class="acheter">Caramel</button>
+            <button class="acheter">Fraise</button>
+            <button class="acheter">Vanille</button>
+        </div>
+
+        <div id="container_cards">
+
+            <div class="card">
+                <div class="img_card">
+                    <img src="icones/GeForceRTX5090.png" width="300dvh" alt="image carte graphique GeForceRTX5060"/>
+                </div>
+                <p class="titre">GEFORCE RTX 5090 - GOÛT CHOCOLAT</p>
+                <p class="description">Performance extrême, coeur fondant, refroidissement liquide overclockée.</p>
+                <p class="text_prix">Prix : <span class="prix">339.99€</span></p>
+                <button class="acheter acheter_card">Acheter</button>
+            </div>
+
+            <div class="card">
+                <div class="img_card">
+                    <img src="icones/GeForceRTX5060.png" width="300dvh" alt="image carte graphique GeForce RTX 5060"/>
+                </div>
+                <p class="titre">GEFORCE RTX 5060 - GOÛT MENTHE</p>
+                <p class="description">Efficacité 1080p fluide, biscuit sablé croquant, refroidissement DLSS à la menthe glaciale.</p>
+                <p class="text_prix">Prix : <span class="prix">329.99€</span></p>
+                <button class="acheter acheter_card">Acheter</button>
+            </div>
+
+            <div class="card">
+                <div class="img_card">
+                    <img src="icones/RadeonRX9060XT.png" alt="image carte graphique Radeon RX 9060 XT"/>
+                </div>
+                <p class="titre">RADEON RX 9060 XT - GOÛT FRAISE</p>
+                <p class="description">Fluidité 144Hz, coeur praliné croustillant, Infinity Cache aux éclats de noisettes.</p>
+                <p class="text_prix">Prix : <span class="prix">389.99€</span></p>
+                <button class="acheter acheter_card">Acheter</button>
+            </div>
+
+            <div class="card">
+                <div class="img_card">
+                    <img src="icones/GeForceRTX4090.png" alt="image carte graphique GeForce RTX 4090"/>
+                </div>
+                <p class="titre">GEFORCE RTX 4090 - GOÛT CHOCOLAT NOIR</p>
+                <p class="description">Architecture Ada Lovelace, ganache noire 70% de cacao.</p>
+                <p class="text_prix">Prix : <span class="prix">409.99€</span></p>
+                <button class="acheter acheter_card">Acheter</button>
+            </div>
+
+            <div class="card">
+                <div class="img_card">
+                    <img src="icones/MSIMEGZ790GL.png" alt="image carte mère MSI MEG Z790 GODLIKE"/>
+                </div>
+                <p class="titre">CARTE MÈRE MSI MEG Z790 GODLIKE - GOÛT CHOCOLAT PRALINÉ</p>
+                <p class="description">Format E-ATX avec étages d'alimentation en génoise, blindage lourd en chocolat.</p>
+                <p class="text_prix">Prix : <span class="prix">299.99€</span></p>
+                <button class="acheter acheter_card">Acheter</button>
+            </div>
+
+            <div class="card">
+                <div class="img_card">
+                    <img src="icones/RadeonRX7900XTX.png" alt="image carte graphique Radeon RX 7900 XTX"/>
+                </div>
+                <p class="titre">RADEON RX 7900 XTX - GOÛT CARAMEL BEURRE SALÉ</p>
+                <p class="description">Puce Navi 31, cœur caramel au beurre salé coulant, 24 Go de mémoire GDDR6.</p>
+                <p class="text_prix">Prix : <span class="prix">499.99€</span></p>
+                <button class="acheter acheter_card">Acheter</button>
+            </div>
+
+            <div class="card">
+                <div class="img_card">
+                    <img src="icones/GeForceRTX4060Ti.png" alt="image carte graphique GEFORCE RTX 4060 Ti"/>
+                </div>
+                <p class="titre">GEFORCE RTX 4060 Ti - GOÛT CARAMEL MACCHIATO</p>
+                <p class="description">Efficacité 1080p redoutable, refroidissement au caramel doux.</p>
+                <p class="text_prix">Prix : <span class="prix">459.99€</span></p>
+                <button class="acheter acheter_card">Acheter</button>
+            </div>
+
+            <div class="card">
+                <div class="img_card">
+                    <img src="icones/RadeonRX7800XT.png" alt="image carte graphique RADEON RX 7800 XT"/>
+                </div>
+                <p class="titre">RADEON RX 7800 XT - GOÛT FRAISE DES BOIS</p>
+                <p class="description">Architecture RDNA 3, coulis de fraise intense, ventilateurs en pâte d'amande.</p>
+                <p class="text_prix">Prix : <span class="prix">379.99€</span></p>
+                <button class="acheter acheter_card">Acheter</button>
+            </div>
+
+            <div class="card">
+                <div class="img_card">
+                    <img src="icones/AsusROGSTRIXB650E.png" alt="image carte mère ASUS ROG STRIX B650E-F"/>
+                </div>
+                <p class="titre">CARTE MÈRE ASUS ROG STRIX B650E-F - GOÛT CHARLOTTE AUX FRAISES</p>
+                <p class="description">Socket AM5 posé sur un lit de biscuits à la cuillère.</p>
+                <p class="text_prix">Prix : <span class="prix">559.99€</span></p>
+                <button class="acheter acheter_card">Acheter</button>
+            </div>
+
+            <div class="card">
+                <div class="img_card">
+                    <img src="icones/GeForceRTX4080SUPER.png" alt="image de carte graphique GEFORCE RTX 4080 SUPER"/>
+                </div>
+                <p class="titre">GEFORCE RTX 4080 SUPER - GOÛT VANILLE DE MADAGASCAR</p>
+                <p class="description">Dissipateur thermique infusé à la vraie gousse de vanille.</p>
+                <p class="text_prix">Prix : <span class="prix">659.99€</span></p>
+                <button class="acheter acheter_card">Acheter</button>
+            </div>
+
+            <div class="card">
+                <div class="img_card">
+                    <img src="icones/GigabyteX670EAorussMASTER.png" alt="image de carte mère GIGABYTE X670E AORUS MASTER"/>
+                </div>
+                <p class="titre">CARTE MÈRE GIGABYTE X670E AORUS MASTER - GOÛT VANILLE PÉCAN</p>
+                <p class="description">PCB 8 couches saupoudré de noix de pécan caramélisées, dissipateurs M.2.</p>
+                <p class="text_prix">Prix : <span class="prix">259.99€</span></p>
+                <button class="acheter acheter_card">Acheter</button>
+            </div>
+
+            <div class="card">
+                <div class="img_card">
+                    <img src="icones/RadeonRX7800XT.png" alt="image de carte graphique RADEON RX 7700 XT"/>
+                </div>
+                <p class="titre">RADEON RX 7700 XT - GOÛT CAFÉ CORSÉ</p>
+                <p class="description">Boost d'horloge ultra-caféiné, mémoire GDDR6 torréfiée à point.</p>
+                <p class="text_prix">Prix : <span class="prix">439.99€</span></p>
+                <button class="acheter acheter_card">Acheter</button>
+            </div>
+
+            <div class="card">
+                <div class="img_card">
+                    <img src="icones/X870EAorusXTREMEX3D.png" alt="image de carte mère X870 AORUS XTREME X3D"/>
+                </div>
+                <p class="titre">CARTE MÈRE X870E AORUS XTREME X3D - GOÛT TIRAMISU AU CAFÉ</p>
+                <p class="description">Superposition de circuits expressos, dissipateurs en biscuits imbibés.</p>
+                <p class="text_prix">Prix : <span class="prix">839.99€</span></p>
+                <button class="acheter acheter_card">Acheter</button>
+            </div>
+
+            <div class="card">
+                <div class="img_card">
+                    <img src="icones/RadeonRX9070XT.png" alt="image de carte graphique RADEON RX 9070 XT"/>
+                </div>
+                <p class="titre">RADEON RX 9070 XT - - GOÛT CHOCO-FRAMBOISE</p>
+                <p class="description">DLSS 3 avec une pointe de cacao et un coulis de framboise.</p>
+                <p class="text_prix">Prix : <span class="prix">510.99€</span></p>
+                <button class="acheter acheter_card">Acheter</button>
+            </div>
+
+            <div class="card">
+                <div class="img_card">
+                    <img src="icones/RadeonRX7600.png" alt="image de carte graphique RADEON RX 7600 XT"/>
+                </div>
+                <p class="titre">RADEON RX 7600 - GOÛT MENTHE CHOCOLAT</p>
+                <p class="description">Puce graphique compacte, ventilation mentholée pour des sessions e-sport.</p>
+                <p class="text_prix">Prix : <span class="prix">319.99€</span></p>
+                <button class="acheter acheter_card">Acheter</button>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div id="container_footer">
+            <p id="copyright"><span class="commentaires">//</span> © 2026 Silicon Carne. auteurs : Radouane HADJ RABAH, Rayene FREJ, Matthieu VANNEREAU</p>
+        </div>
+    </footer>
+</body>
+</html>

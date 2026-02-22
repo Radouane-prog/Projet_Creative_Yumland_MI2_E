@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commandes - Silicon Carne</title>
+</head>
+<body>
+    
+    <nav>
+        <div id="container_nav">
+        <div class="container_center">
+            <img id="logo" src="../icones/logo.png" alt="image du logo" width="80dvh"/>
+            <h1 id="nom_resto">Silicon Carne</h1>
+        </div>
+
+        <ul id="menu_classique">
+            <li><a href="../Accueil/Accueil.html">Accueil</a></li>
+            <li><a href="../Presentation/Presentation.html">Présentation</a></li>
+            <li><a href="../page_admin/index.html">Administrateur</a></li>
+            <li><a href="../page_livraison/index.html">Livraison</a></li>
+            <li><a href="../page_commande/index.html">Commandes</a></li>
+            <li><a href="../notation/notation.html">Notation</a></li>
+        </ul>
+
+        <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+  
+        <label for="menu-toggle" class="hamburger">
+          <span class="line"></span>
+          <span class="line"></span>
+          <span class="line"></span>
+        </label>
+
+        <ul class="nav-menu">
+            <li><a href="../Accueil/Accueil.html">Accueil</a></li>
+            <li><a href="../Presentation/Presentation.html">Présentation</a></li>
+            <li><a href="../page_admin/index.html">Administrateur</a></li>
+            <li><a href="../page_livraison/index.html">Livraison</a></li>
+            <li><a href="../page_commande/index.html">Commandes</a></li>
+            <li><a href="../notation/notation.html">Notation</a></li>
+            <li><a href="../profil/profil.html">Profil</a></li>
+            <li><a href="../connexion/connexion.html">Connexion</a></li>
+            <li><a href="../inscription/inscription.html">Inscription</a></li>
+        </ul>
+
+        <div class="container_center" id="container_login">
+            <a href="../profil/profil.html"><img src="../icones/utilisateur.png" id="profil" alt="image profil" width="35dvh"/></a>
+            <button id="button_connexion" onclick="window.location='../connexion/connexion.html'" class="button_log">connexion</button>
+            <button id="button_inscription" onclick="window.location='../inscription/inscription.html'" class="button_log">inscription</button>
+        </div>
+        </div>
+    </nav>
+
+    <main class="page">
+        <header class="header">
+            <h1><span class="commentaires">//</span> Gestion des Commandes</h1>
+            <div id="container_text_btn">
+                <p>Suivez et gérez vos commandes en temps réel</p>
+                <button class="action-btn">+ Nouvelle commande</button>
+            </div>
+        </header>
+
+        <section class="card">
+            <div class="commandes-container">
+                <div class="commande-item">
+                    <div class="commande-header">
+                        <span class="commande-id">#CMD-001</span>
+                        <span class="statut en-cours">En cours</span>
+                    </div>
+                    <div class="commande-details">
+                        <p><strong>Client:</strong> Jean Dupont</p>
+                        <p><strong>Date:</strong> 18/02/2026 - 14:30</p>
+                        <p><strong>Montant:</strong> 45.90 €</p>
+                        <p><strong>Articles:</strong> 3</p>
+                    </div>
+                    <div class="container_btn">
+                        <button class="action-btn">Modifier le statut</button>
+                    </div>
+                </div>
+
+                <div class="commande-item">
+                    <div class="commande-header">
+                        <span class="commande-id">#CMD-002</span>
+                        <span class="statut livree">Livrée</span>
+                    </div>
+                    <div class="commande-details">
+                        <p><strong>Client:</strong> Marie Martin</p>
+                        <p><strong>Date:</strong> 18/02/2026 - 12:15</p>
+                        <p><strong>Montant:</strong> 32.50 €</p>
+                        <p><strong>Articles:</strong> 2</p>
+                    </div>
+                    <div class="container_btn">
+                        <button class="action-btn">Modifier le statut</button>
+                    </div>
+                </div>
+
+                <div class="commande-item">
+                    <div class="commande-header">
+                        <span class="commande-id">#CMD-003</span>
+                        <span class="statut preparation">En préparation</span>
+                    </div>
+                    <div class="commande-details">
+                        <p><strong>Client:</strong> Pierre Durand</p>
+                        <p><strong>Date:</strong> 18/02/2026 - 15:00</p>
+                        <p><strong>Montant:</strong> 58.75 €</p>
+                        <p><strong>Articles:</strong> 5</p>
+                    </div>
+                    <div class="container_btn">
+                        <button class="action-btn">Modifier le statut</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div id="container_footer">
+            <p id="copyright"><span class="commentaires">//</span> © 2026 Silicon Carne. auteurs : Radouane HADJ RABAH, Rayene FREJ, Matthieu VANNEREAU</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../style.css">
+    <title>Administrateur - Silicon Carne</title>
+  </head>
+  <body>
+    
+    <nav>
+        <div id="container_nav">
+        <div class="container_center">
+            <img id="logo" src="../icones/logo.png" alt="image du logo" width="80dvh"/>
+            <h1 id="nom_resto">Silicon Carne</h1>
+        </div>
+
+        <ul id="menu_classique">
+            <li><a href="../Accueil/Accueil.html">Accueil</a></li>
+            <li><a href="../Presentation/Presentation.html">Présentation</a></li>
+            <li><a href="../page_admin/index.html">Administrateur</a></li>
+            <li><a href="../page_livraison/index.html">Livraison</a></li>
+            <li><a href="../page_commande/index.html">Commandes</a></li>
+            <li><a href="../notation/notation.html">Notation</a></li>
+        </ul>
+
+        <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+  
+        <label for="menu-toggle" class="hamburger">
+          <span class="line"></span>
+          <span class="line"></span>
+          <span class="line"></span>
+        </label>
+
+        <ul class="nav-menu">
+            <li><a href="../Accueil/Accueil.html">Accueil</a></li>
+            <li><a href="../Presentation/Presentation.html">Présentation</a></li>
+            <li><a href="../page_admin/index.html">Administrateur</a></li>
+            <li><a href="../page_livraison/index.html">Livraison</a></li>
+            <li><a href="../page_commande/index.html">Commandes</a></li>
+            <li><a href="../notation/notation.html">Notation</a></li>
+            <li><a href="../profil/profil.html">Profil</a></li>
+            <li><a href="../connexion/connexion.html">Connexion</a></li>
+            <li><a href="../inscription/inscription.html">Inscription</a></li>
+        </ul>
+
+        <div class="container_center" id="container_login">
+            <a href="../profil/profil.html"><img src="../icones/utilisateur.png" id="profil" alt="image profil" width="35dvh"/></a>
+            <button id="button_connexion" onclick="window.location='../connexion/connexion.html'" class="button_log">connexion</button>
+            <button id="button_inscription" onclick="window.location='../inscription/inscription.html'" class="button_log">inscription</button>
+        </div>
+        </div>
+    </nav>
+
+    <main class="page">
+      <header class="header">
+        <h1><span class="commentaires">//</span> Terminator</h1>
+        <div id="container_text_btn">
+          <p>Liste des utilisateurs</p>
+          <button class="filter-btn">>0 commandes</button>
+        </div>
+      </header>
+
+      <section class="card">
+        <div class="table">
+          <div class="row header-row">
+            <div class="cell">ID</div>
+            <div class="cell">Nom</div>
+            <div class="cell">Prénom</div>
+            <div class="cell">Âge</div>
+            <div class="cell">Rôle</div>
+            <div class="cell">Commandes</div>
+            <div class="cell">Actions</div>
+          </div>
+
+          <div class="row">
+            <div class="cell">#1001</div>
+            <div class="cell">chuck</div>
+            <div class="cell">norris</div>
+            <div class="cell">67</div>
+            <div class="cell">Admin</div>
+            <div class="cell">12</div>
+            <div class="cell" data-label="Actions">
+              <button class="btn-modifier">Modifier</button> 
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="cell">#1002</div>
+            <div class="cell">Nguyen</div>
+            <div class="cell">Lucas</div>
+            <div class="cell">34</div>
+            <div class="cell">Restaurateur</div>
+            <div class="cell">3</div>
+            <div class="cell" data-label="Actions">
+              <button class="btn-modifier">Modifier</button> 
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="cell">#1003</div>
+            <div class="cell">Diallo</div>
+            <div class="cell">Aïcha</div>
+            <div class="cell">22</div>
+            <div class="cell">Utilisateur</div>
+            <div class="cell">0</div>
+            <div class="cell" data-label="Actions">
+              <button class="btn-modifier">Modifier</button> 
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="cell">#1004</div>
+            <div class="cell">Martin</div>
+            <div class="cell">Hugo</div>
+            <div class="cell">41</div>
+            <div class="cell">livreur</div>
+            <div class="cell">1</div>
+            <div class="cell" data-label="Actions">
+              <button class="btn-modifier">Modifier</button> 
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+        <div id="container_footer">
+            <p id="copyright"><span class="commentaires">//</span> © 2026 Silicon Carne. auteurs : Radouane HADJ RABAH, Rayene FREJ, Matthieu VANNEREAU</p>
+        </div>
+    </footer>
+  </body>
+</html>

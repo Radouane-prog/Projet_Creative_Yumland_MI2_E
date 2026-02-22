@@ -1,0 +1,102 @@
+
+body{
+    background-size: cover;
+}
+
+/*main*/
+
+#container_avis{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 60vh;
+    width: 60%;
+}
+
+main h1{
+    font-size: clamp(1.5rem, 4vw, 2.5rem);;
+    text-shadow: 0 0 5px var(--main-color), 
+                 0 0 10px var(--main-color),
+                 0 0 20px var(--main-color);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h2{
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    text-align: center;
+    margin-top: 15px;
+}
+
+.container_stars{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 30%;
+}
+
+.star {
+  stroke: var(--main-color);
+  filter: drop-shadow(0 0 8px var(--main-color)) drop-shadow(0 0 15px var(--main-color));
+  transition-duration: 0.3s;
+  cursor: pointer;
+}
+
+.star:hover{
+    fill: var(--main-color);
+    filter: drop-shadow(0 0 5px var(--main-color)) drop-shadow(0 0 10px var(--main-color));
+}
+
+#commentaires{
+    min-height: 120px;
+    width: 55%;
+    padding-top: 10px;
+    font-size: 16px;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    box-shadow: 0px 0px 15px 2px var(--main-color);
+    resize: vertical;
+    border: solid var(--main-color) 2px;
+}
+
+#commentaires:focus{
+    outline: none;
+}
+
+#commentaires::placeholder{
+    color: var(--details-color);
+}
+
+#submit_avis{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 55%;
+    font-size: 18px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    box-shadow: 0px 0px 15px 2px var(--main-color);
+    text-shadow: 0 0 5px var(--main-color), 
+                 0 0 10px var(--main-color),
+                 0 0 20px var(--main-color);
+    border: solid var(--main-color) 2px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    #container_avis {
+        width: 95%;
+    }
+
+    .container_stars {
+        width: 80%;
+    }
+
+    #commentaires, #submit_avis {
+        width: 90%;
+    }
+}
+
+/*fin main*/

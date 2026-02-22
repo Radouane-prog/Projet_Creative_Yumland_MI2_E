@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="Accueil.css">
+    <link rel="stylesheet" href="../style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil</title>
+</head>
+<body>
+    <nav>
+        <div id="container_nav">
+        <div class="container_center">
+            <img id="logo" src="../icones/logo.png" alt="image du logo" width="80dvh"/>
+            <h1 id="nom_resto">Silicon Carne</h1>
+        </div>
+
+        <ul id="menu_classique">
+            <li><a href="../Accueil/Accueil.html">Accueil</a></li>
+            <li><a href="../Presentation/Presentation.html">Présentation</a></li>
+            <li><a href="../page_admin/index.html">Administrateur</a></li>
+            <li><a href="../page_livraison/index.html">Livraison</a></li>
+            <li><a href="../page_commande/index.html">Commandes</a></li>
+            <li><a href="../notation/notation.html">Notation</a></li>
+        </ul>
+
+        <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+  
+        <label for="menu-toggle" class="hamburger">
+          <span class="line"></span>
+          <span class="line"></span>
+          <span class="line"></span>
+        </label>
+
+        <ul class="nav-menu">
+            <li><a href="../Accueil/Accueil.html">Accueil</a></li>
+            <li><a href="../Presentation/Presentation.html">Présentation</a></li>
+            <li><a href="../page_admin/index.html">Administrateur</a></li>
+            <li><a href="../page_livraison/index.html">Livraison</a></li>
+            <li><a href="../page_commande/index.html">Commandes</a></li>
+            <li><a href="../notation/notation.html">Notation</a></li>
+            <li><a href="../profil/profil.html">Profil</a></li>
+            <li><a href="../connexion/connexion.html">Connexion</a></li>
+            <li><a href="../inscription/inscription.html">Inscription</a></li>
+        </ul>
+
+        <div class="container_center" id="container_login">
+            <a href="../profil/profil.html"><img src="../icones/utilisateur.png" id="profil" alt="image profil" width="35dvh"/></a>
+            <button id="button_connexion" onclick="window.location='../connexion/connexion.html'" class="button_log">connexion</button>
+            <button id="button_inscription" onclick="window.location='../inscription/inscription.html'" class="button_log">inscription</button>
+        </div>
+        </div>
+    </nav>
+
+    <main>
+        <div id="search_bar">
+            <div class="container_center_text">
+                <span id="fleche">></span>
+                <input type="text" placeholder="Rechercher un composant..." minlength="0" maxlength="70" id="input_search"/>
+            </div>
+            <img src="icones/search.png" id="button_search" alt="icone Rechercher"/>
+        </div>
+
+        <div id="container_pdj">
+
+            <div id="img_pdj" alt="image carte graphique Radeon RX 9070 XT">
+                <h1 id="etiquette_pdj">PLAT DU JOUR</h1>
+            </div>
+
+            <div id="details_pdj">
+
+                <h1>Détails</h1>
+
+                <div class="container_between">
+                    <p class="type_description">MODÈLE:</p>
+                    <p>RADEON RX 9070 XT</p>
+                </div>
+
+                <div class="container_between">
+                    <p class="type_description">VRAM:</p>
+                    <p>24 Go DE CACAO</p>
+                </div>
+
+                <div class="container_between">
+                    <p class="type_description">REFROIDISSEMENT:</p>
+                    <p>COULIS DE FRAMBOISE</p>
+                </div>
+
+                <div class="container_between">
+                    <p class="type_description">PRIX:</p>
+                    <p>510,99€</p>
+                </div>
+
+                <button class="acheter" id="acheter_pdj">Acheter</button>
+
+            </div>
+
+        </div>
+
+        <h2>Fréquemment commandés</h2>
+        <div id="container_cards">
+
+            <div class="card">
+                <div class="img_card">
+                    <img src="icones/GeForceRTX5090.png" width="300dvh" alt="image carte graphique GeForce RTX 5060"/>
+                </div>
+                <p class="titre">GEFORCE RTX 5090 - GOÛT CHOCOLAT</p>
+                <p class="description">Performance extrême, coeur fondant, refroidissement liquide overclockée.</p>
+                <p class="text_prix">Prix : <span class="prix">339.99€</span></p>
+                <button class="acheter acheter_card">Acheter</button>
+            </div>
+
+            <div class="card">
+                <div class="img_card">
+                    <img src="icones/GeForceRTX5060.png" width="300dvh" alt="image carte graphique Radeon RX 9060 XT"/>
+                </div>
+                <p class="titre">GEFORCE RTX 5060 - GOÛT MENTHE</p>
+                <p class="description">Efficacité 1080p fluide, biscuit sablé croquant, refroidissement DLSS à la menthe glaciale.</p>
+                <p class="text_prix">Prix : <span class="prix">329.99€</span></p>
+                <button class="acheter acheter_card">Acheter</button>
+            </div>
+
+            <div class="card">
+                <div class="img_card">
+                    <img src="icones/RadeonRX9060XT.png" alt="image carte graphique GeForce RTX 4090"/>
+                </div>
+                <p class="titre">RADEON RX 9060 XT - GOÛT FRAISE</p>
+                <p class="description">Fluidité 144Hz, coeur praliné croustillant, Infinity Cache aux éclats de noisettes.</p>
+                <p class="text_prix">Prix : <span class="prix">389.99€</span></p>
+                <button class="acheter acheter_card">Acheter</button>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div id="container_footer">
+            <p id="copyright"><span class="commentaires">//</span> © 2026 Silicon Carne. auteurs : Radouane HADJ RABAH, Rayene FREJ, Matthieu VANNEREAU</p>
+        </div>
+    </footer>
+</body>
+</html>

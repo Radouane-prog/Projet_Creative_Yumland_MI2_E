@@ -1,0 +1,113 @@
+
+/* Styles page Admin */
+
+.header {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 120px;
+  min-width: 400px;
+}
+
+#container_text_btn{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: auto;
+  width: 100%;
+}
+
+.header h1 {
+  font-size: 24px;
+  margin-bottom: 6px;
+  color: var(--text-color);
+}
+
+.header p {
+  color: var(--details-color);
+}
+
+.filter-btn {
+  background-color: rgba(255, 51, 51, 0.2);
+  box-shadow: 0px 0px 8px 2px var(--main-color);
+  color: var(--text-color);
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+
+.filter-btn:hover {
+  transform: scale(1.03);
+  background-color: rgba(255, 51, 51, 0.3);
+}
+
+.card {
+  background: var(--background-color);
+  border: 1px solid var(--main-color);
+  border-radius: 8px;
+  padding: 12px;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.table {
+  display: block;
+  border: 1px solid var(--main-color);
+  border-radius: 6px;
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr 60px 1fr 110px 100px;
+  border-bottom: 1px solid var(--details-color);
+  align-items: center;
+  min-width: 800px;
+}
+
+.row:not(.header-row) {
+  background: rgba(17, 17, 17, 0.6);
+}
+
+.row:not(.header-row):nth-child(even) {
+  background: rgba(255, 51, 51, 0.1);
+}
+
+.cell {
+  padding: 10px 12px;
+  color: var(--text-color);
+  text-align: center;
+}
+
+.header-row .cell {
+  font-weight: 700;
+  background: rgba(255, 51, 51, 0.2);
+  color: var(--text-color);
+}
+
+.row:last-child .cell {
+  border-bottom: none;
+}
+
+.btn-modifier {
+  display: block;
+  background-color: transparent;
+  color: var(--main-color);
+  border: 1px solid var(--main-color);
+  padding: 5px 10px;
+  border-radius: 4px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.btn-modifier:hover{
+  background-color: var(--main-color);
+  color: var(--background-color);
+  box-shadow: 0 0 10px var(--main-color);
+}
