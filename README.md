@@ -19,8 +19,43 @@ Cette **Phase #1** se concentre uniquement sur la partie graphique côté client
 
 1.  Téléchargez ou clonez ce dépôt sur votre ordinateur.
 2.  Naviguez dans le dossier du projet.
-3.  Ouvrez le dossier nommé `Accueil`.
-4.  **Double-cliquez sur le fichier `Accueil.html`** pour l'ouvrir dans votre navigateur web par défaut.
+   ```text
+.
+├── Accueil
+│   ├── Accueil.css
+│   ├── Accueil.html
+│   └── icones
+├── avatars
+├── connexion
+│   ├── connexion.css
+│   └── connexion.html
+├── icones
+├── inscription
+│   ├── inscription.css
+│   └── inscription.html
+├── notation
+│   ├── notation.css
+│   └── notation.html
+├── page_admin
+│   ├── index.html
+│   └── style.css
+├── page_commande
+│   ├── index.html
+│   └── style.css
+├── page_livraison
+│   ├── index.html
+│   └── style.css
+├── Presentation
+│   ├── icones
+│   ├── Presentation.css
+│   └── Presentation.html
+├── profil
+│   ├── profil.css
+│   └── profil.html
+└── style.css
+```
+4.  Ouvrez le dossier nommé `Accueil`.
+5.  **Double-cliquez sur le fichier `Accueil.html`** pour l'ouvrir dans votre navigateur web par défaut.
 
 ### Navigation :
 
