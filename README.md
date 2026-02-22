@@ -32,7 +32,7 @@ Une fois sur la **Page d'accueil**, vous pouvez naviguer vers l'ensemble des pag
 
 ---
 
-## 📂 Contenu de la Phase #1
+## Contenu de la Phase #1
 
 Conformément au cahier des charges, nous avons réalisé l'intégration HTML/CSS des pages suivantes :
 
@@ -48,7 +48,7 @@ Conformément au cahier des charges, nous avons réalisé l'intégration HTML/CS
     * `page_commande/index.html` : Interface tablette pour le restaurateur (commandes en cours).
     * `page_livraison/index.html` : Interface mobile pour le livreur (détails de livraison, GPS).
 
-## 🎨 Charte Graphique et Technique
+## Charte Graphique et Technique
 
 * **HTML5 :** Structure sémantique respectée (chaque page dans un fichier séparé).
 * **CSS3 :**
