@@ -1,102 +1,59 @@
-# Projet_Creative_Yumland_MI2_E
-Projet de groupe du semestre 2 - Développement du projet Web Creative Yumland.
-Le but du projet est de simuler un site web d'un restaurant, sur lequel nous pouvons comander, payer et être l[ivré
+# Silicon Carne - Projet Web (Phase #1)
 
-[PHASE 1]
-# Rapport de Projet : Silicon Carne  
-## Phase #1 — Architecture Statique & Identité Visuelle  
+Bienvenue sur le dépôt du projet **Silicon Carne**.
+Ce projet a pour but de développer le site web d'une chaîne de restaurants au thème **composants de PC** et une charte graphique type "AMD", réalisé dans le cadre du cours d'Informatique 4.
 
-Ce document constitue le **rapport de projet** (suivi et planning).  
-Il est distinct du document de conception fonctionnelle et graphique.
-
----
-
-## 1. Planning Réalisé (Phase #1)
-
-Le planning a suivi les étapes clés de la Phase #1, de la définition du concept jusqu’à l’intégration CSS.
-
-### Semaine 1
-- Brainstorming autour du thème **"Silicon Carne"**
-- Validation du concept **"Hardware Bistro"**
-
-### Semaine 2
-- Création du dépôt Git
-- Mise en place d’un tableau Kanban
-- Répartition initiale des rôles
-
-### Semaine 3
-- Développement des structures HTML
-- Création et intégration de la charte graphique (*Team Red*)
-
-### Semaine 4 (actuelle)
-- Harmonisation du Header global
-- Finalisation des pages administratives
-- Rédaction des rapports
+## Auteurs
+**Groupe de projet :**
+* Radouane HADJ RABAH
+* Rayene FREJ
+* Matthieu VANNEREAU
 
 ---
 
-## 2. Répartition des Tâches (Source : Kanban)
+## Installation et Lancement
 
-La distribution des tâches a été effectuée afin d’équilibrer la charge de travail.
+Cette **Phase #1** se concentre uniquement sur la partie graphique côté client (HTML statique et CSS). Il n'y a donc pas besoin de serveur local (WAMP/XAMPP) ni de base de données pour le moment.
 
-| Membre | Tâches Assignées | 
-|---------|------------------|
-| Rayene  | Pages : Commandes, Administrateur, Livraison. Gestion du dépôt Git
-| Matthieu  | Global Header, Pages : Accueil, Présentation (Menu), Notation 
-| Radouane  | Pages : Inscription, Connexion, Profil 
+### Pour lancer le site :
 
----
+1.  Téléchargez ou clonez ce dépôt sur votre ordinateur.
+2.  Naviguez dans le dossier du projet.
+3.  Ouvrez le dossier nommé `Accueil`.
+4.  **Double-cliquez sur le fichier `Accueil.html`** pour l'ouvrir dans votre navigateur web par défaut.
 
-## 3. Analyse des Problèmes et Solutions
+### Navigation :
 
-Le sujet impose l’identification de trois types de problèmes : humains, organisationnels et techniques.
-
----
-
-### A. Problèmes Humains
-
-**Problème :**  
-Difficulté initiale à aligner les visions créatives concernant l’esthétique  
-("Gaming" vs "Professionnel").
-
-**Solution :**  
-Discussion collective afin de valider la direction artistique **"Team Red"** (La roue de démocratie à trancher),  
-inspirée par l’univers hardware gaming, pour assurer la cohérence avec le nom *Silicon Carne*.
-
+Une fois sur la **Page d'accueil**, vous pouvez naviguer vers l'ensemble des pages du site via la barre de navigation (Menu) située en haut de l'écran :
+* **Présentation :** La carte du restaurant avec filtres.
+* **Connexion / Inscription :** Pour accéder aux formulaires utilisateurs.
+* **Profil :** Pour voir les informations client, l'historique et la fidélité.
+* **Pages Rôles :** Accès aux interfaces spécifiques (Administrateur, Restaurateur/Commandes, Livreur/Livraison).
 
 ---
 
-### B. Problèmes Organisationnels
+## 📂 Contenu de la Phase #1
 
-**Problème :**  
-Risque de duplication et d’incohérences dans le code CSS si chaque membre développe son propre fichier.
+Conformément au cahier des charges, nous avons réalisé l'intégration HTML/CSS des pages suivantes :
 
-**Solution :**  
-- Solution Temporaire : accord collectif sur le CSS commun header et footer 
-- Centralisation immédiate dans un fichier unique `style.css`
-- Mise en place d’un Header commun partagé sur toutes les pages
+* **Partie Client :**
+    * `Accueil.html` : Page de garde avec mise en avant du concept et recherche.
+    * `Presentation.html` : Liste des produits avec filtres (catégories, allergènes...).
+    * `connexion.html` & `inscription.html` : Gestion de l'accès utilisateur.
+    * `profil.html` : Tableau de bord utilisateur (Infos, Historique de commandes, Fidélité "XP").
+    * `notation.html` : Formulaire d'évaluation d'une commande.
 
+* **Partie Staff (Rôles spécifiques) :**
+    * `page_admin/index.html` : Gestion des utilisateurs pour l'administrateur.
+    * `page_commande/index.html` : Interface tablette pour le restaurateur (commandes en cours).
+    * `page_livraison/index.html` : Interface mobile pour le livreur (détails de livraison, GPS).
+
+## 🎨 Charte Graphique et Technique
+
+* **HTML5 :** Structure sémantique respectée (chaque page dans un fichier séparé).
+* **CSS3 :**
+    * Fichier `style.css` commun pour la charte graphique globale (Variables CSS, Nav, Footer).
+    * Design Responsive (Adapté Mobile/Desktop) via Flexbox et Media Queries.
+    * **Identité visuelle :** Thème sombre (`#111111`), accentuation Rouge Néon (`#ff3333`) et police "Source Code Pro" pour l'aspect technologique.
 
 ---
-
-### C. Problèmes Techniques
-
-**Problème :**  
-Conflits Git lors des premiers push (écrasement involontaire de fichiers).
-
-**Solution :**  
-- Adoption d’une routine stricte : `Pull` avant chaque `Push`
-- Utilisation normalisée des messages de commit avec la mention `[phase#1]`
-
----
-
-## Conclusion Phase #1
-
-La Phase #1 a permis :
-
-- La validation du concept
-- La mise en place de l’architecture HTML statique
-- L’intégration d’une identité visuelle cohérente
-- L’instauration d’une organisation Git structurée
-
-Le projet est désormais prêt pour la transition vers les phases dynamiques (backend et interactions avancées).
