@@ -19,7 +19,7 @@ Cette **Phase #1** se concentre uniquement sur la partie graphique côté client
 
 1.  Téléchargez ou clonez ce dépôt sur votre ordinateur.
 2.  Naviguez dans le dossier du projet.
-   ```text
+```text
 .
 ├── Accueil
 │   ├── Accueil.css
@@ -42,6 +42,7 @@ Cette **Phase #1** se concentre uniquement sur la partie graphique côté client
 ├── page_commande
 │   ├── index.html
 │   └── style.css
+├── Page de conception.pdf
 ├── page_livraison
 │   ├── index.html
 │   └── style.css
@@ -52,6 +53,8 @@ Cette **Phase #1** se concentre uniquement sur la partie graphique côté client
 ├── profil
 │   ├── profil.css
 │   └── profil.html
+├── Rapport_de_projet.pdf
+├── README.md
 └── style.css
 ```
 4.  Ouvrez le dossier nommé `Accueil`.
