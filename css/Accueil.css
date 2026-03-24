@@ -114,7 +114,7 @@ main{
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    background-image: url(icones/plat_du_jour.jpg);
+    background-image: url(../assets/icones_accueil/plat_du_jour.jpg);
     width: 100%;
     max-width: 750px;
     height: auto;             
