@@ -1,0 +1,30 @@
+[
+    {
+        "login": "teuteu",
+        "nom": "a",
+        "prenom": "a",
+        "naissance": "2000-01-01",
+        "adresse": "38 Traverse de la Tr\u00e9varesse",
+        "tel": "0600000000",
+        "infos": "",
+        "email": "a@gmail.com",
+        "password": "$2y$12$v2CNot.xkY2GZEu4XHelkOgfvKYOWURqrhOdHOwGKTgUxLnZ4Tf5i",
+        "role": "client",
+        "date_inscription": "2026-03-28 14:21:31",
+        "xp": 0
+    },
+    {
+        "login": "teuteu1",
+        "nom": "a",
+        "prenom": "a",
+        "naissance": "2000-01-01",
+        "adresse": "a",
+        "tel": "a",
+        "infos": "",
+        "email": "b@gmail.com",
+        "password": "$2y$12$d6DtPWiZgrEnMcQAPytfHej\/1HWH2Wb6YPBAxKXHNul9bw9HtiXWC",
+        "role": "client",
+        "date_inscription": "2026-03-28 14:29:32",
+        "xp": 0
+    }
+]
