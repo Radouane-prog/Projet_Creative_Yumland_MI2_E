@@ -124,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="container_center" id="container_login">
                 <a href="../profil/profil.html"><img src="../icones/utilisateur.png" id="profil" alt="image profil" width="35dvh"/></a>
-                <button id="button_connexion" onclick="window.location='../connexion/connexion.php'" class="button_log">connexion</button>
+                <button id="button_connexion" onclick="window.location='/connexion.php'" class="button_log">connexion</button>
                 <button id="button_inscription" onclick="window.location='inscription.php'" class="button_log">inscription</button>
             </div>
         </div>
