@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "nom": "Menu Radeon",
+    "description": "Radeon RX 7800 et 7700",
+    "prix_total": 819.98,
+    "plats_inclus": [8, 12], 
+    "personnes_min": 1
+  },
+
+  {
+    "id": 1,
+    "nom": "Menu RTX",
+    "description": "Geforce RTX 5090 et 5060",
+    "prix_total": 669.98,
+    "plats_inclus": [1, 2], 
+    "personnes_min": 1
+  },
+
+  {
+    "id": 1,
+    "nom": "Menu cartes mère",
+    "description": "cartes mère ASUS ROG et AORUS XTREME",
+    "prix_total": 1399.98,
+    "plats_inclus": [9, 2], 
+    "personnes_min": 1
+  }
+]

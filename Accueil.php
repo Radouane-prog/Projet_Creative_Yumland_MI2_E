@@ -16,12 +16,12 @@
         </div>
 
         <ul id="menu_classique">
-            <li><a href="Accueil.html">Accueil</a></li>
-            <li><a href="Presentation.html">Présentation</a></li>
-            <li><a href="index_admin.html">Administrateur</a></li>
-            <li><a href="index_livraison.html">Livraison</a></li>
-            <li><a href="index_commande.html">Commandes</a></li>
-            <li><a href="notation.html">Notation</a></li>
+            <li><a href="Accueil.php">Accueil</a></li>
+            <li><a href="Presentation.php">Présentation</a></li>
+            <li><a href="index_admin.php">Administrateur</a></li>
+            <li><a href="index_livraison.php">Livraison</a></li>
+            <li><a href="index_commande.php">Commandes</a></li>
+            <li><a href="notation.php">Notation</a></li>
         </ul>
 
         <input type="checkbox" id="menu-toggle" class="menu-checkbox">
@@ -33,21 +33,21 @@
         </label>
 
         <ul class="nav-menu">
-            <li><a href="Accueil.html">Accueil</a></li>
-            <li><a href="Presentation.html">Présentation</a></li>
-            <li><a href="index_admin.html">Administrateur</a></li>
-            <li><a href="index_livraison.html">Livraison</a></li>
-            <li><a href="index_commande.html">Commandes</a></li>
-            <li><a href="notation.html">Notation</a></li>
-            <li><a href="profil.html">Profil</a></li>
-            <li><a href="connexion.html">Connexion</a></li>
-            <li><a href="inscription.html">Inscription</a></li>
+            <li><a href="Accueil.php">Accueil</a></li>
+            <li><a href="Presentation.php">Présentation</a></li>
+            <li><a href="index_admin.php">Administrateur</a></li>
+            <li><a href="index_livraison.php">Livraison</a></li>
+            <li><a href="index_commande.php">Commandes</a></li>
+            <li><a href="notation.php">Notation</a></li>
+            <li><a href="profil.php">Profil</a></li>
+            <li><a href="connexion.php">Connexion</a></li>
+            <li><a href="inscription.php">Inscription</a></li>
         </ul>
 
         <div class="container_center" id="container_login">
-            <a href="profil.html"><img src="assets/icones/utilisateur.png" id="profil" alt="image profil" width="35dvh"/></a>
-            <button id="button_connexion" onclick="window.location='connexion.html'" class="button_log">connexion</button>
-            <button id="button_inscription" onclick="window.location='inscription.html'" class="button_log">inscription</button>
+            <a href="profil.php"><img src="assets/icones/utilisateur.png" id="profil" alt="image profil" width="35dvh"/></a>
+            <button id="button_connexion" onclick="window.location='connexion.php'" class="button_log">connexion</button>
+            <button id="button_inscription" onclick="window.location='inscription.php'" class="button_log">inscription</button>
         </div>
         </div>
     </nav>

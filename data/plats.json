@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "nom": "GEFORCE RTX 3090 - GOÛT CHOCOLAT",
+    "description": "Performance extrême, cœur fondant, refroidissement liquide overclockée.",
+    "categorie": "Carte Graphique",
+    "prix": 329.99,
+    "image": "assets/icones_presentation/GeForceRTX5090.png",
+    "alt": "image carte graphique GeForceRTX5060",
+    "allergenes": ["Chocolat"]
+  },
+  {
+    "id": 2,
+    "nom": "GEFORCE RTX 3080 - GOÛT MENTHE",
+    "description": "Efficacité 1080p fluide, biscuit sablé croquant, refroidissement DLSS à la menthe glaciale.",
+    "categorie": "Carte Graphique",
+    "prix": 329.99,
+    "image": "assets/icones_presentation/GeForceRTX5060.png",
+    "alt": "image carte graphique GeForce RTX 5060",
+    "allergenes": ["Menthe"]
+  },
+  {
+    "id": 3,
+    "nom": "RADEON RX 6800 XT - GOÛT FRAISE",
+    "description": "Fluidité 144Hz, cœur praliné croustillant, Infinity Cache aux éclats de noisettes.",
+    "categorie": "Carte Graphique",
+    "prix": 389.99,
+    "image": "assets/icones_presentation/RadeonRX9060XT.png",
+    "alt": "image carte graphique Radeon RX 9060 XT",
+    "allergenes": ["Fraise"]
+  },
+  {
+    "id": 4,
+    "nom": "GEFORCE RTX 4090 - GOÛT CHOCOLAT NOIR",
+    "description": "Architecture Ada Lovelace, ganache noire 70% de cacao.",
+    "categorie": "Carte Graphique",
+    "prix": 489.99,
+    "image": "assets/icones_presentation/GeForceRTX4090.png",
+    "alt": "image carte graphique GeForce RTX 4090",
+    "allergenes": ["Chocolat"]
+  },
+  {
+    "id": 5,
+    "nom": "CARTE MÈRE MSI MEG Z790 GODLIKE - GOÛT CHOCOLAT PRALINÉ",
+    "description": "Format E-ATX avec étages d'alimentation en génoise, blindage lourd en chocolat.",
+    "categorie": "Carte Mère",
+    "prix": 289.99,
+    "image": "assets/icones_presentation/MSIMEGZ790GL.png",
+    "alt": "image carte mère MSI MEG Z790 GODLIKE",
+    "allergenes": ["Chocolat", "+16 Go RAM"]
+  },
+  {
+    "id": 6,
+    "nom": "RADEON RX 7900 XTX - GOÛT CARAMEL BEURRE SALÉ",
+    "description": "Puce Navi 31, cœur caramel au beurre salé coulant, 24 Go de mémoire GDDR6.",
+    "categorie": "Carte Graphique",
+    "prix": 499.99,
+    "image": "assets/icones_presentation/RadeonRX7900XTX.png",
+    "alt": "image carte graphique Radeon RX 7900 XTX",
+    "allergenes": ["Caramel"]
+  },
+  {
+    "id": 7,
+    "nom": "GEFORCE RTX 4060 Ti - GOÛT CARAMEL MACCHIATO",
+    "description": "Efficacité 1080p redoutable, refroidissement au caramel doux.",
+    "categorie": "Carte Graphique",
+    "prix": 459.99,
+    "image": "assets/icones_presentation/GeForceRTX4060Ti.png",
+    "alt": "image carte graphique GEFORCE RTX 4060 Ti",
+    "allergenes": ["Caramel", "Café"]
+  },
+  {
+    "id": 8,
+    "nom": "RADEON RX 7800 XT - GOÛT FRAISE DES BOIS",
+    "description": "Architecture RDNA 3, coulis de fraise intense, ventilateurs en pâte d'amande.",
+    "categorie": "Carte Graphique",
+    "prix": 379.99,
+    "image": "assets/icones_presentation/RadeonRX7800XT.png",
+    "alt": "image carte graphique RADEON RX 7800 XT",
+    "allergenes": ["Fraise"]
+  },
+  {
+    "id": 9,
+    "nom": "CARTE MÈRE ASUS ROG STRIX B650E-F - GOÛT CHARLOTTE AUX FRAISES",
+    "description": "Socket AM5 posé sur un lit de biscuits à la cuillère.",
+    "categorie": "Carte Mère",
+    "prix": 339.99,
+    "image": "assets/icones_presentation/AsusROGSTRIXB650E.png",
+    "alt": "image carte mère ASUS ROG STRIX B650E-F",
+    "allergenes": ["Fraise", "+16 Go RAM"]
+  },
+  {
+    "id": 10,
+    "nom": "GEFORCE RTX 4080 SUPER - GOÛT VANILLE DE MADAGASCAR",
+    "description": "Dissipateur thermique infusé à la vraie gousse de vanille.",
+    "categorie": "Carte Graphique",
+    "prix": 659.99,
+    "image": "assets/icones_presentation/GeForceRTX4080SUPER.png",
+    "alt": "image de carte graphique GEFORCE RTX 4080 SUPER",
+    "allergenes": ["Vanille"]
+  },
+  {
+    "id": 11,
+    "nom": "CARTE MÈRE GIGABYTE X670E AORUS MASTER - GOÛT VANILLE PÉCAN",
+    "description": "PCB 8 couches saupoudré de noix de pécan caramélisées, dissipateurs M.2.",
+    "categorie": "Carte Mère",
+    "prix": 259.99,
+    "image": "assets/icones_presentation/GigabyteX670EAorussMASTER.png",
+    "alt": "image de carte mère GIGABYTE X670E AORUS MASTER",
+    "allergenes": ["Vanille", "+16 Go RAM"]
+  },
+  {
+    "id": 12,
+    "nom": "RADEON RX 7700 XT - GOÛT CAFÉ CORSÉ",
+    "description": "Boost d'horloge ultra-raffiné, mémoire GDDR6 torréfiée à point.",
+    "categorie": "Carte Graphique",
+    "prix": 439.99,
+    "image": "assets/icones_presentation/RadeonRX7800XT.png",
+    "alt": "image de carte graphique RADEON RX 7700 XT",
+    "allergenes": ["Café"]
+  },
+  {
+    "id": 13,
+    "nom": "CARTE MÈRE X670E AORUS XTREME X3D - GOÛT TIRAMISU AU CAFÉ",
+    "description": "Superposition de circuits expressos, dissipateurs en biscuits imbibés.",
+    "categorie": "Carte Mère",
+    "prix": 839.99,
+    "image": "assets/icones_presentation/X870EAorusXTREMEX3D.png",
+    "alt": "image de carte mère X870 AORUS XTREME X3D",
+    "allergenes": ["Café", "Chocolat", "+16 Go RAM"]
+  },
+  {
+    "id": 14,
+    "nom": "RADEON RX 6950 XT - GOÛT CHOCO-FRAMBOISE",
+    "description": "DLSS 3 avec une pointe de cacao et un coulis de framboise.",
+    "categorie": "Carte Graphique",
+    "prix": 539.99,
+    "image": "assets/icones_presentation/RadeonRX9070XT.png",
+    "alt": "image de carte graphique RADEON RX 9070 XT",
+    "allergenes": ["Chocolat", "Fraise"]
+  },
+  {
+    "id": 15,
+    "nom": "RADEON RX 7600 - GOÛT MENTHE CHOCOLAT",
+    "description": "Puce graphique compacte, ventilation mentholée pour des sessions e-sport.",
+    "categorie": "Carte Graphique",
+    "prix": 319.99,
+    "image": "assets/icones_presentation/RadeonRX7600.png",
+    "alt": "image de carte graphique RADEON RX 7600 XT",
+    "allergenes": ["Menthe", "Chocolat"]
+  }
+]
