@@ -107,6 +107,53 @@ body{
 
 /*produits*/
 
+#container_menus{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 85%;
+    min-width: 400px;
+}
+
+.card_menus{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 450px;
+    width: 400px;
+    margin: 15px;
+    padding: 10px;
+    background-color: var(--background-color);
+    background-size: 400px 450px; 
+    border-radius: 15px;
+    transition-duration: 0.3s;
+}
+
+.card_menus:hover{
+    box-shadow: 0px 0px 8px 2px var(--main-color);
+}
+
+.container_center_card{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.container_img_menu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    width: 100%;
+    max-width: 250px;
+    margin: 15px;
+    padding: 10px;
+}
+
 #container_cards{
     display: flex;
     flex-wrap: wrap;

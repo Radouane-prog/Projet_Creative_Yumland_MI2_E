@@ -77,155 +77,74 @@
 
         <div id="container_cards">
 
-            <div class="card">
-                <div class="img_card">
-                    <img src="assets/icones_presentation/GeForceRTX5090.png" width="300dvh" alt="image carte graphique GeForceRTX5060"/>
+            <?php
+                $menus = json_decode(file_get_contents("data/menus.json"), true);
+                $plats = json_decode(file_get_contents("data/plats.json"), true);
+            ?>
+
+            <?php foreach ($menus as $menu) : ?>
+
+                <?php
+                    $id_composant_1 = $menu['plats_inclus'][0];
+                    $id_composant_2 = $menu['plats_inclus'][1];
+    
+                    $composant_1 = null;
+                    $composant_2 = null;
+
+    
+                    foreach ($plats as $plat) {
+                        if ($plat['id'] == $id_composant_1) {
+                         $composant_1 = $plat;
+                        }
+                        if ($plat['id'] == $id_composant_2) {
+                            $composant_2 = $plat;
+                        }
+                    }
+                ?>
+
+                <div class="card_menus">
+
+                <div class="container_center_card">
+            
+                    <div class="container_img_menu">
+                        <div class="img_card">
+                            <img src="<?= $composant_1['image'] ?>" alt="<?= $composant_1['alt'] ?>"/>
+                        </div>
+                    </div>
+
+                    <h1>+</h1>
+
+                    <div class="container_img_menu">
+                        <div class="img_card">
+                            <img src="<?= $composant_2['image'] ?>" alt="<?= $composant_2['alt'] ?>"/>
+                        </div>
+                    </div>
+
                 </div>
-                <p class="titre">GEFORCE RTX 5090 - GOÛT CHOCOLAT</p>
-                <p class="description">Performance extrême, coeur fondant, refroidissement liquide overclockée.</p>
-                <p class="text_prix">Prix : <span class="prix">339.99€</span></p>
-                <button class="acheter acheter_card">Acheter</button>
-            </div>
+
+                <p class="titre"><?= $menu['nom'] ?></p>
+                <p class="description"><?= $menu['description'] ?></p>
+                <p class="text_prix">Prix : <span class="prix"><?= $menu['prix_total'] ?>€</span></p>
+        
+                <button class="acheter acheter_card" data-id-menu="<?= $menu['id'] ?>">Acheter</button>
+
+                </div>
+
+            <?php endforeach; ?>
+                
+            <?php foreach($plats as $plat) : ?>
 
             <div class="card">
                 <div class="img_card">
-                    <img src="assets/icones_presentation/GeForceRTX5060.png" width="300dvh" alt="image carte graphique GeForce RTX 5060"/>
+                    <img src="<?= $plat['image'] ?>" width="300dvh" alt="<?= $plat['alt'] ?>"/>
                 </div>
-                <p class="titre">GEFORCE RTX 5060 - GOÛT MENTHE</p>
-                <p class="description">Efficacité 1080p fluide, biscuit sablé croquant, refroidissement DLSS à la menthe glaciale.</p>
-                <p class="text_prix">Prix : <span class="prix">329.99€</span></p>
-                <button class="acheter acheter_card">Acheter</button>
+                <p class="titre"><?=  $plat['nom'] ?></p>
+                <p class="description"><?= $plat['description'] ?></p>
+                <p class="text_prix">Prix : <span class="prix"><?= $plat['prix'] ?>€</span></p>
+                <button class="acheter acheter_card" data-id-plat="<?= $plat['id'] ?>">Acheter</button>
             </div>
 
-            <div class="card">
-                <div class="img_card">
-                    <img src="assets/icones_presentation/RadeonRX9060XT.png" alt="image carte graphique Radeon RX 9060 XT"/>
-                </div>
-                <p class="titre">RADEON RX 9060 XT - GOÛT FRAISE</p>
-                <p class="description">Fluidité 144Hz, coeur praliné croustillant, Infinity Cache aux éclats de noisettes.</p>
-                <p class="text_prix">Prix : <span class="prix">389.99€</span></p>
-                <button class="acheter acheter_card">Acheter</button>
-            </div>
-
-            <div class="card">
-                <div class="img_card">
-                    <img src="assets/icones_presentation/GeForceRTX4090.png" alt="image carte graphique GeForce RTX 4090"/>
-                </div>
-                <p class="titre">GEFORCE RTX 4090 - GOÛT CHOCOLAT NOIR</p>
-                <p class="description">Architecture Ada Lovelace, ganache noire 70% de cacao.</p>
-                <p class="text_prix">Prix : <span class="prix">409.99€</span></p>
-                <button class="acheter acheter_card">Acheter</button>
-            </div>
-
-            <div class="card">
-                <div class="img_card">
-                    <img src="assets/icones_presentation/MSIMEGZ790GL.png" alt="image carte mère MSI MEG Z790 GODLIKE"/>
-                </div>
-                <p class="titre">CARTE MÈRE MSI MEG Z790 GODLIKE - GOÛT CHOCOLAT PRALINÉ</p>
-                <p class="description">Format E-ATX avec étages d'alimentation en génoise, blindage lourd en chocolat.</p>
-                <p class="text_prix">Prix : <span class="prix">299.99€</span></p>
-                <button class="acheter acheter_card">Acheter</button>
-            </div>
-
-            <div class="card">
-                <div class="img_card">
-                    <img src="assets/icones_presentation/RadeonRX7900XTX.png" alt="image carte graphique Radeon RX 7900 XTX"/>
-                </div>
-                <p class="titre">RADEON RX 7900 XTX - GOÛT CARAMEL BEURRE SALÉ</p>
-                <p class="description">Puce Navi 31, cœur caramel au beurre salé coulant, 24 Go de mémoire GDDR6.</p>
-                <p class="text_prix">Prix : <span class="prix">499.99€</span></p>
-                <button class="acheter acheter_card">Acheter</button>
-            </div>
-
-            <div class="card">
-                <div class="img_card">
-                    <img src="assets/icones_presentation/GeForceRTX4060Ti.png" alt="image carte graphique GEFORCE RTX 4060 Ti"/>
-                </div>
-                <p class="titre">GEFORCE RTX 4060 Ti - GOÛT CARAMEL MACCHIATO</p>
-                <p class="description">Efficacité 1080p redoutable, refroidissement au caramel doux.</p>
-                <p class="text_prix">Prix : <span class="prix">459.99€</span></p>
-                <button class="acheter acheter_card">Acheter</button>
-            </div>
-
-            <div class="card">
-                <div class="img_card">
-                    <img src="assets/icones_presentation/RadeonRX7800XT.png" alt="image carte graphique RADEON RX 7800 XT"/>
-                </div>
-                <p class="titre">RADEON RX 7800 XT - GOÛT FRAISE DES BOIS</p>
-                <p class="description">Architecture RDNA 3, coulis de fraise intense, ventilateurs en pâte d'amande.</p>
-                <p class="text_prix">Prix : <span class="prix">379.99€</span></p>
-                <button class="acheter acheter_card">Acheter</button>
-            </div>
-
-            <div class="card">
-                <div class="img_card">
-                    <img src="assets/icones_presentation/AsusROGSTRIXB650E.png" alt="image carte mère ASUS ROG STRIX B650E-F"/>
-                </div>
-                <p class="titre">CARTE MÈRE ASUS ROG STRIX B650E-F - GOÛT CHARLOTTE AUX FRAISES</p>
-                <p class="description">Socket AM5 posé sur un lit de biscuits à la cuillère.</p>
-                <p class="text_prix">Prix : <span class="prix">559.99€</span></p>
-                <button class="acheter acheter_card">Acheter</button>
-            </div>
-
-            <div class="card">
-                <div class="img_card">
-                    <img src="assets/icones_presentation/GeForceRTX4080SUPER.png" alt="image de carte graphique GEFORCE RTX 4080 SUPER"/>
-                </div>
-                <p class="titre">GEFORCE RTX 4080 SUPER - GOÛT VANILLE DE MADAGASCAR</p>
-                <p class="description">Dissipateur thermique infusé à la vraie gousse de vanille.</p>
-                <p class="text_prix">Prix : <span class="prix">659.99€</span></p>
-                <button class="acheter acheter_card">Acheter</button>
-            </div>
-
-            <div class="card">
-                <div class="img_card">
-                    <img src="assets/icones_presentation/GigabyteX670EAorussMASTER.png" alt="image de carte mère GIGABYTE X670E AORUS MASTER"/>
-                </div>
-                <p class="titre">CARTE MÈRE GIGABYTE X670E AORUS MASTER - GOÛT VANILLE PÉCAN</p>
-                <p class="description">PCB 8 couches saupoudré de noix de pécan caramélisées, dissipateurs M.2.</p>
-                <p class="text_prix">Prix : <span class="prix">259.99€</span></p>
-                <button class="acheter acheter_card">Acheter</button>
-            </div>
-
-            <div class="card">
-                <div class="img_card">
-                    <img src="assets/icones_presentation/RadeonRX7800XT.png" alt="image de carte graphique RADEON RX 7700 XT"/>
-                </div>
-                <p class="titre">RADEON RX 7700 XT - GOÛT CAFÉ CORSÉ</p>
-                <p class="description">Boost d'horloge ultra-caféiné, mémoire GDDR6 torréfiée à point.</p>
-                <p class="text_prix">Prix : <span class="prix">439.99€</span></p>
-                <button class="acheter acheter_card">Acheter</button>
-            </div>
-
-            <div class="card">
-                <div class="img_card">
-                    <img src="assets/icones_presentation/X870EAorusXTREMEX3D.png" alt="image de carte mère X870 AORUS XTREME X3D"/>
-                </div>
-                <p class="titre">CARTE MÈRE X870E AORUS XTREME X3D - GOÛT TIRAMISU AU CAFÉ</p>
-                <p class="description">Superposition de circuits expressos, dissipateurs en biscuits imbibés.</p>
-                <p class="text_prix">Prix : <span class="prix">839.99€</span></p>
-                <button class="acheter acheter_card">Acheter</button>
-            </div>
-
-            <div class="card">
-                <div class="img_card">
-                    <img src="assets/icones_presentation/RadeonRX9070XT.png" alt="image de carte graphique RADEON RX 9070 XT"/>
-                </div>
-                <p class="titre">RADEON RX 9070 XT - - GOÛT CHOCO-FRAMBOISE</p>
-                <p class="description">DLSS 3 avec une pointe de cacao et un coulis de framboise.</p>
-                <p class="text_prix">Prix : <span class="prix">510.99€</span></p>
-                <button class="acheter acheter_card">Acheter</button>
-            </div>
-
-            <div class="card">
-                <div class="img_card">
-                    <img src="assets/icones_presentation/RadeonRX7600.png" alt="image de carte graphique RADEON RX 7600 XT"/>
-                </div>
-                <p class="titre">RADEON RX 7600 - GOÛT MENTHE CHOCOLAT</p>
-                <p class="description">Puce graphique compacte, ventilation mentholée pour des sessions e-sport.</p>
-                <p class="text_prix">Prix : <span class="prix">319.99€</span></p>
-                <button class="acheter acheter_card">Acheter</button>
-            </div>
+            <?php endforeach ; ?>
 
         </div>
     </main>
