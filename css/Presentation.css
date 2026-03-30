@@ -107,15 +107,6 @@ body{
 
 /*produits*/
 
-#container_menus{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    width: 85%;
-    min-width: 400px;
-}
-
 .card_menus{
     display: flex;
     flex-direction: column;

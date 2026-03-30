@@ -87,3 +87,14 @@ form textarea:focus {
         font-size: 1.5rem;
     }
 }
+
+ #link_connexion{
+    color: var(--main-color);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+#link_connexion:hover {
+    text-decoration: underline;
+    text-shadow: 0 0 5px var(--main-color);
+}

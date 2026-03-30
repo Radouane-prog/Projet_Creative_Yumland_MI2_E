@@ -74,6 +74,18 @@ nav{
     border: solid var(--main-color) 2px;
 }
 
+#panier{
+    border-radius: 50%;
+    box-shadow: 0px 0px 8px 2px var(--main-color);
+    padding: 5px;
+    margin: 10px;
+    border: 2px solid transparent;
+}
+
+#panier:hover{
+    border: solid var(--main-color) 2px;
+}
+
 nav #menu_classique{
     display: flex;
     justify-content: space-between;

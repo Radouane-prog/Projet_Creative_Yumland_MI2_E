@@ -26,5 +26,61 @@
         "role": "client",
         "date_inscription": "2026-03-28 14:29:32",
         "xp": 0
+    },
+    {
+        "login": "client_test",
+        "nom": "nom_client_test",
+        "prenom": "prenom_client_test",
+        "naissance": "2026-03-23",
+        "adresse": "12 rue test",
+        "tel": "0667676767",
+        "infos": "",
+        "email": "client_test@gmail.com",
+        "password": "$2y$12$X0Q4Iu7k6t1K6dtOpPrVKeffSQqT6PysiqrebUexDgUwgaD5ZTLF.",
+        "role": "client",
+        "date_inscription": "2026-03-30 22:20:07",
+        "xp": 0
+    },
+    {
+        "login": "admin_test",
+        "nom": "nom_admin_test",
+        "prenom": "prenom_admin_test",
+        "naissance": "2026-03-23",
+        "adresse": "12 rue test",
+        "tel": "0667676767",
+        "infos": "",
+        "email": "admin_test@gmail.com",
+        "password": "$2y$12$C7bZOW8.80eLkbHtm.\/23eNlgcYV9reI5AoznnOsJvz7pU.dHgL4i",
+        "role": "admin",
+        "date_inscription": "2026-03-30 22:25:28",
+        "xp": 0
+    },
+    {
+        "login": "livreur_test",
+        "nom": "nom_livreur_test",
+        "prenom": "prenom_livreur_test",
+        "naissance": "2026-03-23",
+        "adresse": "12 rue test",
+        "tel": "0667676767",
+        "infos": "",
+        "email": "livreur_test@gmail.com",
+        "password": "$2y$12$bPu3G4SkBzNEW\/G4Uscb2.xCZdxEP6RRMH\/I01iEIeiTkjCwhwcO6",
+        "role": "livreur",
+        "date_inscription": "2026-03-30 22:26:24",
+        "xp": 0
+    },
+    {
+        "login": "resto_test",
+        "nom": "nom_resto_test",
+        "prenom": "prenom_resto_test",
+        "naissance": "2026-03-23",
+        "adresse": "12 rue test",
+        "tel": "0667676767",
+        "infos": "",
+        "email": "resto_test@gmail.com",
+        "password": "$2y$12$0jJVAtFIwZhMt4QA2yOg8.7pBab0KHLF5yrNWEIe\/t3QHgAksS67K",
+        "role": "resto",
+        "date_inscription": "2026-03-30 22:27:29",
+        "xp": 0
     }
 ]
