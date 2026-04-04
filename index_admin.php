@@ -99,14 +99,53 @@ $couleurs_role = [
         .alerte-succes { background: rgba(0,255,100,0.08); border: 1px solid #00ff64; color: #00ff64; }
         .alerte-erreur { background: rgba(255,51,51,0.1);  border: 1px solid #ff3333; color: #ff3333; }
 
-        /* Grille : Login | Nom | Prénom | Âge | Rôle | Commandes | Actions */
-        .row { grid-template-columns: 110px 1fr 1fr 55px 1fr 100px 130px; }
+        /* Grille : Login | Nom | Prénom | Âge | Rôle | Statut | Remise | Commandes | Actions */
+        .row { grid-template-columns: 110px 1fr 1fr 55px 1fr 100px 80px 90px 130px; }
 
         /* Badge rôle */
         .badge-role {
             display: inline-block; padding: 2px 8px; border-radius: 4px;
             border: 1px solid currentColor; font-size: 12px; font-weight: 700;
         }
+
+        /* Badge statut */
+        .badge-statut {
+            display: inline-block; padding: 2px 8px; border-radius: 4px;
+            border: 1px solid currentColor; font-size: 12px; font-weight: 700;
+        }
+        .badge-statut.basique  { color: #b0b0b0; border-color: #b0b0b0; box-shadow: 0 0 5px #b0b0b044; }
+        .badge-statut.premium  { color: #c0c0c0; border-color: #c0c0c0; box-shadow: 0 0 5px #c0c0c066;
+                                  background: linear-gradient(135deg, rgba(192,192,192,0.15), rgba(255,255,255,0.05)); }
+        .badge-statut.vip      { color: #ffd700; border-color: #ffd700; box-shadow: 0 0 8px #ffd70066;
+                                  background: rgba(255,215,0,0.08); }
+
+        /* Select statut inline */
+        .select-statut {
+            display: none;
+            background: #1a1a1a; color: #f5f5f5;
+            border: 1px solid var(--main-color); border-radius: 4px;
+            padding: 4px 6px; font-family: "Source Code Pro", monospace;
+            font-size: 12px; width: 100%; box-sizing: border-box;
+        }
+        .select-statut:focus { outline: none; box-shadow: 0 0 6px var(--main-color); }
+
+        /* Cellule statut */
+        .cell-statut { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+
+        /* Affichage remise */
+        .remise-display { font-weight: bold; font-size: 14px; color: #f5f5f5; }
+        .remise-display.zero { color: var(--details-color); }
+        .remise-display.actif { color: #00ff64; text-shadow: 0 0 6px #00ff6466; }
+
+        /* Input remise inline */
+        .input-remise {
+            display: none;
+            background: #1a1a1a; color: #f5f5f5;
+            border: 1px solid var(--main-color); border-radius: 4px;
+            padding: 4px 6px; font-family: "Source Code Pro", monospace;
+            font-size: 12px; width: 100%; box-sizing: border-box; text-align: center;
+        }
+        .input-remise:focus { outline: none; box-shadow: 0 0 6px var(--main-color); }
 
         /* Select inline */
         .select-role {
@@ -186,7 +225,42 @@ $couleurs_role = [
 <body>
 
     <!-- NAV -->
-    <?php include "includes/header.php"; ?>
+    <nav>
+        <div id="container_nav">
+            <div class="container_center">
+                <img id="logo" src="assets/icones/logo.png" alt="logo" width="80dvh"/>
+                <h1 id="nom_resto">Silicon Carne</h1>
+            </div>
+            <ul id="menu_classique">
+                <li><a href="Accueil.html">Accueil</a></li>
+                <li><a href="Presentation.html">Présentation</a></li>
+                <li><a href="index_admin.php">Administrateur</a></li>
+                <li><a href="index_livraison.html">Livraison</a></li>
+                <li><a href="index_commande.html">Commandes</a></li>
+                <li><a href="notation.html">Notation</a></li>
+            </ul>
+            <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+            <label for="menu-toggle" class="hamburger">
+                <span class="line"></span><span class="line"></span><span class="line"></span>
+            </label>
+            <ul class="nav-menu">
+                <li><a href="Accueil.html">Accueil</a></li>
+                <li><a href="Presentation.html">Présentation</a></li>
+                <li><a href="index_admin.php">Administrateur</a></li>
+                <li><a href="index_livraison.html">Livraison</a></li>
+                <li><a href="index_commande.html">Commandes</a></li>
+                <li><a href="notation.html">Notation</a></li>
+                <li><a href="profil.html">Profil</a></li>
+                <li><a href="connexion.php">Connexion</a></li>
+                <li><a href="inscription.php">Inscription</a></li>
+            </ul>
+            <div class="container_center" id="container_login">
+                <a href="profil.html"><img src="assets/icones/utilisateur.png" id="profil" alt="profil" width="35dvh"/></a>
+                <button id="button_connexion" onclick="window.location='connexion.php'" class="button_log">connexion</button>
+                <button id="button_inscription" onclick="window.location='inscription.php'" class="button_log">inscription</button>
+            </div>
+        </div>
+    </nav>
 
     <!-- MODALE suppression -->
     <div class="modal-overlay" id="modal-supprimer">
@@ -235,6 +309,8 @@ $couleurs_role = [
                     <div class="cell">Prénom</div>
                     <div class="cell">Âge</div>
                     <div class="cell">Rôle</div>
+                    <div class="cell">Statut</div>
+                    <div class="cell">Remise</div>
                     <div class="cell">Commandes</div>
                     <div class="cell">Actions</div>
                 </div>
@@ -251,6 +327,8 @@ $couleurs_role = [
                         $role    = $user['role']   ?? 'client';
                         $couleur = $couleurs_role[$role] ?? '#b0b0b0';
                         $nb_cmd  = $nb_commandes[$login] ?? 0;
+                        $statut  = $user['statut'] ?? 'basique';
+                        $remise  = $user['remise'] ?? 0;
                         $safe    = htmlspecialchars($login, ENT_QUOTES);
                     ?>
                     <div class="row" data-login="<?= $safe ?>" data-commandes="<?= $nb_cmd ?>">
@@ -278,6 +356,33 @@ $couleurs_role = [
                                 </select>
                                 <button type="submit" class="btn-valider-role" id="valider-<?= $safe ?>">✓ Valider</button>
                             </form>
+                        </div>
+
+                        
+                        <div class="cell cell-statut" id="cell-statut-<?= $safe ?>">
+                            <span class="badge-statut <?= htmlspecialchars($statut) ?>" id="badge-statut-<?= $safe ?>">
+                                <?= htmlspecialchars($statut) ?>
+                            </span>
+                            <select class="select-statut" id="select-statut-<?= $safe ?>">
+                                <option value="basique"  <?= $statut === 'basique'  ? 'selected' : '' ?>>basique</option>
+                                <option value="premium"  <?= $statut === 'premium'  ? 'selected' : '' ?>>premium</option>
+                                <option value="vip"      <?= $statut === 'vip'      ? 'selected' : '' ?>>vip</option>
+                            </select>
+                        </div>
+
+                        <!-- Remise : affichage + input inline -->
+                        <div class="cell" id="cell-remise-<?= $safe ?>">
+                            <span
+                                class="remise-display <?= $remise > 0 ? 'actif' : 'zero' ?>"
+                                id="remise-display-<?= $safe ?>"
+                            ><?= $remise ?>%</span>
+                            <input
+                                type="number"
+                                class="input-remise"
+                                id="input-remise-<?= $safe ?>"
+                                min="0" max="100" step="1"
+                                value="<?= $remise ?>"
+                            />
                         </div>
 
                         <!-- Commandes -->
@@ -316,27 +421,39 @@ $couleurs_role = [
     </footer>
 
     <script>
-        // --- Edition inline du rôle ---
+        // --- Edition inline du rôle, statut et remise ---
         function toggleEdition(login) {
-            const select  = document.getElementById('select-'       + login);
-            const valider = document.getElementById('valider-'      + login);
-            const badge   = document.getElementById('badge-'        + login);
-            const btn     = document.getElementById('btn-modifier-' + login);
+            const selectRole   = document.getElementById('select-'         + login);
+            const valider      = document.getElementById('valider-'        + login);
+            const badge        = document.getElementById('badge-'          + login);
+            const btn          = document.getElementById('btn-modifier-'   + login);
+            const selectStatut = document.getElementById('select-statut-'  + login);
+            const badgeStatut  = document.getElementById('badge-statut-'   + login);
+            const inputRemise  = document.getElementById('input-remise-'   + login);
+            const remiseDisplay= document.getElementById('remise-display-' + login);
 
-            const enEdition = select.style.display === 'block';
+            const enEdition = selectRole.style.display === 'block';
 
             if (enEdition) {
-                // → annuler
-                select.style.display  = 'none';
-                valider.style.display = 'none';
-                badge.style.display   = '';
-                btn.textContent       = 'Modifier';
+                // → annuler : tout cacher, tout réafficher
+                selectRole.style.display    = 'none';
+                valider.style.display       = 'none';
+                badge.style.display         = '';
+                selectStatut.style.display  = 'none';
+                badgeStatut.style.display   = '';
+                inputRemise.style.display   = 'none';
+                remiseDisplay.style.display = '';
+                btn.textContent             = 'Modifier';
             } else {
-                // → passer en mode édition
-                select.style.display  = 'block';
-                valider.style.display = 'block';
-                badge.style.display   = 'none';
-                btn.textContent       = 'Annuler';
+                // → mode édition : cacher badges, montrer champs
+                selectRole.style.display    = 'block';
+                valider.style.display       = 'block';
+                badge.style.display         = 'none';
+                selectStatut.style.display  = 'block';
+                badgeStatut.style.display   = 'none';
+                inputRemise.style.display   = 'block';
+                remiseDisplay.style.display = 'none';
+                btn.textContent             = 'Annuler';
             }
         }
 
