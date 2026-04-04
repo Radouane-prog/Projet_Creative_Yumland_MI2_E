@@ -20,7 +20,7 @@
     gap: 15px;
     margin: 30px;
 }
-
+/*
 .avatar-section a{
     position: absolute;
     background-color: var(--background-color);
@@ -36,6 +36,69 @@
     transform: none !important;
     box-shadow: 0 0 25px var(--main-color);
 }
+*/
+    
+
+.avatar-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+
+.btn-modif-avatar {
+    position: absolute;
+    background-color: var(--background-color);
+    border-radius: 50%;
+    border: solid var(--main-color) 3px;
+    box-shadow: 0 0 15px var(--main-color);
+    padding: 15px; 
+    bottom: 5px;
+    right: 5px;
+    transition: 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-modif-avatar:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px var(--main-color);
+}
+
+
+
+
+.btn-deconnexion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid var(--main-color);
+    background-color: rgba(255, 51, 51, 0.1);
+    color: var(--main-color);
+    padding: 12px 20px;
+    margin-top: 10px;
+    width: 200px;
+    border-radius: 5px;
+    font-family: "Source Code Pro", monospace;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-deconnexion:hover {
+    background-color: var(--main-color);
+    color: var(--background-color);
+    box-shadow: 0 0 15px var(--main-color);
+    text-shadow: none; 
+}
+
+
+
+
+
+
+
 
 
 .avatar {
