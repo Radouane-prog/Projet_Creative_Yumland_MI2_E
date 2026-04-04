@@ -1,5 +1,12 @@
 <?php
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+
+
+
 $login = $nom = $prenom = $naissance = $adresse = $tel = $infos = $email = "";
 $erreurs = [];
 $succes = "";

@@ -14,8 +14,18 @@
     <title>Accueil</title>
 </head>
 <body>
-    
     <?php include "includes/header.php"; ?>
+
+
+    <?php if (isset($_SESSION['popup_bienvenue'])): ?>
+        <div class="popup-toast">
+            > <?= $_SESSION['popup_bienvenue'] ?>
+        </div>
+        <?php 
+        unset($_SESSION['popup_bienvenue']); 
+        ?>
+    <?php endif; ?>
+    
 
     <main>
         <div id="search_bar">

@@ -292,3 +292,31 @@ footer{
 
 /*fin footer*/
 
+
+
+/* ajout matthieu test*/
+/*message en cas de connexion*/
+
+.popup-toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: rgba(0, 255, 100, 0.1); 
+    border: 1px solid #00ff64;
+    color: #00ff64;
+    padding: 15px 25px;
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(0, 255, 100, 0.3);
+    font-family: 'Source Code Pro', monospace;
+    font-weight: bold;
+    z-index: 99999;
+    
+    animation: fadeinout 4s forwards;
+}
+
+@keyframes fadeinout {
+    0%   { opacity: 0; transform: translateY(20px); }
+    10%  { opacity: 1; transform: translateY(0); }
+    85%  { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(20px); visibility: hidden; }
+}

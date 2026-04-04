@@ -98,3 +98,36 @@ form textarea:focus {
     text-decoration: underline;
     text-shadow: 0 0 5px var(--main-color);
 }
+
+.alerte-erreur { 
+    color: var(--main-color); 
+    background: rgba(255, 51, 51, 0.1); 
+    padding: 15px; 
+    border-radius: 5px; 
+    margin-bottom: 20px; 
+    border: 1px solid var(--main-color); 
+    font-family: "Source Code Pro", monospace;
+    font-weight: bold;
+    text-shadow: 0 0 5px var(--main-color);
+}
+
+.alerte-succes { 
+    color: #00ff64; 
+    background: rgba(0, 255, 100, 0.1); 
+    padding: 15px; 
+    border-radius: 5px; 
+    margin-bottom: 20px; 
+    border: 1px solid #00ff64; 
+    font-family: "Source Code Pro", monospace;
+    font-weight: bold;
+    text-shadow: 0 0 5px #00ff64;
+}
+
+.alerte-succes a {
+    color: #00ff64;
+    text-decoration: underline;
+}
+
+.alerte-succes a:hover {
+    text-shadow: 0 0 10px #00ff64;
+}

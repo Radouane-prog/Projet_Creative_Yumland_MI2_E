@@ -35,11 +35,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $_SESSION['nom'] = $user['nom'];
                             $_SESSION['prenom'] = $user['prenom'];
                             $_SESSION['role'] = $user['role']; 
+
+                            $_SESSION['prenom'] = $user['prenom'];
+                            $_SESSION['popup_bienvenue'] = "Bien connecté(e), " . $user['login'] . " !";
+
                             
                             header("Location: Accueil.php");
                             exit; 
                         }
-                        break;
+                        break;  
                     }
                 }
             }
@@ -62,9 +66,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta name="description" content="Page connexion">
   <link rel="stylesheet" href="css/connexion.css"/>
   <link rel="stylesheet" href="css/style.css"/>
-  <style>
-      .alerte-erreur { color: #ff3333; background: rgba(255,51,51,0.1); padding: 10px; border-radius: 5px; margin-bottom: 15px; border: 1px solid #ff3333; }
-  </style>
 </head>
 
 <body>
