@@ -72,7 +72,7 @@
             <div class="profil-container">
                 <div class="card profil-info">
                     <h3>Mes Informations</h3>
-                    <p><b>Nom d'utilisateur :</b> <?= htmlspecialchars($user_data['prenom']) . ' ' . htmlspecialchars($user_data['nom']) ?></p>
+                    <p><b>Nom d'utilisateur :</b> <?= htmlspecialchars($user_data['login']) ?></p>
                     <p><b>Rôle :</b> <span style="color: var(--main-color); text-transform: uppercase;"><?= htmlspecialchars($user_data['role']) ?></span></p>
                     <p><b>Email :</b> <?= htmlspecialchars($user_data['email']) ?></p>       
                     <p><b>Adresse :</b> <?= htmlspecialchars($user_data['adresse'] ?? 'Non renseignée') ?> <a href="#" class="edit-btn" title="Modifier (Phase 3)"><img src="assets/icones/modifier.png" alt="Modifier" width="18" style="vertical-align: middle;"></a></p>
