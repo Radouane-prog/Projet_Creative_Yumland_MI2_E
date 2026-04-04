@@ -1,0 +1,153 @@
+
+.titre_panier {
+    text-align: center;
+    margin-bottom: 40px;
+    color: white;
+    text-shadow: 0 0 5px var(--main-color), 
+                 0 0 10px var(--main-color),
+                 0 0 20px var(--main-color);
+}
+
+.panier_liste_cartes {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.carte_article_panier {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    width: 90%;
+    background-color: var(--background-color);
+    border-radius: 10px;
+    transition-duration: 0.3s;
+}
+
+.carte_info_produit {
+    display: flex;
+    align-items: center;
+}
+
+.img_carte_panier {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid var(--main-color);
+    box-shadow: 0px 0px 8px 2px var(--main-color);
+    margin-right: 25px;
+}
+
+.details_produit {
+    display: flex;
+    flex-direction: column;
+}
+
+.nom_article {
+    font-weight: bold;
+    color: white;
+    font-size: clamp(0.5em,2.5vw,1.2em);
+    margin-bottom: 10px;
+}
+
+.prix_unitaire {
+    font-size: clamp(0.5em,2.5vw,0.95em);
+}
+
+.carte_actions {
+    display: flex;
+    align-items: center;
+}
+
+.btn_qte{
+    display: block;
+    text-decoration: none;
+    font-size: 1.2rem;
+    margin: 10px;
+    color: white;
+    transition-duration: 0.5s;
+}
+
+.btn_qte:hover{
+    transform: scale(1.5);
+    color: var(--main-color);
+}
+
+.bloc_qte {
+    display: flex;
+    align-items: center;
+    margin-right: 50px;
+}
+
+.bloc_prix_total {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-right: 40px;
+}
+
+.label_total {
+    white-space: nowrap;
+    font-size: clamp(0.4,2.5vw,0.8em);
+    margin-bottom: 5px;
+}
+
+.prix_ligne {
+    white-space: nowrap;
+    color: var(--main-color);
+    font-weight: bold;
+    font-size: clamp(1.0,2.5vw,1.3em);;
+}
+
+
+.panier_resume {
+    align-self: flex-end;
+    background-color: var(--background-color);
+    border: 1px solid var(--main-color);
+    border-radius: 10px;
+    padding: 30px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 300px;
+}
+
+.total_commande {
+    font-size: 1.5em;
+    color: white;
+    margin-bottom: 25px;
+}
+
+#prix_total_global {
+    color: var(--main-color);
+    font-weight: bold;
+}
+
+.btn_valider_panier {
+    display: block;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 51, 51, 0.1);
+    box-shadow: 0px 0px 8px 2px var(--main-color);
+    color: var(--text-color);
+    width:120px;
+    height: 40px;
+    margin: 10px;
+    font-size: 16px;
+    border: 2px solid transparent;
+}
+
+.btn_valider_panier:hover {
+    border: solid var(--main-color) 2px;
+}
+
+@media (max-width: 768px) {
+    .panier_resume{
+        align-self: center;
+    }
+
+}
