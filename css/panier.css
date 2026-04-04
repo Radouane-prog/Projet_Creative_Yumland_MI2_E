@@ -21,6 +21,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+    margin: 10px;
     width: 90%;
     background-color: var(--background-color);
     border-radius: 10px;
@@ -46,8 +47,9 @@
 }
 
 .img_carte_panier {
-    min-width: 100px;
-    min-height: 100px;
+    width: 10vw;
+    max-width: 150px;
+    min-width: 70px;
     object-fit: contain;
     border-radius: 5px;
     border: 1px solid var(--main-color);
@@ -121,9 +123,11 @@
     background-color: var(--background-color);
     border: 1px solid var(--main-color);
     border-radius: 10px;
-    padding: 30px 40px;
+    padding: 15px 40px;
+    margin: 5px;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     align-items: center;
     min-width: 300px;
 }
@@ -137,6 +141,32 @@
 #prix_total_global {
     color: var(--main-color);
     font-weight: bold;
+}
+
+#ctn_quand{
+    margin-bottom: 20px; 
+    text-align: left; 
+    background-color: var(--background-color); 
+    padding: 15px;
+    border-radius: 8px; 
+    border: 1px var(--main-color);
+}
+
+label[for="immediat"], label[for="plus_tard"]{
+    cursor: pointer;
+    color: var(--details);
+}
+
+input[name="date_preparation"]{
+    width: 100%; 
+    background: var(--background-color);
+    border: 1px solid var(--main-color); 
+    color: white;
+    padding: 8px; 
+    margin: 10px;
+    border-radius: 5px; 
+    box-sizing: border-box; 
+    font-family: "Source Code Pro";
 }
 
 .btn_valider_panier {

@@ -81,9 +81,9 @@
                         <div class="carte_info_produit">
                             <div class="ctn_img_panier">
                                 <?php if ($est_un_menu) : ?>
-                                <img src="<?= $img_plat_1 ?>" alt="Composant 1" class="img_carte_panier" style="width: 65px; height: 65px; margin-right: 0;">
+                                <img src="<?= $img_plat_1 ?>" alt="Composant 1" class="img_carte_panier">
                                     <span class="plus_separator">+</span>
-                                    <img src="<?= $img_plat_2 ?>" alt="Composant 2" class="img_carte_panier" style="width: 65px; height: 65px;">
+                                    <img src="<?= $img_plat_2 ?>" alt="Composant 2" class="img_carte_panier">
                                 <?php else : ?>
                                     <img src="<?= $article_trouve['image'] ?>" alt="<?= $article_trouve['nom'] ?>" class="img_carte_panier">
                                 <?php endif; ?>
@@ -125,6 +125,20 @@
             </div>
             
             <form action="scripts/php/valider_commande.php" method="POST">
+    
+                <div id="ctn_quand">
+                    <h3>Quand préparer la commande ?</h3>
+                    <input type="radio" id="immediat" name="type_preparation" value="immediat" checked>
+                    <label for="immediat">Préparation immédiate</label>
+
+        
+                    <div>
+                        <input type="radio" id="plus_tard" name="type_preparation" value="plus_tard">
+                        <label for="plus_tard">Pour plus tard :</label>
+                        <input type="datetime-local" name="date_preparation">
+                    </div>
+                </div>
+
                 <button type="submit" class="btn_valider_panier">Valider</button>
             </form>
 
