@@ -237,6 +237,13 @@ if ($client && !empty($client['adresse'])) {
             text-align: center;
             padding: 30px;
         }
+        .texte-tronque {
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%; /* S'assure que ça ne dépasse pas la boîte parent */
+        }
         .ecran-vide .icone { font-size: 70px; }
         .ecran-vide h2 { font-size: 22px; margin: 0; }
         .ecran-vide p  { color: var(--details-color); font-size: 16px; margin: 0; }
