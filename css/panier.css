@@ -32,14 +32,26 @@
     align-items: center;
 }
 
+.ctn_img_panier{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 25px;
+}
+
+.plus_separator{
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px;
+}
+
 .img_carte_panier {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
+    min-width: 100px;
+    min-height: 100px;
+    object-fit: contain;
     border-radius: 5px;
     border: 1px solid var(--main-color);
     box-shadow: 0px 0px 8px 2px var(--main-color);
-    margin-right: 25px;
 }
 
 .details_produit {
@@ -146,8 +158,13 @@
 }
 
 @media (max-width: 768px) {
+
     .panier_resume{
         align-self: center;
+    }
+
+    .ctn_img_panier{
+        flex-direction: column;
     }
 
 }

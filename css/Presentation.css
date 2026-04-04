@@ -224,6 +224,10 @@ body{
 
 .acheter_card{
     align-self: flex-end;
+    text-decoration: none;
+    font-family: "Source Code Pro";
+    text-align: center;
+    align-content: center;
 }
 
 /*fin produit*/

@@ -89,9 +89,7 @@
                 <p class="titre"><?= $menu['nom'] ?></p>
                 <p class="description"><?= $menu['description'] ?></p>
                 <p class="text_prix">Prix : <span class="prix"><?= $menu['prix_total'] ?>€</span></p>
-        
-                <button class="acheter acheter_card" data-id-menu="<?= $menu['id'] ?>">Acheter</button>
-
+                <a class="acheter acheter_card" href="scripts/php/ajouter_panier.php?id=menu_<?= $menu['id'] ?>">Acheter</a>
                 </div>
 
             <?php endforeach; ?>
@@ -105,7 +103,7 @@
                 <p class="titre"><?=  $plat['nom'] ?></p>
                 <p class="description"><?= $plat['description'] ?></p>
                 <p class="text_prix">Prix : <span class="prix"><?= $plat['prix'] ?>€</span></p>
-                <button class="acheter acheter_card" data-id-plat="<?= $plat['id'] ?>">Acheter</button>
+                <a class="acheter acheter_card" href="scripts/php/ajouter_panier.php?id=plat_<?= $plat['id'] ?>">Acheter</a>
             </div>
 
             <?php endforeach ; ?>
