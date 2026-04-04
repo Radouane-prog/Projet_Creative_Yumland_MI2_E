@@ -64,7 +64,7 @@
                     </a>
                 </div>
 
-                <a href="logout.php" class="btn-deconnexion">
+                <a href="scripts/logout.php" class="btn-deconnexion">
                     [ SE DÉCONNECTER ]
                 </a>     
             </div>
