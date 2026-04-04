@@ -1,0 +1,9 @@
+{
+  "id": "CMD-001",
+  "login_client": "rayene",
+  "login_livreur": "livreur_test",
+  "articles": ["RTX 5090 Chocolat"],
+  "montant": 339.99,
+  "statut": "en-cours",
+  "date": "2026-04-04 12:00:00"
+}
