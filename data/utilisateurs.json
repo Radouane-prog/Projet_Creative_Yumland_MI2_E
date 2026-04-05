@@ -11,7 +11,9 @@
         "password": "$2y$12$X0Q4Iu7k6t1K6dtOpPrVKeffSQqT6PysiqrebUexDgUwgaD5ZTLF.",
         "role": "admin",
         "date_inscription": "2026-03-30 22:20:07",
-        "xp": 0
+        "xp": 0,
+        "statut": "premium",
+        "remise": 4
     },
     {
         "login": "admin_test",
@@ -53,7 +55,9 @@
         "password": "$2y$12$0jJVAtFIwZhMt4QA2yOg8.7pBab0KHLF5yrNWEIe\/t3QHgAksS67K",
         "role": "resto",
         "date_inscription": "2026-03-30 22:27:29",
-        "xp": 0
+        "xp": 0,
+        "statut": "basique",
+        "remise": 0
     },
     {
         "login": "rayene",
@@ -65,9 +69,11 @@
         "infos": "",
         "email": "rezrarzea@ajfdosf.com",
         "password": "$2y$10$QD8fBiAUuoPPFK75KBog1etirBPtzC.d0Q.K57daG5bNjKBRjF7by",
-        "role": "client",
+        "role": "restaurateur",
         "date_inscription": "2026-04-04 02:14:29",
-        "xp": 0
+        "xp": 0,
+        "statut": "basique",
+        "remise": 0
     },
     {
         "login": "ray",
