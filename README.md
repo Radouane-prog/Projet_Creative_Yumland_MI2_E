@@ -12,7 +12,7 @@ Ce projet a pour but de développer le site web d'une chaîne de restaurants au 
 
 ---
 
-## 🚀 Installation et Lancement (Mise à jour Phase #2)
+##  Installation et Lancement (Mise à jour Phase #2)
 
 Avec le passage à la **Phase 2**, le site est désormais dynamique et gère les sessions utilisateurs via **PHP**. Il est indispensable d'utiliser un serveur local pour naviguer. **Ne double-cliquez plus sur les fichiers HTML/PHP pour les ouvrir !**
 
@@ -28,7 +28,7 @@ php -S localhost:8000
 
 ---
 
-## 📂 Architecture du Projet
+##  Architecture du Projet
 
 L'arborescence a été entièrement revue pour la Phase 2 afin de séparer la logique, le stockage et les vues de manière propre :
 
@@ -57,7 +57,7 @@ L'arborescence a été entièrement revue pour la Phase 2 afin de séparer la lo
 
 ---
 
-## 🔒 Navigation, Accès et Sécurité
+##  Navigation, Accès et Sécurité
 
 Le système de navigation intègre un contrôle d'accès strict via les **Sessions PHP** :
 
@@ -68,7 +68,7 @@ Le système de navigation intègre un contrôle d'accès strict via les **Sessio
 
 ---
 
-## 🛠️ Historique des Phases de Développement
+##  Historique des Phases de Développement
 
 ### Contenu de la Phase #2 (Back-end & Logique)
 La seconde phase a dynamisé l'interface via des technologies côté serveur :
@@ -85,7 +85,3 @@ La première phase s'est concentrée sur la création d'une charte graphique imm
 * **Intégration des vues principales :** Accueil, catalogue de présentation avec filtres, interfaces spécifiques au staff (Admin, Restaurateur, Livreur).
 ```
 
-### Ce qui a été amélioré par rapport à l'ancien :
-* **L'arborescence :** Elle correspond désormais exactement à ton vrai projet actuel (fichiers `.php` à la racine, dossier `data/` ajouté) plutôt qu'aux anciens dossiers séparés de la Phase 1.
-* **L'installation :** J'ai bien insisté sur la commande `php -S localhost:8000` et enlevé la mention "double-cliquez sur le fichier", qui aurait valu des points de pénalité si les correcteurs l'avaient fait.
-* **Le contenu de la Phase 2 :** J'ai listé le JSON, le PHP, le hachage sécurisé et le pré-remplissage exigé par les profs (5 clients, 2 admins).
