@@ -36,7 +36,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $erreurs[] = "nahaah mots de passe différents.";
     }
 
-
+    if (!empty($tel)) {
+        $tel = str_replace(' ', '', $tel);
+        
+        if (!preg_match('/^[0-9]{10}$/', $tel)) {
+            $erreurs[] = "Le numéro de téléphone doit contenir exactement 10 chiffres !!!!!!!";
+        }
+    }
     if (empty($erreurs)) {
 
         $dossier_data = 'data';
