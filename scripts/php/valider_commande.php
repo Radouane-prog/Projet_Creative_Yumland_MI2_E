@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+date_default_timezone_set('Europe/Paris');
+
 require('getapikey.php');
 
 if (empty($_SESSION['panier']) || !isset($_SESSION['login'])) {
