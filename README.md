@@ -1,4 +1,4 @@
-# Silicon Carne - Projet Web (Phase #1)
+# Silicon Carne - Projet Web (Phase #1 + #2)
 
 Bienvenue sur le dépôt du projet **Silicon Carne**.
 Ce projet a pour but de développer le site web d'une chaîne de restaurants au thème **composants de PC** et une charte graphique type "AMD", réalisé dans le cadre du cours d'Informatique 4.
