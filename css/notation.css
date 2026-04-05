@@ -29,23 +29,44 @@ h2{
     margin-top: 15px;
 }
 
-.container_stars{
+.rating_css {
     display: flex;
-    justify-content: space-around;
+    flex-direction: row-reverse;
+    justify-content: center;
     align-items: center;
+    gap: 15px;
     width: 30%;
 }
 
-.star {
-  stroke: var(--main-color);
-  filter: drop-shadow(0 0 8px var(--main-color)) drop-shadow(0 0 15px var(--main-color));
-  transition-duration: 0.3s;
-  cursor: pointer;
+.rating_css input[type="radio"] {
+    display: none;
 }
 
-.star:hover{
+.rating_css label {
+    cursor: pointer;
+}
+
+.rating_css label svg {
+    stroke: var(--main-color);
+    filter: drop-shadow(0 0 8px var(--main-color)) drop-shadow(0 0 15px var(--main-color));
+    transition: 0.3s;
+}
+
+.rating_css label svg polygon {
+    fill: transparent;
+    transition: 0.3s;
+}
+
+.rating_css label:hover svg polygon,
+.rating_css label:hover ~ label svg polygon,
+.rating_css input:checked ~ label svg polygon {
     fill: var(--main-color);
-    filter: drop-shadow(0 0 5px var(--main-color)) drop-shadow(0 0 10px var(--main-color));
+}
+
+.rating_css label:hover svg,
+.rating_css label:hover ~ label svg,
+.rating_css input:checked ~ label svg {
+    filter: drop-shadow(0 0 5px var(--main-color)) drop-shadow(0 0 15px var(--main-color));
 }
 
 #commentaires{
