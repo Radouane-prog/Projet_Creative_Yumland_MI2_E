@@ -9,36 +9,48 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/suivi.css">
+    <link rel="stylesheet" href="css/historique.css">
     <link rel="stylesheet" href="css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suivi</title>
+    <title>Historique</title>
 </head>
 <body>
     
     <?php include "includes/header.php"; ?>
 
     <main>
-        <h1 class="titre_suivi">Suivi de mes commandes</h1>
+        <h1 class="titre_histo">Historique de mes commandes</h1>
 
         <?php
-            $statuts_actifs = ['acceptee', 'preparation', 'en_cours'];
+            $statut_actif = "livree";
             $chemin_json = "data/commandes.json";
-            $commandes_en_cours = [];
+            $commandes_livree = [];
 
             if (file_exists($chemin_json)) {
                 $toutes_commandes = json_decode(file_get_contents($chemin_json), true);
         
                 foreach ($toutes_commandes as $cmd) {
-                    if (isset($cmd['login_client']) && $cmd['login_client'] === $_SESSION['login'] && in_array($cmd['statut'], $statuts_actifs)) {
-                        $commandes_en_cours[] = $cmd;
+                    if (isset($cmd['login_client']) && $cmd['login_client'] === $_SESSION['login'] && $cmd['statut'] === $statut_actif) {
+                        $commandes_livree[] = $cmd;
                     }
                 }
             }
 
             $plats = file_exists('data/plats.json') ? json_decode(file_get_contents('data/plats.json'), true) : [];
             $menus = file_exists('data/menus.json') ? json_decode(file_get_contents('data/menus.json'), true) : [];
+            $chemin_avis = "data/avis.json";
+            $commandes_deja_notees = [];
 
+            if (file_exists($chemin_avis)) {
+                $tous_les_avis = json_decode(file_get_contents($chemin_avis), true);
+                if (is_array($tous_les_avis)) {
+                    foreach ($tous_les_avis as $avis) {
+                        if (isset($avis['id_commande'])) {
+                            $commandes_deja_notees[] = $avis['id_commande'];
+                        }
+                    }
+                }
+            }
 
             function getNomProduit($id_brut, $plats, $menus) {
                 $parts = explode('_', $id_brut);
@@ -56,35 +68,27 @@
                         }
                 }
                 return $id_brut;
-    }
-
-            function getStatutJoli($statut_brut) {
-                switch ($statut_brut) {
-                    case 'acceptee': return 'Validée';
-                    case 'preparation': return 'En préparation';
-                    case 'en_cours': return 'En livraison';
-                    default: return 'En cours';
-                }
             }
+
     ?>
 
-    <?php if (empty($commandes_en_cours)): ?>
+    <?php if (empty($commandes_livree)): ?>
         
         <div class="box_vide">
-            <h3 class="titre_carte">Aucune commande en cours</h3>
-            <p>Vous n'avez aucune commande en cours de préparation ou de livraison.</p>
+            <h3 class="titre_carte">Aucune commande livrée</h3>
+            <p>Vous n'avez aucune commande livrée.</p>
         </div>
 
     <?php else: ?>
 
         <div id="container_cards_commandes">
-            <?php foreach ($commandes_en_cours as $cmd): ?>
+            <?php foreach ($commandes_livree as $cmd): ?>
                 
                 <div class="card_commande">
                     
                     <div class="ligne_commande bordure">
                         <span class="titre_carte">Commande #<?= htmlspecialchars($cmd['id']) ?></span>
-                        <span class="statut_commande"><?= getStatutJoli($cmd['statut']) ?></span>
+                        <span class="statut_commande">est livrée</span>
                     </div>
                     
                     <div class="ligne_commande">
@@ -93,7 +97,17 @@
                     </div>
                     
                     <div class="ligne_commande">
-                        <span>Préparation : <?= htmlspecialchars($cmd['type_preparation'] === 'immediat' ? 'Immédiate' : $cmd['date_livraison_prevue']) ?></span>
+                         
+                    <?php if (in_array($cmd['id'], $commandes_deja_notees)): ?>
+        
+                        <a href="#" class="btn_note btn_desactive">Avis déjà envoyé</a>
+        
+                    <?php else: ?>
+        
+                        <a href="notation.php?id_commande=<?= htmlspecialchars($cmd['id']) ?>" class="btn_note">Laisser un avis sur cette commande</a>
+        
+                    <?php endif; ?>
+
                     </div>
 
                     <div class="contenu_commande">
