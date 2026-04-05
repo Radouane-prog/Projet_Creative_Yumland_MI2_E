@@ -10,7 +10,7 @@
             "plat_2": 2
         },
         "montant": 659.98,
-        "statut": "acceptee"
+        "statut": "preparation"
     },
     {
         "id": "8sATztmhDXyibRx",
@@ -62,6 +62,33 @@
             "plat_4": 1
         },
         "montant": 489.99,
+        "statut": "livree"
+    },
+    {
+        "id": "Iom4rZEdfLUXOTu",
+        "login_client": "ray",
+        "login_livreur": null,
+        "date": "2026-04-05 16:04:44",
+        "type_preparation": "plus_tard",
+        "date_livraison_prevue": "04\/02\/2069 à 11:09",
+        "contenu": {
+            "plat_4": 1
+        },
+        "montant": 489.99,
         "statut": "acceptee"
+    },
+    {
+        "id": "sneVB26KwJO38S7",
+        "login_client": "ray",
+        "login_livreur": "livreur_test",
+        "date": "2026-04-05 16:08:55",
+        "type_preparation": "immediat",
+        "date_livraison_prevue": "Dès que possible",
+        "contenu": {
+            "plat_4": 1
+        },
+        "montant": 489.99,
+        "statut": "livree",
+        "date_fin": "2026-04-05 16:15:55"
     }
 ]

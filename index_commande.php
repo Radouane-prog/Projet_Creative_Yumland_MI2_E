@@ -75,6 +75,7 @@ function trouver_menu(array $menus, int $id): ?array {
 function statut_suivant(string $statut): string {
     $cycle = [
         'attente_paiement' => 'preparation',
+        'acceptee'         => 'preparation',
         'preparation'      => 'en-cours',
         'en-cours'         => 'livree',
     ];
@@ -85,6 +86,7 @@ function statut_suivant(string $statut): string {
 function label_statut(string $statut): string {
     $labels = [
         'attente_paiement' => 'En attente',
+        'acceptee'         => 'Acceptée',
         'preparation'      => 'En préparation',
         'en-cours'         => 'En livraison',
         'livree'           => 'Livrée',
@@ -97,6 +99,7 @@ function label_statut(string $statut): string {
 function classe_statut(string $statut): string {
     $classes = [
         'attente_paiement' => 'attente',
+        'acceptee'         => 'acceptee',
         'preparation'      => 'preparation',
         'en-cours'         => 'en-cours',
         'livree'           => 'livree',
@@ -249,6 +252,11 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
         }
 
         /* Statuts additionnels */
+        .statut.acceptee {
+            background-color: rgba(0,229,255,0.15);
+            color: #00e5ff;
+            box-shadow: 0px 0px 8px 1px rgba(0,229,255,0.2);
+        }
         .statut.attente {
             background-color: rgba(0,229,255,0.15);
             color: #00e5ff;
@@ -438,6 +446,35 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
             $date_detail     = $commande_detail['date'] ?? $commande_detail['date_commande'] ?? '';
             $livreur_assigne = $commande_detail['login_livreur'] ?? null;
             $peut_avancer    = !in_array($statut_detail, ['livree', 'abandonnee']);
+
+            // Commande planifiée pour plus tard : bloquer si la date n'est pas encore passée
+            $est_bloquee_date = false;
+            $temps_restant    = '';
+            if ($peut_avancer && ($commande_detail['type_preparation'] ?? '') === 'plus_tard') {
+                $date_prev_brute = $commande_detail['date_livraison_prevue'] ?? '';
+                // Le format stocké est "dd/mm/YYYY à HH:ii" → on le convertit
+                $date_prev_ts = null;
+                if (!empty($date_prev_brute) && $date_prev_brute !== 'Dès que possible') {
+                    // "05/04/2026 à 18:30" → strtotime ne comprend pas le "à"
+                    $date_propre = str_replace(' à ', ' ', $date_prev_brute);
+                    // format dd/mm/YYYY HH:ii → convertir en YYYY-mm-dd HH:ii
+                    $parts_date = explode(' ', $date_propre);
+                    if (count($parts_date) === 2) {
+                        $jma = explode('/', $parts_date[0]);
+                        if (count($jma) === 3) {
+                            $date_iso = $jma[2] . '-' . $jma[1] . '-' . $jma[0] . ' ' . $parts_date[1];
+                            $date_prev_ts = strtotime($date_iso);
+                        }
+                    }
+                }
+                if ($date_prev_ts !== null && $date_prev_ts > time()) {
+                    $est_bloquee_date = true;
+                    $diff = $date_prev_ts - time();
+                    $h = floor($diff / 3600);
+                    $m = floor(($diff % 3600) / 60);
+                    $temps_restant = $h > 0 ? "dans {$h}h{$m}min" : "dans {$m} min";
+                }
+            }
         ?>
 
         <a href="index_commande.php?filtre=<?= urlencode($filtre_statut) ?>"
@@ -553,14 +590,32 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                 <div class="detail-actions">
 
                     <?php if ($peut_avancer): ?>
-                        <!-- Bouton avancer le statut -->
-                        <form method="POST" action="index_commande.php?detail=<?= urlencode(get_id($commande_detail)) ?>&filtre=<?= urlencode($filtre_statut) ?>">
-                            <input type="hidden" name="action"      value="changer_statut"/>
-                            <input type="hidden" name="commande_id" value="<?= htmlspecialchars(get_id($commande_detail)) ?>"/>
-                            <button type="submit" class="btn-avancer">
-                                → Passer à : <?= label_statut(statut_suivant($statut_detail)) ?>
-                            </button>
-                        </form>
+
+                        <?php if ($est_bloquee_date): ?>
+                            <!-- Commande planifiée : date pas encore atteinte -->
+                            <div style="
+                                background: rgba(255,165,0,0.1);
+                                border: 1px solid rgba(255,165,0,0.4);
+                                border-radius: 8px;
+                                padding: 14px 16px;
+                                color: #ffa500;
+                                font-size: 14px;
+                                line-height: 1.6;
+                            ">
+                                ⏳ <strong>Commande planifiée</strong><br>
+                                Préparation prévue le <strong><?= htmlspecialchars($commande_detail['date_livraison_prevue']) ?></strong><br>
+                                <span style="font-size:12px;opacity:0.8;">Le bouton sera disponible <?= $temps_restant ?>.</span>
+                            </div>
+                        <?php else: ?>
+                            <!-- Bouton avancer le statut -->
+                            <form method="POST" action="index_commande.php?detail=<?= urlencode(get_id($commande_detail)) ?>&filtre=<?= urlencode($filtre_statut) ?>">
+                                <input type="hidden" name="action"      value="changer_statut"/>
+                                <input type="hidden" name="commande_id" value="<?= htmlspecialchars(get_id($commande_detail)) ?>"/>
+                                <button type="submit" class="btn-avancer">
+                                    → Passer à : <?= label_statut(statut_suivant($statut_detail)) ?>
+                                </button>
+                            </form>
+                        <?php endif; ?>
 
                         <!-- Sélecteur livreur (affichage uniquement - phase 3) -->
                         <?php if (in_array($statut_detail, ['preparation', 'en-cours'])): ?>
@@ -605,7 +660,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
             <?php
             $filtres = [
                 'tous'             => 'Toutes',
-                'attente_paiement' => 'En attente',
+                'acceptee'         => 'Acceptées',
                 'preparation'      => 'Préparation',
                 'en-cours'         => 'En livraison',
                 'livree'           => 'Livrées',
