@@ -154,7 +154,7 @@
 
 label[for="immediat"], label[for="plus_tard"]{
     cursor: pointer;
-    color: var(--details);
+    color: var(--details-color);
 }
 
 input[name="date_preparation"]{

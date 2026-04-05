@@ -185,6 +185,7 @@ main{
     height: 40px;
     margin: 10px;
     font-size: 16px;
+    border: 2px solid transparent;
 }
 
 .acheter:hover{
@@ -254,8 +255,13 @@ main{
     font-size: 19px;
 }
 
+
 .acheter_card{
     align-self: flex-end;
+    text-decoration: none;
+    font-family: "Source Code Pro";
+    text-align: center;
+    align-content: center;
 }
 
 /*fin section fréquemment commandés*/
