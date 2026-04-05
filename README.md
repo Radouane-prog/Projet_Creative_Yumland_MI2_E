@@ -34,25 +34,53 @@ L'arborescence a été entièrement revue pour la Phase 2 afin de séparer la lo
 
 ```text
 .
-├── assets/                 # Ressources graphiques (images, avatars, icônes)
-├── css/                    # Feuilles de style (style.css commun + spécifiques)
-├── data/                   # Base de données (utilisateurs.json, menus.json, plats.json...)
-├── includes/               # Fragments de code PHP réutilisables (header.php)
-├── Accueil.php             # Page de garde et "Plat du jour"
-├── Presentation.php        # Catalogue dynamique des produits
-├── connexion.php           # Interface de connexion
-├── inscription.php         # Interface de création de compte
-├── deconnexion.php         # Script de destruction de session
-├── profil.php              # Tableau de bord utilisateur (Protégé)
-├── panier.php              # Gestion des articles sélectionnés
-├── valider_commande.php    # Processus de validation du panier
-├── index_admin.php         # Dashboard Administrateur (Gestion des utilisateurs)
-├── index_commande.php      # Dashboard Restaurateur (Gestion des commandes)
-├── index_livraison.php     # Interface Livreur (Mobile)
-├── notation.php            # Feedback client post-livraison
-├── Page de conception.pdf  # Document de choix UI/UX et structure de données
-├── Rapport_de_projet.pdf   # Planning, répartition des tâches et debug
-└── README.md
+├── Accueil.php
+├── connexion.php
+├── css
+│   ├── Accueil.css
+│   ├── connexion.css
+│   ├── historique.css
+│   ├── inscription.css
+│   ├── notation.css
+│   ├── panier.css
+│   ├── Presentation.css
+│   ├── profil.css
+│   ├── retour_paiement.css
+│   ├── style_admin.css
+│   ├── style_commande.css
+│   ├── style.css
+│   ├── style_livraison.css
+│   └── suivi.css
+├── data
+│   ├── avis.json
+│   ├── commandes.json
+│   ├── menus.json
+│   ├── plats.json
+│   └── utilisateurs.json
+├── historique.php
+├── includes
+│   └── header.php
+├── index_admin.php
+├── index_commande.php
+├── index_livraison.php
+├── inscription.php
+├── logout.php
+├── notation.php
+├── Page de conception.pdf
+├── panier.php
+├── Presentation.php
+├── profil.php
+├── Rapport de Planning et Suivi de Projet.pdf
+├── README.md
+├── scripts
+│   └── php
+│       ├── ajouter_panier.php
+│       ├── getapikey.php
+│       ├── modifier_qte.php
+│       ├── retour_paiement.php
+│       └── valider_commande.php
+└── suivi.php
+
 ```
 
 ---
