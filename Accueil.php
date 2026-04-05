@@ -16,6 +16,11 @@
 <body>
     <?php include "includes/header.php"; ?>
 
+    <?php
+        $menus = json_decode(file_get_contents("data/menus.json"), true);
+        $plats = json_decode(file_get_contents("data/plats.json"), true);
+    ?>
+
 
     <?php if (isset($_SESSION['popup_bienvenue'])): ?>
         <div class="popup-toast">
@@ -48,7 +53,7 @@
 
                 <div class="container_between">
                     <p class="type_description">MODÈLE:</p>
-                    <p>RADEON RX 9070 XT</p>
+                    <p>GEFORCE RTX 4090</p>
                 </div>
 
                 <div class="container_between">
@@ -58,15 +63,15 @@
 
                 <div class="container_between">
                     <p class="type_description">REFROIDISSEMENT:</p>
-                    <p>COULIS DE FRAMBOISE</p>
+                    <p>COULIS DE CHOCOLAT</p>
                 </div>
 
                 <div class="container_between">
                     <p class="type_description">PRIX:</p>
-                    <p>510,99€</p>
+                    <p>489.99€</p>
                 </div>
 
-                <button class="acheter" id="acheter_pdj">Acheter</button>
+                <a class="acheter acheter_card" id="acheter_pdj" href="scripts/php/ajouter_panier.php?id=plat_4">Acheter</a>
 
             </div>
 
@@ -77,32 +82,32 @@
 
             <div class="card">
                 <div class="img_card">
-                    <img src="assets/icones_accueil/GeForceRTX5090.png" width="300dvh" alt="image carte graphique GeForce RTX 5060"/>
+                    <img src="<?= $plats[0]['image'] ?>" width="300dvh" alt="<?= $plats[0]['alt'] ?>"/>
                 </div>
-                <p class="titre">GEFORCE RTX 5090 - GOÛT CHOCOLAT</p>
-                <p class="description">Performance extrême, coeur fondant, refroidissement liquide overclockée.</p>
-                <p class="text_prix">Prix : <span class="prix">339.99€</span></p>
-                <button class="acheter acheter_card">Acheter</button>
+                <p class="titre"><?=  $plats[0]['nom'] ?></p>
+                <p class="description"><?= $plats[0]['description'] ?></p>
+                <p class="text_prix">Prix : <span class="prix"><?= $plats[0]['prix'] ?>€</span></p>
+                <a class="acheter acheter_card" href="scripts/php/ajouter_panier.php?id=plat_1">Acheter</a>
             </div>
 
             <div class="card">
                 <div class="img_card">
-                    <img src="assets/icones_accueil/GeForceRTX5060.png" width="300dvh" alt="image carte graphique Radeon RX 9060 XT"/>
+                    <img src="<?= $plats[1]['image'] ?>" width="300dvh" alt="<?= $plats[1]['alt'] ?>"/>
                 </div>
-                <p class="titre">GEFORCE RTX 5060 - GOÛT MENTHE</p>
-                <p class="description">Efficacité 1080p fluide, biscuit sablé croquant, refroidissement DLSS à la menthe glaciale.</p>
-                <p class="text_prix">Prix : <span class="prix">329.99€</span></p>
-                <button class="acheter acheter_card">Acheter</button>
+                <p class="titre"><?=  $plats[1]['nom'] ?></p>
+                <p class="description"><?= $plats[1]['description'] ?></p>
+                <p class="text_prix">Prix : <span class="prix"><?= $plats[1]['prix'] ?>€</span></p>
+                <a class="acheter acheter_card" href="scripts/php/ajouter_panier.php?id=plat_2">Acheter</a>
             </div>
 
             <div class="card">
                 <div class="img_card">
-                    <img src="assets/icones_accueil/RadeonRX9060XT.png" alt="image carte graphique GeForce RTX 4090"/>
+                    <img src="<?= $plats[2]['image'] ?>" width="300dvh" alt="<?= $plats[2]['alt'] ?>"/>
                 </div>
-                <p class="titre">RADEON RX 9060 XT - GOÛT FRAISE</p>
-                <p class="description">Fluidité 144Hz, coeur praliné croustillant, Infinity Cache aux éclats de noisettes.</p>
-                <p class="text_prix">Prix : <span class="prix">389.99€</span></p>
-                <button class="acheter acheter_card">Acheter</button>
+                <p class="titre"><?=  $plats[2]['nom'] ?></p>
+                <p class="description"><?= $plats[2]['description'] ?></p>
+                <p class="text_prix">Prix : <span class="prix"><?= $plats[2]['prix'] ?>€</span></p>
+                <a class="acheter acheter_card" href="scripts/php/ajouter_panier.php?id=plat_3">Acheter</a>
             </div>
 
         </div>

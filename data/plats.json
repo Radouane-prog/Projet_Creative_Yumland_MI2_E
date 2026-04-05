@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "nom": "GEFORCE RTX 3090 - GOÛT CHOCOLAT",
+    "nom": "GEFORCE RTX 5090 - GOÛT CHOCOLAT",
     "description": "Performance extrême, cœur fondant, refroidissement liquide overclockée.",
     "categorie": "Carte Graphique",
     "prix": 329.99,
@@ -11,7 +11,7 @@
   },
   {
     "id": 2,
-    "nom": "GEFORCE RTX 3080 - GOÛT MENTHE",
+    "nom": "GEFORCE RTX 5060 - GOÛT MENTHE",
     "description": "Efficacité 1080p fluide, biscuit sablé croquant, refroidissement DLSS à la menthe glaciale.",
     "categorie": "Carte Graphique",
     "prix": 329.99,
@@ -21,7 +21,7 @@
   },
   {
     "id": 3,
-    "nom": "RADEON RX 6800 XT - GOÛT FRAISE",
+    "nom": "RADEON RX 9060 XT - GOÛT FRAISE",
     "description": "Fluidité 144Hz, cœur praliné croustillant, Infinity Cache aux éclats de noisettes.",
     "categorie": "Carte Graphique",
     "prix": 389.99,

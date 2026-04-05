@@ -1,11 +1,40 @@
 [
     {
-  "id": "CMD-001",
-  "login_client": "rayene",
-  "login_livreur": "livreur_test",
-  "articles": ["RTX 5090 Chocolat"],
-  "montant": 339.99,
-  "statut": "en-cours",
-  "date": "2026-04-04 12:00:00"
-}
+        "id": "CMD-001",
+        "login_client": "rayene",
+        "login_livreur": "livreur_test",
+        "articles": [
+            "RTX 5090 Chocolat"
+        ],
+        "montant": 339.99,
+        "statut": "en-cours",
+        "date": "2026-04-04 12:00:00"
+    },
+    {
+        "id": "eN1IT54WSnLP69s",
+        "login_client": "client_test",
+        "login_livreur": null,
+        "date": "2026-04-04 23:45:10",
+        "type_preparation": "immediat",
+        "date_livraison_prevue": "Dès que possible",
+        "contenu": {
+            "plat_2": 2
+        },
+        "montant": 659.98,
+        "statut": "acceptee"
+    },
+    {
+        "id": "lwmxIYjU1JPTs3F",
+        "login_client": "client_test",
+        "login_livreur": null,
+        "date": "2026-04-04 23:46:35",
+        "type_preparation": "immediat",
+        "date_livraison_prevue": "Dès que possible",
+        "contenu": {
+            "plat_2": 1,
+            "plat_6": 1
+        },
+        "montant": 829.98,
+        "statut": "refusee"
+    }
 ]
