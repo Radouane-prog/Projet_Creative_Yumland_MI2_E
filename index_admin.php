@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'modif
     $nouveau_role = trim($_POST['role']   ?? '');
     $nouveau_statut = trim($_POST['statut'] ?? '');
     $nouvelle_remise = (int)($_POST['remise'] ?? 0);
-    $roles_valides   = ['client', 'admin', 'restaurateur', 'livreur', 'resto'];
+    $roles_valides   = ['client', 'admin', 'livreur', 'resto'];
     $statuts_valides = ['basique', 'premium', 'vip'];
 
     if (
@@ -110,7 +110,6 @@ function url_base(): string {
 
 $couleurs_role = [
     'admin'        => '#ff3333',
-    'restaurateur' => '#ffa500',
     'resto'        => '#ffa500',
     'livreur'      => '#00e5ff',
     'client'       => '#b0b0b0',
@@ -341,7 +340,7 @@ $couleurs_role = [
                                     <input type="hidden" name="filtre" value="1"/>
                                     <?php endif; ?>
                                     <select name="role">
-                                        <?php foreach (['client','restaurateur','livreur','admin','resto'] as $r): ?>
+                                        <?php foreach (['client','livreur','admin','resto'] as $r): ?>
                                             <option value="<?= $r ?>" <?= $r === $role ? 'selected' : '' ?>><?= $r ?></option>
                                         <?php endforeach; ?>
                                     </select>
