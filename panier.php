@@ -25,6 +25,7 @@
 
             <?php if (empty($_SESSION['panier'])) : ?>
                 <p class="titre_panier">Votre panier est vide...</p>
+            <?php $total_global = 0; ?>
             <?php else : ?>
                 
                 <?php 
