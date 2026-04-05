@@ -1,5 +1,4 @@
 
-```markdown
 # Silicon Carne - Projet Web (Phase #1 & #2)
 
 Bienvenue sur le dépôt du projet **Silicon Carne**.
