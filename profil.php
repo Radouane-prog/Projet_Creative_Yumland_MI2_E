@@ -80,13 +80,6 @@
                     <p><b>Date d'inscription :</b> <?= date('d/m/Y', strtotime($user_data['date_inscription'] ?? 'now')) ?></p>
                 </div>
 
-                <div class="card historique">
-                    <h3>Vos anciennes commandes</h3>
-                    <ul>     
-                        <li>Commande #402 : NVIDIA RTX 2060 6go (Livré)</li>
-                        <li>Commande #309 : Menu "Overclocking" (Burger + Frites)</li>
-                    </ul>
-                </div>
 
                 <div class="card fidelite">
                     <h3>Votre compte fidélité</h3>
