@@ -1,4 +1,6 @@
-# Silicon Carne - Projet Web (Phase #1 + #2)
+
+```markdown
+# Silicon Carne - Projet Web (Phase #1 & #2)
 
 Bienvenue sur le dépôt du projet **Silicon Carne**.
 Ce projet a pour but de développer le site web d'une chaîne de restaurants au thème **composants de PC** et une charte graphique type "AMD", réalisé dans le cadre du cours d'Informatique 4.
@@ -11,87 +13,80 @@ Ce projet a pour but de développer le site web d'une chaîne de restaurants au 
 
 ---
 
-## Installation et Lancement
+## 🚀 Installation et Lancement (Mise à jour Phase #2)
 
-Cette **Phase #1** se concentre uniquement sur la partie graphique côté client (HTML statique et CSS). Il n'y a donc pas besoin de serveur local (WAMP/XAMPP) ni de base de données pour le moment.
+Avec le passage à la **Phase 2**, le site est désormais dynamique et gère les sessions utilisateurs via **PHP**. Il est indispensable d'utiliser un serveur local pour naviguer. **Ne double-cliquez plus sur les fichiers HTML/PHP pour les ouvrir !**
 
 ### Pour lancer le site :
 
-1.  Téléchargez ou clonez ce dépôt sur votre ordinateur.
-2.  Naviguez dans le dossier du projet.
+1. Téléchargez ou clonez ce dépôt sur votre ordinateur.
+2. Naviguez à la racine du dossier du projet.
+3. Ouvrez un terminal (PowerShell, Bash, etc.) dans ce dossier et lancez le serveur PHP intégré :
+```bash
+php -S localhost:8000
+```
+4. Ouvrez votre navigateur web et rendez-vous à l'adresse : **http://localhost:8000/Accueil.php**
+
+---
+
+## 📂 Architecture du Projet
+
+L'arborescence a été entièrement revue pour la Phase 2 afin de séparer la logique, le stockage et les vues de manière propre :
+
 ```text
 .
-├── Accueil
-│   ├── Accueil.css
-│   ├── Accueil.html
-│   └── icones
-├── avatars
-├── connexion
-│   ├── connexion.css
-│   └── connexion.html
-├── icones
-├── inscription
-│   ├── inscription.css
-│   └── inscription.html
-├── notation
-│   ├── notation.css
-│   └── notation.html
-├── page_admin
-│   ├── index.html
-│   └── style.css
-├── page_commande
-│   ├── index.html
-│   └── style.css
-├── Page de conception.pdf
-├── page_livraison
-│   ├── index.html
-│   └── style.css
-├── Presentation
-│   ├── icones
-│   ├── Presentation.css
-│   └── Presentation.html
-├── profil
-│   ├── profil.css
-│   └── profil.html
-├── Rapport_de_projet.pdf
-├── README.md
-└── style.css
+├── assets/                 # Ressources graphiques (images, avatars, icônes)
+├── css/                    # Feuilles de style (style.css commun + spécifiques)
+├── data/                   # Base de données (utilisateurs.json, menus.json, plats.json...)
+├── includes/               # Fragments de code PHP réutilisables (header.php)
+├── Accueil.php             # Page de garde et "Plat du jour"
+├── Presentation.php        # Catalogue dynamique des produits
+├── connexion.php           # Interface de connexion
+├── inscription.php         # Interface de création de compte
+├── deconnexion.php         # Script de destruction de session
+├── profil.php              # Tableau de bord utilisateur (Protégé)
+├── panier.php              # Gestion des articles sélectionnés
+├── valider_commande.php    # Processus de validation du panier
+├── index_admin.php         # Dashboard Administrateur (Gestion des utilisateurs)
+├── index_commande.php      # Dashboard Restaurateur (Gestion des commandes)
+├── index_livraison.php     # Interface Livreur (Mobile)
+├── notation.php            # Feedback client post-livraison
+├── Page de conception.pdf  # Document de choix UI/UX et structure de données
+├── Rapport_de_projet.pdf   # Planning, répartition des tâches et debug
+└── README.md
 ```
-4.  Ouvrez le dossier nommé `Accueil`.
-5.  **Double-cliquez sur le fichier `Accueil.html`** pour l'ouvrir dans votre navigateur web par défaut.
-
-### Navigation :
-
-Une fois sur la **Page d'accueil**, vous pouvez naviguer vers l'ensemble des pages du site via la barre de navigation (Menu) située en haut de l'écran :
-* **Présentation :** La carte du restaurant avec filtres.
-* **Connexion / Inscription :** Pour accéder aux formulaires utilisateurs.
-* **Profil :** Pour voir les informations client, l'historique et la fidélité.
-* **Pages Rôles :** Accès aux interfaces spécifiques (Administrateur, Restaurateur/Commandes, Livreur/Livraison).
 
 ---
 
-## Contenu de la Phase #1
+## 🔒 Navigation, Accès et Sécurité
 
-Conformément au cahier des charges, nous avons réalisé l'intégration HTML/CSS des pages suivantes :
+Le système de navigation intègre un contrôle d'accès strict via les **Sessions PHP** :
 
-* **Partie Client :**
-    * `Accueil.html` : Page de garde avec mise en avant du concept et recherche.
-    * `Presentation.html` : Liste des produits avec filtres (catégories, allergènes...).
-    * `connexion.html` & `inscription.html` : Gestion de l'accès utilisateur.
-    * `profil.html` : Tableau de bord utilisateur (Infos, Historique de commandes, Fidélité "XP").
-    * `notation.html` : Formulaire d'évaluation d'une commande.
-
-* **Partie Staff (Rôles spécifiques) :**
-    * `page_admin/index.html` : Gestion des utilisateurs pour l'administrateur.
-    * `page_commande/index.html` : Interface tablette pour le restaurateur (commandes en cours).
-    * `page_livraison/index.html` : Interface mobile pour le livreur (détails de livraison, GPS).
-
-## Charte Graphique et Technique
-
-* **HTML5 :** Structure sémantique respectée (chaque page dans un fichier séparé).
-* **CSS3 :**
-    * Fichier `style.css` commun pour la charte graphique globale (Variables CSS, Nav, Footer).
-    * Design Responsive (Adapté Mobile/Desktop) via Flexbox et Media Queries.
-    * **Identité visuelle :** Thème sombre (`#111111`), accentuation Rouge Néon (`#ff3333`) et police "Source Code Pro" pour l'aspect technologique.
+* **Espace Public :** Les pages `Accueil.php`, `Presentation.php` et `panier.php` sont explorables par tous les visiteurs.
+* **Espace Sécurisé :** Les pages `profil.php`, `index_admin.php`, `index_commande.php` et `index_livraison.php` exigent une authentification. Toute tentative d'accès sans session active redirige automatiquement vers la page de connexion.
+* **Comptes de test (Phase 2) :** Conformément aux exigences, la base de données `data/utilisateurs.json` contient déjà plus de 5 comptes clients et 2 comptes administrateurs fonctionnels.
+* **Déconnexion :** Une fois connecté, un bouton de déconnexion est accessible via le panneau "Profil".
 
 ---
+
+## 🛠️ Historique des Phases de Développement
+
+### Contenu de la Phase #2 (Back-end & Logique)
+La seconde phase a dynamisé l'interface via des technologies côté serveur :
+* **Passage complet au PHP :** Transformation des pages `.html` en `.php` avec inclusion dynamique des headers.
+* **Stockage au format JSON :** Séparation stricte entre les scripts d'affichage et le stockage des données (Utilisateurs, Menus, Plats, Commandes).
+* **Authentification sécurisée :** Mise en place des formulaires d'inscription et de connexion avec hachage de pointe (`password_hash` BCrypt) pour les mots de passe.
+* **Variables de Session (`$_SESSION`) :** Maintien de l'état de connexion de l'utilisateur à travers le site et affichage dynamique de ses informations (Nom, points d'XP, adresse) sur le profil.
+* **Logique de Panier :** Initialisation des variables de calcul et gestion des commandes.
+
+### Contenu de la Phase #1 (Front-end & UI)
+La première phase s'est concentrée sur la création d'une charte graphique immersive :
+* **HTML5 / CSS3 Sémantique :** Design Responsive (Adapté Mobile/Desktop) via Flexbox.
+* **Identité visuelle (Thème PC/Gaming) :** Thème sombre (`#111111`), accentuation Rouge Néon (`#ff3333`) et police "Source Code Pro".
+* **Intégration des vues principales :** Accueil, catalogue de présentation avec filtres, interfaces spécifiques au staff (Admin, Restaurateur, Livreur).
+```
+
+### Ce qui a été amélioré par rapport à l'ancien :
+* **L'arborescence :** Elle correspond désormais exactement à ton vrai projet actuel (fichiers `.php` à la racine, dossier `data/` ajouté) plutôt qu'aux anciens dossiers séparés de la Phase 1.
+* **L'installation :** J'ai bien insisté sur la commande `php -S localhost:8000` et enlevé la mention "double-cliquez sur le fichier", qui aurait valu des points de pénalité si les correcteurs l'avaient fait.
+* **Le contenu de la Phase 2 :** J'ai listé le JSON, le PHP, le hachage sécurisé et le pré-remplissage exigé par les profs (5 clients, 2 admins).
