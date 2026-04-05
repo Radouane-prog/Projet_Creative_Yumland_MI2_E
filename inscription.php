@@ -81,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'email' => $email,
                 'password' => password_hash($password, PASSWORD_DEFAULT),
                 'role' => 'client', 
-                'date_inscription' => date('Y-m-d H:i:s'),
+                'date_inscription' => date('d/m/Y H:i:s'),
                 'xp' => 0
             ];
 
