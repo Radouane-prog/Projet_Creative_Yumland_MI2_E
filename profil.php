@@ -6,7 +6,6 @@
 
 
     if (!isset($_SESSION['connecte']) || $_SESSION['connecte'] !== true) {
-        // Redirection vers la page de connexion s'il n'y a pas de session active
         header("Location: connexion.php");
         exit;
     }
@@ -43,6 +42,7 @@
   <meta name="description" content="Page profil">
   <link rel="stylesheet" href="css/profil.css"/> 
   <link rel="stylesheet" href="css/style.css">
+  <script src="profil.js" defer > </script>
 </head>
 
 <body>

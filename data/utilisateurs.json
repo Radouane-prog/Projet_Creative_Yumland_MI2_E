@@ -88,5 +88,47 @@
         "role": "client",
         "date_inscription": "2026-04-04 02:15:20",
         "xp": 0
+    },
+    {
+        "login": "teuteu",
+        "nom": "a",
+        "prenom": "a",
+        "naissance": "2000-01-01",
+        "adresse": "a",
+        "tel": "0600000000",
+        "infos": "",
+        "email": "a@gmail.com",
+        "password": "$2y$10$tCGZ.Nv6fA1R96sBLBNj4urIk\/rKfDoxxo4RMB0kJGUtdMqo6PUOK",
+        "role": "client",
+        "date_inscription": "2026-04-14 09:18:43",
+        "xp": 0
+    },
+    {
+        "login": "client1",
+        "nom": "a",
+        "prenom": "a",
+        "naissance": "2000-01-01",
+        "adresse": "a",
+        "tel": "0600000000",
+        "infos": "",
+        "email": "b@gmail.com",
+        "password": "$2y$10$xylTw3eTq.aVi571QYfdR.rz1kQ8zuPk533Of3dqGBie9LTUfMha.",
+        "role": "client",
+        "date_inscription": "2026-04-14 09:22:16",
+        "xp": 0
+    },
+    {
+        "login": "client2",
+        "nom": "a",
+        "prenom": "a",
+        "naissance": "2000-01-01",
+        "adresse": "a",
+        "tel": "6000000000",
+        "infos": "",
+        "email": "c@gmail.com",
+        "password": "$2y$10$BxlMQImNpI8m3aHkx6c2hOcEwI8n3oUEgUPBWfgfV1rNBJum4kWyy",
+        "role": "client",
+        "date_inscription": "2026-04-14 09:23:47",
+        "xp": 0
     }
 ]
