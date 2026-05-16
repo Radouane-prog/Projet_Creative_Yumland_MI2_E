@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 date_default_timezone_set('Europe/Paris');
 
-// --- Fichiers de données ---
+// --- Fichiers de donnÃ©es ---
 $fichier_commandes = 'data/commandes.json';
 $fichier_users     = 'data/utilisateurs.json';
 $fichier_plats     = 'data/plats.json';
@@ -37,6 +37,12 @@ if (file_exists($fichier_menus)) {
     if (is_array($m)) $menus = $m;
 }
 
+// Identification du restaurateur connecte, meme logique que la page livreur
+$connecte      = $_SESSION['connecte'] ?? false;
+$login_resto   = $_SESSION['login'] ?? null;
+$role_connecte = $_SESSION['role']  ?? null;
+$acces_resto   = ($connecte === true && $login_resto !== null && $role_connecte === 'resto');
+
 // --- Helpers ---
 
 // Normalise un champ selon les deux formats possibles de commandes.json
@@ -53,6 +59,12 @@ function trouver_user(array $utilisateurs, string $login): ?array {
         if (($u['login'] ?? '') === $login) return $u;
     }
     return null;
+}
+
+function livreurs_disponibles(array $utilisateurs): array {
+    return array_values(array_filter($utilisateurs, function ($u) {
+        return ($u['role'] ?? '') === 'livreur' && empty($u['suspended']);
+    }));
 }
 
 // Trouve un plat par id
@@ -74,23 +86,30 @@ function trouver_menu(array $menus, int $id): ?array {
 // Cycle de statuts suivants
 function statut_suivant(string $statut): string {
     $cycle = [
-        'attente_paiement' => 'preparation',
         'acceptee'         => 'preparation',
-        'preparation'      => 'en-cours',
-        'en-cours'         => 'livree',
+        'preparation'      => 'prete',
     ];
     return $cycle[$statut] ?? $statut;
+}
+
+function action_statut_restaurateur(string $statut): ?array {
+    $actions = [
+        'acceptee'    => ['statut' => 'preparation', 'label' => 'DÃ©marrer la prÃ©paration'],
+        'preparation' => ['statut' => 'prete', 'label' => 'Commande prÃªte'],
+    ];
+    return $actions[$statut] ?? null;
 }
 
 // Label lisible d'un statut
 function label_statut(string $statut): string {
     $labels = [
         'attente_paiement' => 'En attente',
-        'acceptee'         => 'Acceptée',
-        'preparation'      => 'En préparation',
+        'acceptee'         => 'AcceptÃ©e',
+        'preparation'      => 'En prÃ©paration',
+        'prete'            => 'PrÃªte',
         'en-cours'         => 'En livraison',
-        'livree'           => 'Livrée',
-        'abandonnee'       => 'Abandonnée',
+        'livree'           => 'LivrÃ©e',
+        'abandonnee'       => 'AbandonnÃ©e',
     ];
     return $labels[$statut] ?? $statut;
 }
@@ -101,6 +120,7 @@ function classe_statut(string $statut): string {
         'attente_paiement' => 'attente',
         'acceptee'         => 'acceptee',
         'preparation'      => 'preparation',
+        'prete'            => 'prete',
         'en-cours'         => 'en-cours',
         'livree'           => 'livree',
         'abandonnee'       => 'abandonnee',
@@ -109,40 +129,19 @@ function classe_statut(string $statut): string {
 }
 
 // Liste des livreurs disponibles
-$livreurs = array_filter($utilisateurs, fn($u) => ($u['role'] ?? '') === 'livreur');
+$livreurs = livreurs_disponibles($utilisateurs);
 
-// --- ACTION POST : Changer le statut ---
+// --- Messages dynamiques ---
 $message_succes = '';
 $message_erreur = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'changer_statut') {
-    $id_cible = trim($_POST['commande_id'] ?? '');
-    if (!empty($id_cible)) {
-        $modifie = false;
-        foreach ($commandes as &$cmd) {
-            if (get_id($cmd) === $id_cible) {
-                $cmd['statut'] = statut_suivant($cmd['statut'] ?? '');
-                $modifie = true;
-                break;
-            }
-        }
-        unset($cmd);
-        if ($modifie) {
-            file_put_contents($fichier_commandes, json_encode($commandes, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-            $message_succes = "Statut de la commande \"$id_cible\" mis à jour.";
-        }
-        // Rechargement
-        $commandes = json_decode(file_get_contents($fichier_commandes), true) ?? [];
-    }
-}
-
-// Récupération message GET (après redirect)
+// RÃ©cupÃ©ration message GET (aprÃ¨s redirect)
 if (!empty($_GET['succes'])) $message_succes = htmlspecialchars($_GET['succes']);
 if (!empty($_GET['erreur'])) $message_erreur = htmlspecialchars($_GET['erreur']);
 
-// --- Paramètres GET ---
-$filtre_statut  = $_GET['filtre']  ?? 'tous';   // tous | attente_paiement | preparation | en-cours | livree | abandonnee
-$detail_id      = $_GET['detail']  ?? null;      // ID de la commande à afficher en détail
+// --- ParamÃ¨tres GET ---
+$filtre_statut  = $_GET['filtre']  ?? 'tous';   // tous | attente_paiement | preparation | prete | en-cours | livree | abandonnee
+$detail_id      = $_GET['detail']  ?? null;      // ID de la commande Ã  afficher en dÃ©tail
 
 // --- Filtrage des commandes ---
 $commandes_filtrees = $commandes;
@@ -151,7 +150,7 @@ if ($filtre_statut !== 'tous') {
 }
 $commandes_filtrees = array_values($commandes_filtrees);
 
-// --- Commande en détail ---
+// --- Commande en dÃ©tail ---
 $commande_detail = null;
 if ($detail_id !== null) {
     foreach ($commandes as $cmd) {
@@ -169,7 +168,7 @@ foreach ($commandes as $cmd) {
     $comptages[$s] = ($comptages[$s] ?? 0) + 1;
 }
 
-// --- Résolution des articles d'une commande ---
+// --- RÃ©solution des articles d'une commande ---
 function resoudre_articles(array $cmd, array $plats, array $menus): array {
     $articles = [];
 
@@ -267,6 +266,11 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
             color: #b0b0b0;
             box-shadow: 0px 0px 8px 1px rgba(176,176,176,0.1);
         }
+        .statut.prete {
+            background-color: rgba(0,255,100,0.12);
+            color: #00ff64;
+            box-shadow: 0px 0px 8px 1px rgba(0,255,100,0.2);
+        }
 
         /* Grille commandes vide */
         .commandes-vides {
@@ -298,7 +302,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
         }
         .btn-retour:hover { color: var(--text-color); border-color: var(--text-color); }
 
-        /* --- VUE DÉTAIL --- */
+        /* --- VUE DÃ‰TAIL --- */
         .detail-wrapper {
             display: flex;
             flex-direction: column;
@@ -354,7 +358,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
         .table-articles .col-prix { color: var(--main-color); text-align: right; }
         .table-articles .col-qte  { text-align: center; color: var(--details-color); }
 
-        /* Actions détail */
+        /* Actions dÃ©tail */
         .detail-actions {
             display: flex;
             flex-direction: column;
@@ -370,8 +374,60 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
             border: 1px solid #00ff64; transition: 0.25s; text-align: center;
         }
         .btn-avancer:hover { background: #00ff64; color: #111; box-shadow: 0 0 15px #00ff64; }
+        .btn-avancer[disabled] { opacity: 0.55; cursor: wait; }
 
-        /* Sélecteur livreur (affichage seulement) */
+        .assignation-livreur {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .assignation-livreur label {
+            font-size: 12px;
+            color: var(--details-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .assignation-livreur select {
+            background: #1a1a1a;
+            color: #f5f5f5;
+            border: 1px solid rgba(0,229,255,0.4);
+            border-radius: 6px;
+            padding: 10px 12px;
+            font-family: "Source Code Pro", monospace;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .assignation-livreur .aucun-livreur {
+            color: var(--details-color);
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .message-statut {
+            display: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            margin-bottom: 14px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .message-statut.succes {
+            display: block;
+            background: rgba(0,255,100,0.08);
+            border: 1px solid #00ff64;
+            color: #00ff64;
+        }
+        .message-statut.erreur {
+            display: block;
+            background: rgba(255,51,51,0.1);
+            border: 1px solid #ff3333;
+            color: #ff3333;
+        }
+
+        /* SÃ©lecteur livreur (affichage seulement) */
         .select-livreur-zone {
             display: flex;
             flex-direction: column;
@@ -396,7 +452,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
             font-style: italic; margin-top: 2px;
         }
 
-        /* Commande terminée */
+        /* Commande terminÃ©e */
         .statut-final {
             display: flex;
             align-items: center;
@@ -408,6 +464,15 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
         }
         .statut-final.livree    { background: rgba(0,255,0,0.08);   color: #00ff00; border: 1px solid #00ff0044; }
         .statut-final.abandonnee{ background: rgba(176,176,176,0.08); color: #b0b0b0; border: 1px solid #b0b0b044; }
+        .statut-final.prete     { background: rgba(0,255,100,0.08); color: #00ff64; border: 1px solid #00ff6444; }
+
+        .ecran-vide {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 50vh; gap: 18px; text-align: center; padding: 30px;
+        }
+        .ecran-vide .icone { font-size: 70px; }
+        .ecran-vide h2 { font-size: 22px; margin: 0; }
+        .ecran-vide p { color: var(--details-color); font-size: 16px; margin: 0; }
     </style>
 </head>
 <body>
@@ -415,6 +480,13 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
     <?php include "includes/header.php"; ?>
 
     <main class="page">
+        <?php if (!$acces_resto): ?>
+            <div class="ecran-vide">
+                <div class="icone">ðŸ”’</div>
+                <h2>AccÃ¨s non autorisÃ©</h2>
+                <p>Vous devez Ãªtre connectÃ© en tant que restaurateur.</p>
+            </div>
+        <?php else: ?>
         <header class="header">
             <h1><span class="commentaires">//</span> Gestion des Commandes</h1>
             <div id="container_text_btn">
@@ -426,15 +498,23 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
         </header>
 
         <?php if (!empty($message_succes)): ?>
-            <div class="alerte alerte-succes">✓ <?= $message_succes ?></div>
+            <div class="alerte alerte-succes">âœ“ <?= $message_succes ?></div>
         <?php endif; ?>
         <?php if (!empty($message_erreur)): ?>
-            <div class="alerte alerte-erreur">✗ <?= $message_erreur ?></div>
+            <div class="alerte alerte-erreur">âœ— <?= $message_erreur ?></div>
         <?php endif; ?>
+        <div id="message-statut"
+             class="message-statut"
+             data-livreurs="<?= htmlspecialchars(json_encode(array_map(function ($livreur) {
+                 return [
+                     'login' => $livreur['login'],
+                     'label' => trim(($livreur['prenom'] ?? '') . ' ' . ($livreur['nom'] ?? '')) . ' (' . $livreur['login'] . ')',
+                 ];
+             }, $livreurs), JSON_UNESCAPED_UNICODE), ENT_QUOTES, 'UTF-8') ?>"></div>
 
         <?php if ($commande_detail !== null): ?>
         <!-- ============================================================ -->
-        <!-- VUE DÉTAIL D'UNE COMMANDE                                   -->
+        <!-- VUE DÃ‰TAIL D'UNE COMMANDE                                   -->
         <!-- ============================================================ -->
 
         <?php
@@ -445,19 +525,20 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
             $montant_detail  = $commande_detail['total'] ?? $commande_detail['montant'] ?? null;
             $date_detail     = $commande_detail['date'] ?? $commande_detail['date_commande'] ?? '';
             $livreur_assigne = $commande_detail['login_livreur'] ?? null;
-            $peut_avancer    = !in_array($statut_detail, ['livree', 'abandonnee']);
+            $action_detail    = action_statut_restaurateur($statut_detail);
+            $peut_avancer    = $action_detail !== null;
 
-            // Commande planifiée pour plus tard : bloquer si la date n'est pas encore passée
+            // Commande planifiÃ©e pour plus tard : bloquer si la date n'est pas encore passÃ©e
             $est_bloquee_date = false;
             $temps_restant    = '';
             if ($peut_avancer && ($commande_detail['type_preparation'] ?? '') === 'plus_tard') {
                 $date_prev_brute = $commande_detail['date_livraison_prevue'] ?? '';
-                // Le format stocké est "dd/mm/YYYY à HH:ii" → on le convertit
+                // Le format stockÃ© est "dd/mm/YYYY Ã  HH:ii" â†’ on le convertit
                 $date_prev_ts = null;
-                if (!empty($date_prev_brute) && $date_prev_brute !== 'Dès que possible') {
-                    // "05/04/2026 à 18:30" → strtotime ne comprend pas le "à"
-                    $date_propre = str_replace(' à ', ' ', $date_prev_brute);
-                    // format dd/mm/YYYY HH:ii → convertir en YYYY-mm-dd HH:ii
+                if (!empty($date_prev_brute) && $date_prev_brute !== 'DÃ¨s que possible') {
+                    // "05/04/2026 Ã  18:30" â†’ strtotime ne comprend pas le "Ã "
+                    $date_propre = str_replace(' Ã  ', ' ', $date_prev_brute);
+                    // format dd/mm/YYYY HH:ii â†’ convertir en YYYY-mm-dd HH:ii
                     $parts_date = explode(' ', $date_propre);
                     if (count($parts_date) === 2) {
                         $jma = explode('/', $parts_date[0]);
@@ -478,11 +559,11 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
         ?>
 
         <a href="index_commande.php?filtre=<?= urlencode($filtre_statut) ?>"
-           class="btn-retour">← Retour à la liste</a>
+           class="btn-retour">â† Retour Ã  la liste</a>
 
         <div class="detail-wrapper">
 
-            <!-- En-tête commande -->
+            <!-- En-tÃªte commande -->
             <div class="detail-card">
                 <h3>Commande</h3>
                 <div class="detail-ligne">
@@ -493,8 +574,16 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                 </div>
                 <div class="detail-ligne">
                     <span class="detail-label">Statut</span>
-                    <span class="statut <?= classe_statut($statut_detail) ?>">
+                    <span class="statut <?= classe_statut($statut_detail) ?>" data-statut-commande="<?= htmlspecialchars(get_id($commande_detail)) ?>">
                         <?= label_statut($statut_detail) ?>
+                    </span>
+                </div>
+                <div class="detail-ligne"
+                     data-livreur-info="<?= htmlspecialchars(get_id($commande_detail)) ?>"
+                     style="<?= empty($livreur_assigne) ? 'display:none;' : '' ?>">
+                    <span class="detail-label">Livreur</span>
+                    <span class="detail-valeur" style="color:#00e5ff;">
+                        <?= htmlspecialchars($livreur_assigne ?? '') ?>
                     </span>
                 </div>
                 <?php if (!empty($date_detail)): ?>
@@ -507,15 +596,15 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                 <div class="detail-ligne">
                     <span class="detail-label">Montant total</span>
                     <span class="detail-valeur prix">
-                        <?= number_format((float)$montant_detail, 2, ',', ' ') ?> €
+                        <?= number_format((float)$montant_detail, 2, ',', ' ') ?> â‚¬
                     </span>
                 </div>
                 <?php endif; ?>
                 <?php if (!empty($commande_detail['type_preparation'])): ?>
                 <div class="detail-ligne">
-                    <span class="detail-label">Préparation</span>
+                    <span class="detail-label">PrÃ©paration</span>
                     <span class="detail-valeur">
-                        <?= $commande_detail['type_preparation'] === 'immediat' ? 'Immédiate' : 'Planifiée : ' . htmlspecialchars($commande_detail['date_preparation'] ?? '') ?>
+                        <?= $commande_detail['type_preparation'] === 'immediat' ? 'ImmÃ©diate' : 'PlanifiÃ©e : ' . htmlspecialchars($commande_detail['date_preparation'] ?? '') ?>
                     </span>
                 </div>
                 <?php endif; ?>
@@ -540,7 +629,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                         <span class="detail-valeur"><?= htmlspecialchars($client_detail['adresse'] ?? '-') ?></span>
                     </div>
                     <div class="detail-ligne">
-                        <span class="detail-label">Téléphone</span>
+                        <span class="detail-label">TÃ©lÃ©phone</span>
                         <span class="detail-valeur"><?= htmlspecialchars($client_detail['tel'] ?? '-') ?></span>
                     </div>
                     <?php if (!empty($client_detail['infos'])): ?>
@@ -560,12 +649,12 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
             <!-- Articles -->
             <?php if (!empty($articles_detail)): ?>
             <div class="detail-card">
-                <h3>Articles commandés</h3>
+                <h3>Articles commandÃ©s</h3>
                 <table class="table-articles">
                     <thead>
                         <tr>
                             <th>Article</th>
-                            <th class="col-qte">Qté</th>
+                            <th class="col-qte">QtÃ©</th>
                             <th class="col-prix">Prix unit.</th>
                         </tr>
                     </thead>
@@ -575,7 +664,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                             <td><?= htmlspecialchars($art['nom']) ?></td>
                             <td class="col-qte"><?= $art['qte'] ?></td>
                             <td class="col-prix">
-                                <?= $art['prix'] !== null ? number_format((float)$art['prix'], 2, ',', ' ') . ' €' : '—' ?>
+                                <?= $art['prix'] !== null ? number_format((float)$art['prix'], 2, ',', ' ') . ' â‚¬' : 'â€”' ?>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -592,7 +681,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                     <?php if ($peut_avancer): ?>
 
                         <?php if ($est_bloquee_date): ?>
-                            <!-- Commande planifiée : date pas encore atteinte -->
+                            <!-- Commande planifiÃ©e : date pas encore atteinte -->
                             <div style="
                                 background: rgba(255,165,0,0.1);
                                 border: 1px solid rgba(255,165,0,0.4);
@@ -602,47 +691,53 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                                 font-size: 14px;
                                 line-height: 1.6;
                             ">
-                                ⏳ <strong>Commande planifiée</strong><br>
-                                Préparation prévue le <strong><?= htmlspecialchars($commande_detail['date_livraison_prevue']) ?></strong><br>
+                                â³ <strong>Commande planifiÃ©e</strong><br>
+                                PrÃ©paration prÃ©vue le <strong><?= htmlspecialchars($commande_detail['date_livraison_prevue']) ?></strong><br>
                                 <span style="font-size:12px;opacity:0.8;">Le bouton sera disponible <?= $temps_restant ?>.</span>
                             </div>
                         <?php else: ?>
-                            <!-- Bouton avancer le statut -->
-                            <form method="POST" action="index_commande.php?detail=<?= urlencode(get_id($commande_detail)) ?>&filtre=<?= urlencode($filtre_statut) ?>">
-                                <input type="hidden" name="action"      value="changer_statut"/>
-                                <input type="hidden" name="commande_id" value="<?= htmlspecialchars(get_id($commande_detail)) ?>"/>
-                                <button type="submit" class="btn-avancer">
-                                    → Passer à : <?= label_statut(statut_suivant($statut_detail)) ?>
-                                </button>
-                            </form>
+                            <button type="button"
+                                    class="btn-avancer js-update-statut"
+                                    data-id="<?= htmlspecialchars(get_id($commande_detail)) ?>"
+                                    data-statut="<?= htmlspecialchars($action_detail['statut']) ?>">
+                                <?= htmlspecialchars($action_detail['label']) ?>
+                            </button>
                         <?php endif; ?>
 
-                        <!-- Sélecteur livreur (affichage uniquement - phase 3) -->
-                        <?php if (in_array($statut_detail, ['preparation', 'en-cours'])): ?>
-                        <div class="select-livreur-zone">
-                            <label>Attribuer un livreur</label>
-                            <select class="select-livreur" disabled>
-                                <option value="">
-                                    <?= $livreur_assigne
-                                        ? '✓ ' . htmlspecialchars($livreur_assigne)
-                                        : '— Choisir un livreur —' ?>
-                                </option>
-                                <?php foreach ($livreurs as $lv): ?>
-                                    <option value="<?= htmlspecialchars($lv['login']) ?>"
-                                        <?= ($lv['login'] === $livreur_assigne) ? 'selected' : '' ?>>
-                                        <?= htmlspecialchars($lv['prenom'] . ' ' . $lv['nom'] . ' (' . $lv['login'] . ')') ?>
+
+                    <?php else: ?>
+                        <!-- Commande terminÃ©e -->
+                        <div class="statut-final <?= classe_statut($statut_detail) ?>">
+                            <?php if ($statut_detail === 'livree'): ?>
+                                âœ“ Commande livrÃ©e avec succÃ¨s
+                            <?php elseif ($statut_detail === 'prete'): ?>
+                                âœ“ Commande prÃªte
+                            <?php else: ?>
+                                âœ— Commande abandonnÃ©e
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if ($statut_detail === 'prete'): ?>
+                    <div class="assignation-livreur" data-assignation-commande="<?= htmlspecialchars(get_id($commande_detail)) ?>">
+                        <label>Assigner Ã  un livreur</label>
+                        <?php if (empty($livreurs)): ?>
+                            <p class="aucun-livreur">Aucun livreur disponible</p>
+                        <?php else: ?>
+                            <select class="js-livreur-select" data-id="<?= htmlspecialchars(get_id($commande_detail)) ?>">
+                                <?php foreach ($livreurs as $livreur): ?>
+                                    <option value="<?= htmlspecialchars($livreur['login']) ?>">
+                                        <?= htmlspecialchars(trim(($livreur['prenom'] ?? '') . ' ' . ($livreur['nom'] ?? '')) . ' (' . $livreur['login'] . ')') ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
-                            <span class="note-phase3">⚙ Attribution effective en phase 3</span>
-                        </div>
+                            <button type="button"
+                                    class="btn-avancer js-assigner-livreur"
+                                    data-id="<?= htmlspecialchars(get_id($commande_detail)) ?>">
+                                Assigner
+                            </button>
                         <?php endif; ?>
-
-                    <?php else: ?>
-                        <!-- Commande terminée -->
-                        <div class="statut-final <?= classe_statut($statut_detail) ?>">
-                            <?= $statut_detail === 'livree' ? '✓ Commande livrée avec succès' : '✗ Commande abandonnée' ?>
-                        </div>
+                    </div>
                     <?php endif; ?>
 
                 </div>
@@ -660,11 +755,12 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
             <?php
             $filtres = [
                 'tous'             => 'Toutes',
-                'acceptee'         => 'Acceptées',
-                'preparation'      => 'Préparation',
+                'acceptee'         => 'AcceptÃ©es',
+                'preparation'      => 'PrÃ©paration',
+                'prete'            => 'PrÃªtes',
                 'en-cours'         => 'En livraison',
-                'livree'           => 'Livrées',
-                'abandonnee'       => 'Abandonnées',
+                'livree'           => 'LivrÃ©es',
+                'abandonnee'       => 'AbandonnÃ©es',
             ];
             foreach ($filtres as $val => $lbl):
                 $nb    = $comptages[$val] ?? 0;
@@ -684,8 +780,8 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
 
                 <?php if (empty($commandes_filtrees)): ?>
                     <div class="commandes-vides">
-                        <div class="icone">📭</div>
-                        <p>Aucune commande <?= $filtre_statut !== 'tous' ? 'avec ce statut' : 'enregistrée' ?>.</p>
+                        <div class="icone">ðŸ“­</div>
+                        <p>Aucune commande <?= $filtre_statut !== 'tous' ? 'avec ce statut' : 'enregistrÃ©e' ?>.</p>
                     </div>
 
                 <?php else: ?>
@@ -698,12 +794,13 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                         $date_c     = $cmd['date']  ?? $cmd['date_commande'] ?? '';
                         $articles_c = resoudre_articles($cmd, $plats, $menus);
                         $nb_articles = count($articles_c);
+                        $action_cmd = action_statut_restaurateur($statut_cmd);
                     ?>
                     <div class="commande-item">
 
                         <div class="commande-header">
                             <span class="commande-id"><?= htmlspecialchars($id_cmd) ?></span>
-                            <span class="statut <?= classe_statut($statut_cmd) ?>">
+                            <span class="statut <?= classe_statut($statut_cmd) ?>" data-statut-commande="<?= htmlspecialchars($id_cmd) ?>">
                                 <?= label_statut($statut_cmd) ?>
                             </span>
                         </div>
@@ -717,7 +814,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                                         (<?= htmlspecialchars($login_c) ?>)
                                     </span>
                                 <?php else: ?>
-                                    <?= htmlspecialchars($login_c ?: '—') ?>
+                                    <?= htmlspecialchars($login_c ?: 'â€”') ?>
                                 <?php endif; ?>
                             </p>
                             <?php if (!empty($date_c)): ?>
@@ -727,7 +824,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                             <p>
                                 <strong>Montant :</strong>
                                 <span style="color:var(--main-color);font-weight:bold;">
-                                    <?= number_format((float)$montant_c, 2, ',', ' ') ?> €
+                                    <?= number_format((float)$montant_c, 2, ',', ' ') ?> â‚¬
                                 </span>
                             </p>
                             <?php endif; ?>
@@ -735,22 +832,52 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                                 <strong>Articles :</strong>
                                 <?= $nb_articles ?> article<?= $nb_articles > 1 ? 's' : '' ?>
                             </p>
-                            <?php if (!empty($cmd['login_livreur'])): ?>
-                            <p>
+                            <p data-livreur-info="<?= htmlspecialchars($id_cmd) ?>"
+                               style="<?= empty($cmd['login_livreur']) ? 'display:none;' : '' ?>">
                                 <strong>Livreur :</strong>
                                 <span style="color:#00e5ff;">
-                                    <?= htmlspecialchars($cmd['login_livreur']) ?>
+                                    <?= htmlspecialchars($cmd['login_livreur'] ?? '') ?>
                                 </span>
                             </p>
-                            <?php endif; ?>
                         </div>
 
                         <div class="container_btn" style="margin-top:10px;">
                             <a href="index_commande.php?detail=<?= urlencode($id_cmd) ?>&filtre=<?= urlencode($filtre_statut) ?>"
                                class="action-btn" style="text-decoration:none;display:inline-block;">
-                                Voir le détail →
+                                Voir le dÃ©tail â†’
                             </a>
                         </div>
+                        <?php if ($action_cmd): ?>
+                        <div class="container_btn" style="margin-top:10px;" data-actions-commande="<?= htmlspecialchars($id_cmd) ?>">
+                            <button type="button"
+                                    class="btn-avancer js-update-statut"
+                                    data-id="<?= htmlspecialchars($id_cmd) ?>"
+                                    data-statut="<?= htmlspecialchars($action_cmd['statut']) ?>">
+                                <?= htmlspecialchars($action_cmd['label']) ?>
+                            </button>
+                        </div>
+                        <?php endif; ?>
+                        <?php if ($statut_cmd === 'prete'): ?>
+                        <div class="assignation-livreur" data-assignation-commande="<?= htmlspecialchars($id_cmd) ?>">
+                            <label>Assigner Ã  un livreur</label>
+                            <?php if (empty($livreurs)): ?>
+                                <p class="aucun-livreur">Aucun livreur disponible</p>
+                            <?php else: ?>
+                                <select class="js-livreur-select" data-id="<?= htmlspecialchars($id_cmd) ?>">
+                                    <?php foreach ($livreurs as $livreur): ?>
+                                        <option value="<?= htmlspecialchars($livreur['login']) ?>">
+                                            <?= htmlspecialchars(trim(($livreur['prenom'] ?? '') . ' ' . ($livreur['nom'] ?? '')) . ' (' . $livreur['login'] . ')') ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <button type="button"
+                                        class="btn-avancer js-assigner-livreur"
+                                        data-id="<?= htmlspecialchars($id_cmd) ?>">
+                                    Assigner
+                                </button>
+                            <?php endif; ?>
+                        </div>
+                        <?php endif; ?>
 
                     </div>
                     <?php endforeach; ?>
@@ -760,6 +887,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
         </section>
 
         <?php endif; // fin if detail ?>
+        <?php endif; ?>
 
     </main>
 
@@ -767,10 +895,12 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
         <div id="container_footer">
             <p id="copyright">
                 <span class="commentaires">//</span>
-                © 2026 Silicon Carne. auteurs : Radouane HADJ RABAH, Rayene FREJ, Matthieu VANNEREAU
+                Â© 2026 Silicon Carne. auteurs : Radouane HADJ RABAH, Rayene FREJ, Matthieu VANNEREAU
             </p>
         </div>
     </footer>
+
+    <script src="scriptjs/script1.js" defer></script>
 
 </body>
 </html>
