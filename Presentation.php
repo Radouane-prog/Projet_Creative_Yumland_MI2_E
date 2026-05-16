@@ -28,15 +28,16 @@
         </div>
 
         <div id="container_filtres">
-            <button class="acheter">GPU</button>
-            <button class="acheter">Carte mère</button>
-            <button class="acheter">+16 Go RAM</button>
-            <button class="acheter">Chocolat</button>
-            <button class="acheter">Menthe</button>
-            <button class="acheter">Café</button>
-            <button class="acheter">Caramel</button>
-            <button class="acheter">Fraise</button>
-            <button class="acheter">Vanille</button>
+            <button class="acheter btn_filtre">GPU</button>
+            <button class="acheter btn_filtre">Carte mère</button>
+            <button class="acheter btn_filtre">Chocolat</button>
+            <button class="acheter btn_filtre">Menthe</button>
+            <button class="acheter btn_filtre">Café</button>
+            <button class="acheter btn_filtre">Caramel</button>
+            <button class="acheter btn_filtre">Fraise</button>
+            <button class="acheter btn_filtre">Vanille</button>
+            <button class="acheter btn_tri" data-tri="croissant">Prix Croissant</button>
+            <button class="acheter btn_tri" data-tri="decroissant">Prix Décroissant</button>
         </div>
 
         <div id="container_cards">
@@ -116,5 +117,26 @@
             <p id="copyright"><span class="commentaires">//</span> © 2026 Silicon Carne. auteurs : Radouane HADJ RABAH, Rayene FREJ, Matthieu VANNEREAU</p>
         </div>
     </footer>
+
+    <?php
+        $menus_pour_js = [];
+        foreach ($menus as $menu) {
+            foreach ($plats as $p) {
+                if ($p['id'] == $menu['plats_inclus'][0]) $menu['composant_1'] = $p;
+                if ($p['id'] == $menu['plats_inclus'][1]) $menu['composant_2'] = $p;
+            }
+            $menus_pour_js[] = $menu;
+        }
+    ?>
+
+    <script>
+        const donneesInitiales = {
+            menus: <?= json_encode($menus_pour_js) ?>,
+            plats: <?= json_encode($plats) ?>
+        };
+    </script>
+
+    <script src="scripts/js/Presentation.js" defer></script>
+
 </body>
 </html>

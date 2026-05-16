@@ -103,6 +103,12 @@ body{
     border: solid var(--main-color) 2px;
 }
 
+#container_filtres button.bouton_actif {
+    background-color: var(--main-color);
+    box-shadow: 0 0 15px var(--main-color);
+    transform: scale(1.05);
+}
+
 /*fin filtre*/
 
 /*produits*/
