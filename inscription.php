@@ -114,11 +114,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/inscription.css"/>
   <link rel="stylesheet" href="css/style.css">
+    <script src="scripts/js/inscription.js" defer> </script>
 
 </head>
 
 <body>
-    
     <?php include "includes/header.php"; ?>
 
     <main>
@@ -141,41 +141,70 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             <?php endif; ?>
             
-            <form action="inscription.php" method="POST"> 
+            <form action="inscription.php" method="POST" id="form_inscription"> 
                 <label for="login">Pseudo (Login) :</label>
-                <input type="text" id="login" name="login" value="<?= $login ?>" placeholder="kikoudu95" required><br>
+                <div class="input-wrapper">
+                    <input type="text" id="login" name="login" value="<?= $login ?>" placeholder="kikoudu95" maxlength="20" required>
+                    <span class="char-counter" id="counter_login">0/20</span>
+                </div>
+                <span class="error-js" id="err_login"></span>
 
                 <label for="nom">Nom :</label>
-                <input type="text" id="nom" name="nom" value="<?= $nom ?>" placeholder="DUPONT" required><br>
+                <input type="text" id="nom" name="nom" value="<?= $nom ?>" placeholder="DUPONT" required>
+                <span class="error-js" id="err_nom"></span>
 
                 <label for="prenom">Prénom :</label>
-                <input type="text" id="prenom" name="prenom" value="<?= $prenom ?>" placeholder="Jean" required><br>
+                <input type="text" id="prenom" name="prenom" value="<?= $prenom ?>" placeholder="Jean" required>
+                <span class="error-js" id="err_prenom"></span>
 
                 <label for="naissance">Date de naissance :</label>
-                <input type="date" id="naissance" name="naissance" value="<?= $naissance ?>" required><br>
+                <input type="date" id="naissance" name="naissance" value="<?= $naissance ?>" required>
+                <span class="error-js" id="err_naissance"></span>
 
                 <label for="adresse">Adresse de livraison :</label>
-                <input type="text" id="adresse" name="adresse" value="<?= $adresse ?>" placeholder="12 rue du Processeur" required><br>
+                <input type="text" id="adresse" name="adresse" value="<?= $adresse ?>" placeholder="12 rue du Processeur" required>
+                <span class="error-js" id="err_adresse"></span>
 
                 <label for="tel">Numéro de téléphone :</label>
-                <input type="tel" id="tel" name="tel" value="<?= $tel ?>" placeholder="06 67 67 67 67"><br>
+                <input type="tel" id="tel" name="tel" value="<?= $tel ?>" placeholder="06 67 67 67 67">
+                <span class="error-js" id="err_tel"></span>
 
                 <label for="infos">Informations complémentaires :</label>
-                <textarea id="infos" name="infos" placeholder="Digicode, étage..."><?= $infos ?></textarea><br>
+                <div class="input-wrapper">
+                    <textarea id="infos" name="infos" maxlength="150" placeholder="Digicode, étage..."><?= $infos ?></textarea>
+                    <span class="char-counter" id="counter_infos">0/150</span>
+                </div>
 
                 <hr> 
+                
                 <label for="email">Email de l'utilisateur :</label>
-                <input type="email" id="email" name="email" value="<?= $email ?>" placeholder="kikoudu95@email.com" required><br>
+                <div class="input-wrapper">
+                    <input type="email" id="email" name="email" value="<?= $email ?>" placeholder="kikoudu95@email.com" maxlength="50" required>
+                    <span class="char-counter" id="counter_email">0/50</span>
+                </div>
+                <span class="error-js" id="err_email"></span>
 
                 <label for="password">Mot de passe :</label>
-                <input type="password" id="password" name="password" placeholder="••••••••" required><br>
+                <div class="input-wrapper">
+                    <input type="password" id="password" name="password" placeholder="••••••••" maxlength="50" required>
+                    <span class="toggle-password" onclick="togglePassword('password', 'eye_pwd')">👁️</span>
+                    <span class="char-counter" id="counter_password">0/50</span>
+                </div>
+                <span class="error-js" id="err_password"></span>
 
                 <label for="confirmpassword">Confirmez le mot de passe :</label>
-                <input type="password" id="confirmpassword" name="confirmpassword" placeholder="••••••••" required><br>
+                <div class="input-wrapper">
+                    <input type="password" id="confirmpassword" name="confirmpassword" placeholder="••••••••" maxlength="50" required>
+                    <span class="toggle-password" onclick="togglePassword('confirmpassword', 'eye_confirm')">👁️</span>
+                </div>
+                <span class="error-js" id="err_confirmpassword"></span>
 
                 <input class="styled" type="submit" value="S'inscrire" />
+
             </form>
         </div>
+
+
     </main>
 
     <footer>
