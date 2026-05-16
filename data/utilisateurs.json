@@ -10,6 +10,7 @@
         "email": "client_test@gmail.com",
         "password": "$2y$12$X0Q4Iu7k6t1K6dtOpPrVKeffSQqT6PysiqrebUexDgUwgaD5ZTLF.",
         "role": "client",
+        "suspended": false,
         "date_inscription": "2026-03-30 22:20:07",
         "xp": 0,
         "statut": "premium",
@@ -26,6 +27,7 @@
         "email": "admin_test@gmail.com",
         "password": "$2y$12$C7bZOW8.80eLkbHtm.\/23eNlgcYV9reI5AoznnOsJvz7pU.dHgL4i",
         "role": "admin",
+        "suspended": false,
         "date_inscription": "2026-03-30 22:25:28",
         "xp": 0
     },
@@ -40,6 +42,7 @@
         "email": "livreur_test@gmail.com",
         "password": "$2y$12$bPu3G4SkBzNEW\/G4Uscb2.xCZdxEP6RRMH\/I01iEIeiTkjCwhwcO6",
         "role": "livreur",
+        "suspended": false,
         "date_inscription": "2026-03-30 22:26:24",
         "xp": 0
     },
@@ -54,6 +57,7 @@
         "email": "resto_test@gmail.com",
         "password": "$2y$12$0jJVAtFIwZhMt4QA2yOg8.7pBab0KHLF5yrNWEIe\/t3QHgAksS67K",
         "role": "resto",
+        "suspended": false,
         "date_inscription": "2026-03-30 22:27:29",
         "xp": 0,
         "statut": "basique",
@@ -70,6 +74,7 @@
         "email": "rezrarzea@ajfdosf.com",
         "password": "$2y$10$QD8fBiAUuoPPFK75KBog1etirBPtzC.d0Q.K57daG5bNjKBRjF7by",
         "role": "restaurateur",
+        "suspended": false,
         "date_inscription": "2026-04-04 02:14:29",
         "xp": 0,
         "statut": "basique",
@@ -86,6 +91,7 @@
         "email": "dsgfsdg@gmail.cm",
         "password": "$2y$10$D0O7gyraNjFftEUL3tmEjela9EHGKGn7qbltOGK44N2u7hK.LAnX6",
         "role": "client",
+        "suspended": false,
         "date_inscription": "2026-04-04 02:15:20",
         "xp": 0
     },
@@ -100,6 +106,7 @@
         "email": "a@gmail.com",
         "password": "$2y$10$tCGZ.Nv6fA1R96sBLBNj4urIk\/rKfDoxxo4RMB0kJGUtdMqo6PUOK",
         "role": "client",
+        "suspended": true,
         "date_inscription": "2026-04-14 09:18:43",
         "xp": 0
     },
@@ -114,6 +121,7 @@
         "email": "b@gmail.com",
         "password": "$2y$10$xylTw3eTq.aVi571QYfdR.rz1kQ8zuPk533Of3dqGBie9LTUfMha.",
         "role": "client",
+        "suspended": false,
         "date_inscription": "2026-04-14 09:22:16",
         "xp": 0
     },
@@ -128,7 +136,23 @@
         "email": "c@gmail.com",
         "password": "$2y$10$BxlMQImNpI8m3aHkx6c2hOcEwI8n3oUEgUPBWfgfV1rNBJum4kWyy",
         "role": "client",
+        "suspended": false,
         "date_inscription": "2026-04-14 09:23:47",
+        "xp": 0
+    },
+    {
+        "login": "eeb",
+        "nom": "309",
+        "prenom": "555",
+        "naissance": "2003-12-15",
+        "adresse": "antony",
+        "tel": "7758461499",
+        "infos": "",
+        "email": "aldwineeb@gmail.com",
+        "password": "$2y$12$lirdwVMIr0KEav8IfTgq.em8U53B\/u7GQZjt\/ibhk6E5khK6AbmIS",
+        "role": "client",
+        "suspended": false,
+        "date_inscription": "2026-05-16 01:11:26",
         "xp": 0
     }
 ]
