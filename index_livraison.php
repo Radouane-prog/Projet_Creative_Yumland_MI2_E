@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 date_default_timezone_set('Europe/Paris');
 
-//  Fichiers de données 
+//  Fichiers de donnÃ©es 
 $fichier_commandes = 'data/commandes.json';
 $fichier_users     = 'data/utilisateurs.json';
 
@@ -20,19 +20,21 @@ if (file_exists($fichier_users)) {
     if (is_array($u)) $utilisateurs = $u;
 }
 
-//  Identification du livreur connecté 
+//  Identification du livreur connectÃ© 
+$connecte      = $_SESSION['connecte'] ?? false;
 $login_livreur = $_SESSION['login'] ?? null;
 $role_connecte = $_SESSION['role']  ?? null;
+$acces_livreur = ($connecte === true && $login_livreur !== null && $role_connecte === 'livreur');
 
-// Changer le statut d'une commande 
+// Changer le statut d'une commande
 if (
     $_SERVER['REQUEST_METHOD'] === 'POST' &&
     isset($_POST['action'], $_POST['commande_id']) &&
-    $login_livreur !== null
+    $acces_livreur
 ) {
     $action_demandee = $_POST['action'];
     $commande_id     = $_POST['commande_id'];
-    $statuts_valides = ['livree', 'abandonnee'];
+    $statuts_valides = ['abandonnee'];
 
     if (in_array($action_demandee, $statuts_valides)) {
         foreach ($commandes as &$cmd) {
@@ -50,41 +52,50 @@ if (
             $fichier_commandes,
             json_encode($commandes, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
         );
-        // Rechargement après écriture
+        // Rechargement aprÃ¨s Ã©criture
         $commandes = json_decode(file_get_contents($fichier_commandes), true) ?? [];
     }
 }
 
-// Recherche de la commande attribuée au livreur (statut "en-cours") 
-$commande_active = null;
+$statuts_en_livraison = ['en-cours', 'en_cours', 'en_livraison'];
+
+function trouver_utilisateur(array $utilisateurs, string $login): ?array
+{
+    foreach ($utilisateurs as $u) {
+        if (($u['login'] ?? '') === $login) {
+            return $u;
+        }
+    }
+
+    return null;
+}
+
+function lien_maps_client(?array $client): string
+{
+    if ($client && !empty($client['adresse'])) {
+        return 'https://maps.google.com/?q=' . urlencode($client['adresse']);
+    }
+
+    return '#';
+}
+
+// Recherche des commandes attribuÃ©es au livreur
+$commandes_actives = [];
 if ($login_livreur) {
     foreach ($commandes as $cmd) {
+        $livreur_assigne = $cmd['login_livreur'] ?? ($cmd['livreur_attribue'] ?? '');
         if (
-            ($cmd['login_livreur'] ?? '') === $login_livreur &&
-            ($cmd['statut']        ?? '') === 'en-cours'
+            $livreur_assigne === $login_livreur &&
+            in_array(($cmd['statut'] ?? ''), $statuts_en_livraison, true)
         ) {
-            $commande_active = $cmd;
-            break;
+            $client = trouver_utilisateur($utilisateurs, $cmd['login_client'] ?? '');
+            $commandes_actives[] = [
+                'commande' => $cmd,
+                'client' => $client,
+                'lien_maps' => lien_maps_client($client),
+            ];
         }
     }
-}
-
-// Récupération des infos client depuis utilisateurs.json 
-$client = null;
-if ($commande_active) {
-    $login_client = $commande_active['login_client'] ?? '';
-    foreach ($utilisateurs as $u) {
-        if (($u['login'] ?? '') === $login_client) {
-            $client = $u;
-            break;
-        }
-    }
-}
-
-//  Lien Maps 
-$lien_maps = '#';
-if ($client && !empty($client['adresse'])) {
-    $lien_maps = 'https://maps.google.com/?q=' . urlencode($client['adresse']);
 }
 ?>
 <!DOCTYPE html>
@@ -96,7 +107,7 @@ if ($client && !empty($client['adresse'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Livraison - Silicon Carne</title>
     <style>
-        /* === Surcharges spécifiques livreur === */
+        /* === Surcharges spÃ©cifiques livreur === */
 
         .page {
             max-width: 480px;
@@ -104,7 +115,7 @@ if ($client && !empty($client['adresse'])) {
             padding: 15px;
         }
 
-        /* Numéro de commande */
+        /* NumÃ©ro de commande */
         .livraison-info {
             text-align: center;
             margin-bottom: 20px;
@@ -172,7 +183,7 @@ if ($client && !empty($client['adresse'])) {
             font-weight: normal;
         }
 
-        /* Boutons — min 90px, police 22px+, impossibles à rater avec des gants */
+        /* Boutons - min 90px, police 22px+, impossibles Ã  rater avec des gants */
         .boutons-container {
             display: flex;
             flex-direction: column;
@@ -211,7 +222,7 @@ if ($client && !empty($client['adresse'])) {
         }
         .btn-maps:hover { box-shadow: 0 0 25px rgba(0,229,255,0.4); }
 
-        /* Livré */
+        /* LivrÃ© */
         .btn-livre {
             background-color: rgba(57,255,20,0.2);
             border: 2px solid rgba(57,255,20,0.35) !important;
@@ -226,7 +237,28 @@ if ($client && !empty($client['adresse'])) {
         }
         .btn-abandonne:hover { box-shadow: 0 0 25px rgba(255,165,0,0.4); }
 
-        /* Écran vide / non connecté */
+        .statut-livraison {
+            margin-top: 12px;
+            color: var(--details-color);
+            font-size: 16px;
+            text-align: center;
+        }
+        .livraison-message {
+            display: none;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(57,255,20,0.35);
+            background: rgba(57,255,20,0.12);
+            color: var(--text-color);
+            text-align: center;
+            font-weight: bold;
+        }
+        .livraison-message.erreur {
+            border-color: rgba(255,51,51,0.45);
+            background: rgba(255,51,51,0.14);
+        }
+
+        /* Ã‰cran vide / non connectÃ© */
         .ecran-vide {
             display: flex;
             flex-direction: column;
@@ -242,7 +274,7 @@ if ($client && !empty($client['adresse'])) {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 100%; /* S'assure que ça ne dépasse pas la boîte parent */
+            max-width: 100%; /* S'assure que Ã§a ne dÃ©passe pas la boÃ®te parent */
         }
         .ecran-vide .icone { font-size: 70px; }
         .ecran-vide h2 { font-size: 22px; margin: 0; }
@@ -255,145 +287,162 @@ if ($client && !empty($client['adresse'])) {
 
     <main class="page">
 
-        <?php if (!$login_livreur || $role_connecte !== 'livreur'): ?>
-            <!-- ===== CAS 0 : Pas connecté ou mauvais rôle ===== -->
+        <?php if (!$acces_livreur): ?>
+            <!-- ===== CAS 0 : Pas connectÃ© ou mauvais rÃ´le ===== -->
             <div class="ecran-vide">
-                <div class="icone">🔒</div>
-                <h2>Accès non autorisé</h2>
-                <p>Vous devez être connecté en tant que livreur.</p>
+                <div class="icone">ðŸ”’</div>
+                <h2>AccÃ¨s non autorisÃ©</h2>
+                <p>Vous devez Ãªtre connectÃ© en tant que livreur.</p>
             </div>
 
-        <?php elseif (!$commande_active): ?>
-            <!-- ===== CAS 1 : Connecté mais aucune commande attribuée ===== -->
-            <div class="ecran-vide">
-                <div class="icone">✅</div>
+        <?php elseif (empty($commandes_actives)): ?>
+            <!-- ===== CAS 1 : ConnectÃ© mais aucune commande attribuÃ©e ===== -->
+            <div class="ecran-vide" data-aucune-livraison>
+                <div class="icone">âœ…</div>
                 <h2>Aucune livraison en cours</h2>
-                <p>Vous n'avez pas de commande attribuée pour le moment.</p>
+                <p>Vous n'avez pas de commande attribuÃ©e pour le moment.</p>
                 <p style="margin-top:8px;">En attente d'une nouvelle mission...</p>
             </div>
 
         <?php else: ?>
-            <!-- ===== CAS 2 : Commande active à livrer ===== -->
-
-            <!-- Numéro de commande -->
-            <div class="livraison-info">
-                <h1><span class="commentaires">//</span> Livraison en cours</h1>
-                <div class="commande-numero">
-                    <?= htmlspecialchars($commande_active['id']) ?>
-                </div>
+            <div class="ecran-vide" data-aucune-livraison style="display:none;">
+                <div class="icone">âœ…</div>
+                <h2>Aucune livraison en cours</h2>
+                <p>Vous n'avez pas de commande attribuÃ©e pour le moment.</p>
+                <p style="margin-top:8px;">En attente d'une nouvelle mission...</p>
             </div>
 
-            <!-- Informations client -->
-            <div class="client-info">
+            <?php foreach ($commandes_actives as $livraison): ?>
+                <?php
+                    $commande_active = $livraison['commande'];
+                    $client = $livraison['client'];
+                    $lien_maps = $livraison['lien_maps'];
+                ?>
+                <section class="carte-livraison" data-carte-livraison>
+                    <!-- NumÃ©ro de commande -->
+                    <div class="livraison-info">
+                        <h1><span class="commentaires">//</span> Livraison en cours</h1>
+                        <div class="commande-numero">
+                            <?= htmlspecialchars($commande_active['id']) ?>
+                        </div>
+                        <div class="statut-livraison" data-statut-livraison>
+                            Statut : En livraison
+                        </div>
+                    </div>
 
-                <!-- Nom complet -->
-                <h2>
-                    <?php
-                        $nom_complet = trim(
-                            htmlspecialchars($client['prenom'] ?? '') . ' ' .
-                            htmlspecialchars($client['nom']    ?? $commande_active['login_client'])
-                        );
-                        echo $nom_complet ?: htmlspecialchars($commande_active['login_client']);
-                    ?>
-                </h2>
+                    <!-- Informations client -->
+                    <div class="client-info">
 
-                <!-- Adresse -->
-                <div class="info-ligne">
-                    <span class="info-label">📍 Adresse</span>
-                    <span class="info-valeur">
-                        <?= htmlspecialchars($client['adresse'] ?? 'Adresse non renseignée') ?>
-                    </span>
-                </div>
+                        <!-- Nom complet -->
+                        <h2>
+                            <?php
+                                $nom_complet = trim(
+                                    htmlspecialchars($client['prenom'] ?? '') . ' ' .
+                                    htmlspecialchars($client['nom'] ?? $commande_active['login_client'])
+                                );
+                                echo $nom_complet ?: htmlspecialchars($commande_active['login_client']);
+                            ?>
+                        </h2>
 
-                <!-- Infos complémentaires (digicode, étage...) depuis le champ "infos" -->
-                <?php if (!empty($client['infos'])): ?>
-                <div class="info-ligne">
-                    <span class="info-label">🔑 Digicode / Étage / Infos</span>
-                    <span class="info-valeur secondaire">
-                        <?= htmlspecialchars($client['infos']) ?>
-                    </span>
-                </div>
-                <?php endif; ?>
+                        <!-- Adresse -->
+                        <div class="info-ligne">
+                            <span class="info-label">Adresse</span>
+                            <span class="info-valeur">
+                                <?= htmlspecialchars($client['adresse'] ?? 'Adresse non renseignÃ©e') ?>
+                            </span>
+                        </div>
 
-                <!-- Téléphone cliquable -->
-                <div class="info-ligne">
-                    <span class="info-label">📞 Téléphone</span>
-                    <span class="info-valeur tel">
-                        <a href="tel:<?= htmlspecialchars($client['tel'] ?? '') ?>"
-                           style="color:inherit;text-decoration:none;">
-                            <?= htmlspecialchars($client['tel'] ?? 'Non renseigné') ?>
+                        <!-- Infos complÃ©mentaires (digicode, Ã©tage...) depuis le champ "infos" -->
+                        <?php if (!empty($client['infos'])): ?>
+                        <div class="info-ligne">
+                            <span class="info-label">Digicode / Ã‰tage / Infos</span>
+                            <span class="info-valeur secondaire">
+                                <?= htmlspecialchars($client['infos']) ?>
+                            </span>
+                        </div>
+                        <?php endif; ?>
+
+                        <!-- TÃ©lÃ©phone cliquable -->
+                        <div class="info-ligne">
+                            <span class="info-label">ðŸ“ž TÃ©lÃ©phone</span>
+                            <span class="info-valeur tel">
+                                <a href="tel:<?= htmlspecialchars($client['tel'] ?? '') ?>"
+                                   style="color:inherit;text-decoration:none;">
+                                    <?= htmlspecialchars($client['tel'] ?? 'Non renseignÃ©') ?>
+                                </a>
+                            </span>
+                        </div>
+
+                        <!-- Articles commandÃ©s -->
+                        <?php if (!empty($commande_active['articles'])): ?>
+                        <div class="info-ligne">
+                            <span class="info-label">ðŸ›’ Articles</span>
+                            <span class="info-valeur secondaire">
+                                <?= htmlspecialchars(implode(', ', $commande_active['articles'])) ?>
+                            </span>
+                        </div>
+                        <?php endif; ?>
+
+                        <!-- Montant -->
+                        <?php if (isset($commande_active['montant'])): ?>
+                        <div class="info-ligne">
+                            <span class="info-label">ðŸ’° Montant</span>
+                            <span class="info-valeur">
+                                <?= number_format((float)$commande_active['montant'], 2, ',', ' ') ?> â‚¬
+                            </span>
+                        </div>
+                        <?php endif; ?>
+
+                    </div>
+
+                    <!-- Boutons d'action -->
+                    <div class="boutons-container">
+
+                        <!-- MAPS - lien direct, pas de formulaire -->
+                        <a href="<?= htmlspecialchars($lien_maps) ?>"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="btn-maps">
+                            <span class="btn-icon">â†’</span>
+                            <span>OUVRIR MAPS</span>
                         </a>
-                    </span>
-                </div>
 
-                <!-- Articles commandés -->
-                <?php if (!empty($commande_active['articles'])): ?>
-                <div class="info-ligne">
-                    <span class="info-label">🛒 Articles</span>
-                    <span class="info-valeur secondaire">
-                        <?= htmlspecialchars(implode(', ', $commande_active['articles'])) ?>
-                    </span>
-                </div>
-                <?php endif; ?>
+                        <div class="livraison-message" data-message-livraison></div>
 
-                <!-- Montant -->
-                <?php if (isset($commande_active['montant'])): ?>
-                <div class="info-ligne">
-                    <span class="info-label">💰 Montant</span>
-                    <span class="info-valeur">
-                        <?= number_format((float)$commande_active['montant'], 2, ',', ' ') ?> €
-                    </span>
-                </div>
-                <?php endif; ?>
+                        <button type="button"
+                                class="btn-livre"
+                                data-valider-livraison
+                                data-id-commande="<?= htmlspecialchars($commande_active['id']) ?>">
+                            <span class="btn-icon">âœ“</span>
+                            <span>Livraison effectuÃ©e</span>
+                        </button>
 
-            </div>
+                        <!-- ADRESSE INTROUVABLE -->
+                        <form method="POST" action="index_livraison.php">
+                            <input type="hidden" name="action"      value="abandonnee"/>
+                            <input type="hidden" name="commande_id" value="<?= htmlspecialchars($commande_active['id']) ?>"/>
+                            <button type="submit" class="btn-abandonne">
+                                <span class="btn-icon">âœ—</span>
+                                <span>ADRESSE INTROUVABLE</span>
+                            </button>
+                        </form>
 
-            <!-- Boutons d'action -->
-            <div class="boutons-container">
-
-                <!-- MAPS — lien direct, pas de formulaire -->
-                <a href="<?= htmlspecialchars($lien_maps) ?>"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="btn-maps">
-                    <span class="btn-icon">🗺️</span>
-                    <span>OUVRIR MAPS</span>
-                </a>
-
-                <!-- LIVRÉ -->
-                <form method="POST" action="index_livraison.php">
-                    <input type="hidden" name="action"      value="livree"/>
-                    <input type="hidden" name="commande_id" value="<?= htmlspecialchars($commande_active['id']) ?>"/>
-                    <button type="submit" class="btn-livre">
-                        <span class="btn-icon">✓</span>
-                        <span>LIVRÉ</span>
-                    </button>
-                </form>
-
-                <!-- ADRESSE INTROUVABLE -->
-                <form method="POST" action="index_livraison.php">
-                    <input type="hidden" name="action"      value="abandonnee"/>
-                    <input type="hidden" name="commande_id" value="<?= htmlspecialchars($commande_active['id']) ?>"/>
-                    <button type="submit" class="btn-abandonne">
-                        <span class="btn-icon">✗</span>
-                        <span>ADRESSE INTROUVABLE</span>
-                    </button>
-                </form>
-
-            </div>
-
+                    </div>
+                </section>
+            <?php endforeach; ?>
         <?php endif; ?>
-
     </main>
 
     <footer>
         <div id="container_footer">
             <p id="copyright">
                 <span class="commentaires">//</span>
-                © 2026 Silicon Carne. auteurs : Radouane HADJ RABAH, Rayene FREJ, Matthieu VANNEREAU
+                Â© 2026 Silicon Carne. auteurs : Radouane HADJ RABAH, Rayene FREJ, Matthieu VANNEREAU
             </p>
         </div>
     </footer>
+
+    <script src="scriptjs/script1.js" defer></script>
 
 </body>
 </html>
