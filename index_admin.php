@@ -516,7 +516,7 @@ $couleurs_role = [
         </div>
     </footer>
 
-    <script src="scriptjs/script1.js" defer></script>
+    <script src="js/script1.js" defer></script>
 
 </body>
 </html>
