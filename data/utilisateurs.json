@@ -155,8 +155,22 @@
         "role": "client",
         "suspended": false,
         "date_inscription": "2026-05-16 01:11:26",
+        "xp": 0
+    },
+    {
+        "login": "teuteu3",
+        "nom": "b",
+        "prenom": "b",
+        "naissance": "2000-01-01",
+        "adresse": "anfiisdg",
+        "tel": "0600000001",
+        "infos": "",
+        "email": "d@gmail.com",
+        "password": "$2y$12$9jdy5d\/ns7wTzmaWOEcw5e7AbrUydJr0sv2wWzgzfz.d7c\/lsqYcC",
+        "role": "client",
+        "suspended": false,
+        "date_inscription": "2026-05-17 14:15:08",
         "xp": 0,
-        "statut": "basique",
-        "remise": 100
+        "avatar": "cs.png"
     }
 ]
