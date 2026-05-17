@@ -15,14 +15,14 @@ document.addEventListener("DOMContentLoaded", () => {
         // Réinitialiser tous les messages d'erreur
         document.querySelectorAll(".error-js").forEach(el => el.textContent = "");
 
-        
+        // verif de chaque label
         const telInput = document.getElementById("tel").value.replace(/\s/g, ''); // Enlever les espaces
         if (telInput.length > 0 && !/^\d{10}$/.test(telInput)) {
             document.getElementById("err_tel").textContent = "> Erreur : Le numéro doit contenir exactement 10 chiffres.";
             isValid = false;
         }
 
-        
+        // verif d'email (elle est là mais sert un peu à rien)
         const emailInput = document.getElementById("email").value;
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(emailInput)) {
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        //  Vérification des Mots de passe 
+        
         const pwd = document.getElementById("password").value;
         const pwdConf = document.getElementById("confirmpassword").value;
         
