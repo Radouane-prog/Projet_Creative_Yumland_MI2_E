@@ -4,7 +4,6 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 date_default_timezone_set('Europe/Paris');
 
-// --- Fichiers de données ---
 $fichier_commandes = 'data/commandes.json';
 $fichier_users     = 'data/utilisateurs.json';
 $fichier_plats     = 'data/plats.json';
@@ -18,8 +17,7 @@ $menus        = [];
 if (file_exists($fichier_commandes)) {
     $c = json_decode(file_get_contents($fichier_commandes), true);
     if (is_array($c)) {
-        // Le restaurateur ne voit pas les commandes en attente de paiement
-        // ni celles refusees : elles ne le concernent pas
+        // Masquer les commandes en attente de paiement et refusées
         $statuts_masques = ["attente_paiement", "refusee"];
         $commandes = array_values(array_filter($c, fn($cmd) => !in_array($cmd["statut"] ?? "", $statuts_masques)));
     }
@@ -37,15 +35,11 @@ if (file_exists($fichier_menus)) {
     if (is_array($m)) $menus = $m;
 }
 
-// Identification du restaurateur connecte, meme logique que la page livreur
 $connecte      = $_SESSION['connecte'] ?? false;
 $login_resto   = $_SESSION['login'] ?? null;
 $role_connecte = $_SESSION['role']  ?? null;
 $acces_resto   = ($connecte === true && $login_resto !== null && $role_connecte === 'resto');
 
-// --- Helpers ---
-
-// Normalise un champ selon les deux formats possibles de commandes.json
 function get_login_client(array $cmd): string {
     return $cmd['login_client'] ?? $cmd['client'] ?? '';
 }
@@ -53,7 +47,6 @@ function get_id(array $cmd): string {
     return $cmd['id'] ?? '';
 }
 
-// Trouve un utilisateur par login
 function trouver_user(array $utilisateurs, string $login): ?array {
     foreach ($utilisateurs as $u) {
         if (($u['login'] ?? '') === $login) return $u;
@@ -67,7 +60,6 @@ function livreurs_disponibles(array $utilisateurs): array {
     }));
 }
 
-// Trouve un plat par id
 function trouver_plat(array $plats, int $id): ?array {
     foreach ($plats as $p) {
         if ((int)($p['id'] ?? 0) === $id) return $p;
@@ -75,7 +67,6 @@ function trouver_plat(array $plats, int $id): ?array {
     return null;
 }
 
-// Trouve un menu par id
 function trouver_menu(array $menus, int $id): ?array {
     foreach ($menus as $m) {
         if ((int)($m['id'] ?? 0) === $id) return $m;
@@ -83,7 +74,6 @@ function trouver_menu(array $menus, int $id): ?array {
     return null;
 }
 
-// Cycle de statuts suivants
 function statut_suivant(string $statut): string {
     $cycle = [
         'acceptee'         => 'preparation',
@@ -100,7 +90,7 @@ function action_statut_restaurateur(string $statut): ?array {
     return $actions[$statut] ?? null;
 }
 
-// Label lisible d'un statut
+// Afficher un statut en français lisible
 function label_statut(string $statut): string {
     $labels = [
         'attente_paiement' => 'En attente',
@@ -114,7 +104,6 @@ function label_statut(string $statut): string {
     return $labels[$statut] ?? $statut;
 }
 
-// Classe CSS d'un statut
 function classe_statut(string $statut): string {
     $classes = [
         'attente_paiement' => 'attente',
@@ -128,29 +117,23 @@ function classe_statut(string $statut): string {
     return $classes[$statut] ?? '';
 }
 
-// Liste des livreurs disponibles
 $livreurs = livreurs_disponibles($utilisateurs);
 
-// --- Messages dynamiques ---
 $message_succes = '';
 $message_erreur = '';
 
-// Récupération message GET (après redirect)
 if (!empty($_GET['succes'])) $message_succes = htmlspecialchars($_GET['succes']);
 if (!empty($_GET['erreur'])) $message_erreur = htmlspecialchars($_GET['erreur']);
 
-// --- Paramètres GET ---
-$filtre_statut  = $_GET['filtre']  ?? 'tous';   // tous | attente_paiement | preparation | prete | en-cours | livree | abandonnee
-$detail_id      = $_GET['detail']  ?? null;      // ID de la commande à  afficher en détail
+$filtre_statut  = $_GET['filtre']  ?? 'tous';
+$detail_id      = $_GET['detail']  ?? null;
 
-// --- Filtrage des commandes ---
 $commandes_filtrees = $commandes;
 if ($filtre_statut !== 'tous') {
     $commandes_filtrees = array_filter($commandes, fn($c) => ($c['statut'] ?? '') === $filtre_statut);
 }
 $commandes_filtrees = array_values($commandes_filtrees);
 
-// --- Commande en détail ---
 $commande_detail = null;
 if ($detail_id !== null) {
     foreach ($commandes as $cmd) {
@@ -161,18 +144,16 @@ if ($detail_id !== null) {
     }
 }
 
-// --- Comptage par statut (pour les badges de filtre) ---
 $comptages = ['tous' => count($commandes)];
 foreach ($commandes as $cmd) {
     $s = $cmd['statut'] ?? 'inconnu';
     $comptages[$s] = ($comptages[$s] ?? 0) + 1;
 }
 
-// --- Résolution des articles d'une commande ---
 function resoudre_articles(array $cmd, array $plats, array $menus): array {
     $articles = [];
 
-    // Format 1 : contenu = {"plat_3": 2, "menu_1": 1}
+    // Cas 1 : données récentes avec la structure 'contenu'
     if (!empty($cmd['contenu']) && is_array($cmd['contenu'])) {
         foreach ($cmd['contenu'] as $cle => $qte) {
             $parts = explode('_', $cle);
@@ -188,7 +169,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
         }
     }
 
-    // Format 2 : articles = ["RTX 5090 Chocolat", ...]
+    // Format ancien (rétrocompatibilité)
     if (empty($articles) && !empty($cmd['articles']) && is_array($cmd['articles'])) {
         foreach ($cmd['articles'] as $art) {
             $articles[] = ['nom' => $art, 'prix' => null, 'qte' => 1];
