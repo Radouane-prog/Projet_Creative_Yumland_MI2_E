@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 date_default_timezone_set('Europe/Paris');
 
-// --- Fichiers de donnÃ©es ---
+// --- Fichiers de données ---
 $fichier_commandes = 'data/commandes.json';
 $fichier_users     = 'data/utilisateurs.json';
 $fichier_plats     = 'data/plats.json';
@@ -94,8 +94,8 @@ function statut_suivant(string $statut): string {
 
 function action_statut_restaurateur(string $statut): ?array {
     $actions = [
-        'acceptee'    => ['statut' => 'preparation', 'label' => 'DÃ©marrer la prÃ©paration'],
-        'preparation' => ['statut' => 'prete', 'label' => 'Commande prÃªte'],
+        'acceptee'    => ['statut' => 'preparation', 'label' => 'Démarrer la préparation'],
+        'preparation' => ['statut' => 'prete', 'label' => 'Commande prête'],
     ];
     return $actions[$statut] ?? null;
 }
@@ -104,12 +104,12 @@ function action_statut_restaurateur(string $statut): ?array {
 function label_statut(string $statut): string {
     $labels = [
         'attente_paiement' => 'En attente',
-        'acceptee'         => 'AcceptÃ©e',
-        'preparation'      => 'En prÃ©paration',
-        'prete'            => 'PrÃªte',
+        'acceptee'         => 'Acceptée',
+        'preparation'      => 'En préparation',
+        'prete'            => 'Prête',
         'en-cours'         => 'En livraison',
-        'livree'           => 'LivrÃ©e',
-        'abandonnee'       => 'AbandonnÃ©e',
+        'livree'           => 'Livrée',
+        'abandonnee'       => 'Abandonnée',
     ];
     return $labels[$statut] ?? $statut;
 }
@@ -135,13 +135,13 @@ $livreurs = livreurs_disponibles($utilisateurs);
 $message_succes = '';
 $message_erreur = '';
 
-// RÃ©cupÃ©ration message GET (aprÃ¨s redirect)
+// Récupération message GET (après redirect)
 if (!empty($_GET['succes'])) $message_succes = htmlspecialchars($_GET['succes']);
 if (!empty($_GET['erreur'])) $message_erreur = htmlspecialchars($_GET['erreur']);
 
-// --- ParamÃ¨tres GET ---
+// --- Paramètres GET ---
 $filtre_statut  = $_GET['filtre']  ?? 'tous';   // tous | attente_paiement | preparation | prete | en-cours | livree | abandonnee
-$detail_id      = $_GET['detail']  ?? null;      // ID de la commande Ã  afficher en dÃ©tail
+$detail_id      = $_GET['detail']  ?? null;      // ID de la commande à  afficher en détail
 
 // --- Filtrage des commandes ---
 $commandes_filtrees = $commandes;
@@ -150,7 +150,7 @@ if ($filtre_statut !== 'tous') {
 }
 $commandes_filtrees = array_values($commandes_filtrees);
 
-// --- Commande en dÃ©tail ---
+// --- Commande en détail ---
 $commande_detail = null;
 if ($detail_id !== null) {
     foreach ($commandes as $cmd) {
@@ -168,7 +168,7 @@ foreach ($commandes as $cmd) {
     $comptages[$s] = ($comptages[$s] ?? 0) + 1;
 }
 
-// --- RÃ©solution des articles d'une commande ---
+// --- Résolution des articles d'une commande ---
 function resoudre_articles(array $cmd, array $plats, array $menus): array {
     $articles = [];
 
@@ -206,274 +206,6 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
     <link rel="stylesheet" href="css/style_commande.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Commandes - Silicon Carne</title>
-    <style>
-        /* === Surcharges page restaurateur === */
-
-        .page { padding: 20px; }
-
-        /* Alertes */
-        .alerte {
-            padding: 10px 16px; border-radius: 6px;
-            margin-bottom: 14px; font-size: 14px; box-sizing: border-box;
-        }
-        .alerte-succes { background: rgba(0,255,100,0.08); border: 1px solid #00ff64; color: #00ff64; }
-        .alerte-erreur { background: rgba(255,51,51,0.1);  border: 1px solid #ff3333; color: #ff3333; }
-
-        /* Barre de filtres */
-        .filtres-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 24px;
-            width: 100%;
-        }
-        .filtre-lien {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 7px 14px;
-            border-radius: 6px;
-            font-family: "Source Code Pro", monospace;
-            font-size: 13px;
-            text-decoration: none;
-            color: var(--text-color);
-            background: rgba(255,51,51,0.1);
-            border: 1px solid rgba(255,51,51,0.3);
-            transition: 0.2s;
-        }
-        .filtre-lien:hover { background: rgba(255,51,51,0.25); border-color: var(--main-color); }
-        .filtre-lien.actif { background: rgba(255,51,51,0.35); border-color: var(--main-color);
-                              box-shadow: 0 0 8px rgba(255,51,51,0.3); }
-        .filtre-badge {
-            display: inline-block; min-width: 20px; text-align: center;
-            padding: 1px 5px; border-radius: 10px; font-size: 11px; font-weight: bold;
-            background: rgba(255,255,255,0.1);
-        }
-
-        /* Statuts additionnels */
-        .statut.acceptee {
-            background-color: rgba(0,229,255,0.15);
-            color: #00e5ff;
-            box-shadow: 0px 0px 8px 1px rgba(0,229,255,0.2);
-        }
-        .statut.attente {
-            background-color: rgba(0,229,255,0.15);
-            color: #00e5ff;
-            box-shadow: 0px 0px 8px 1px rgba(0,229,255,0.2);
-        }
-        .statut.abandonnee {
-            background-color: rgba(176,176,176,0.15);
-            color: #b0b0b0;
-            box-shadow: 0px 0px 8px 1px rgba(176,176,176,0.1);
-        }
-        .statut.prete {
-            background-color: rgba(0,255,100,0.12);
-            color: #00ff64;
-            box-shadow: 0px 0px 8px 1px rgba(0,255,100,0.2);
-        }
-
-        /* Grille commandes vide */
-        .commandes-vides {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 200px;
-            gap: 12px;
-            color: var(--details-color);
-            font-size: 16px;
-        }
-        .commandes-vides .icone { font-size: 48px; }
-
-        /* Bouton retour liste */
-        .btn-retour {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-family: "Source Code Pro", monospace;
-            font-size: 13px;
-            text-decoration: none;
-            color: var(--details-color);
-            border: 1px solid var(--details-color);
-            transition: 0.2s;
-            margin-bottom: 20px;
-        }
-        .btn-retour:hover { color: var(--text-color); border-color: var(--text-color); }
-
-        /* --- VUE DÃ‰TAIL --- */
-        .detail-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        .detail-card {
-            background: var(--background-color);
-            border: 1px solid var(--main-color);
-            border-radius: 10px;
-            padding: 20px 24px;
-        }
-        .detail-card h3 {
-            margin: 0 0 14px 0;
-            font-size: 15px;
-            color: var(--details-color);
-            border-bottom: 1px solid rgba(255,51,51,0.2);
-            padding-bottom: 8px;
-        }
-        .detail-ligne {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 6px 0;
-            border-bottom: 1px solid rgba(176,176,176,0.1);
-            font-size: 14px;
-        }
-        .detail-ligne:last-child { border-bottom: none; }
-        .detail-label { color: var(--details-color); }
-        .detail-valeur { color: var(--text-color); font-weight: bold; }
-        .detail-valeur.prix { color: var(--main-color); }
-
-        /* Table articles */
-        .table-articles {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-        }
-        .table-articles th {
-            text-align: left;
-            padding: 6px 8px;
-            color: var(--details-color);
-            border-bottom: 1px solid rgba(255,51,51,0.3);
-            font-weight: 600;
-        }
-        .table-articles td {
-            padding: 8px;
-            border-bottom: 1px solid rgba(176,176,176,0.08);
-            color: var(--text-color);
-        }
-        .table-articles tr:last-child td { border-bottom: none; }
-        .table-articles .col-prix { color: var(--main-color); text-align: right; }
-        .table-articles .col-qte  { text-align: center; color: var(--details-color); }
-
-        /* Actions dÃ©tail */
-        .detail-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        /* Bouton changer statut */
-        .btn-avancer {
-            display: block; width: 100%; padding: 14px;
-            border-radius: 8px; font-family: "Source Code Pro", monospace;
-            font-size: 15px; font-weight: bold; cursor: pointer;
-            background: rgba(0,255,100,0.1); color: #00ff64;
-            border: 1px solid #00ff64; transition: 0.25s; text-align: center;
-        }
-        .btn-avancer:hover { background: #00ff64; color: #111; box-shadow: 0 0 15px #00ff64; }
-        .btn-avancer[disabled] { opacity: 0.55; cursor: wait; }
-
-        .assignation-livreur {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            width: 100%;
-            margin-top: 10px;
-        }
-        .assignation-livreur label {
-            font-size: 12px;
-            color: var(--details-color);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .assignation-livreur select {
-            background: #1a1a1a;
-            color: #f5f5f5;
-            border: 1px solid rgba(0,229,255,0.4);
-            border-radius: 6px;
-            padding: 10px 12px;
-            font-family: "Source Code Pro", monospace;
-            font-size: 14px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        .assignation-livreur .aucun-livreur {
-            color: var(--details-color);
-            font-size: 13px;
-            margin: 0;
-        }
-
-        .message-statut {
-            display: none;
-            padding: 10px 16px;
-            border-radius: 6px;
-            margin-bottom: 14px;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-        .message-statut.succes {
-            display: block;
-            background: rgba(0,255,100,0.08);
-            border: 1px solid #00ff64;
-            color: #00ff64;
-        }
-        .message-statut.erreur {
-            display: block;
-            background: rgba(255,51,51,0.1);
-            border: 1px solid #ff3333;
-            color: #ff3333;
-        }
-
-        /* SÃ©lecteur livreur (affichage seulement) */
-        .select-livreur-zone {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .select-livreur-zone label {
-            font-size: 12px;
-            color: var(--details-color);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .select-livreur {
-            background: #1a1a1a; color: #f5f5f5;
-            border: 1px solid rgba(0,229,255,0.4); border-radius: 6px;
-            padding: 10px 12px; font-family: "Source Code Pro", monospace;
-            font-size: 14px; width: 100%; box-sizing: border-box;
-            cursor: not-allowed; opacity: 0.7;
-        }
-        .select-livreur:focus { outline: none; }
-        .note-phase3 {
-            font-size: 11px; color: var(--details-color);
-            font-style: italic; margin-top: 2px;
-        }
-
-        /* Commande terminÃ©e */
-        .statut-final {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        .statut-final.livree    { background: rgba(0,255,0,0.08);   color: #00ff00; border: 1px solid #00ff0044; }
-        .statut-final.abandonnee{ background: rgba(176,176,176,0.08); color: #b0b0b0; border: 1px solid #b0b0b044; }
-        .statut-final.prete     { background: rgba(0,255,100,0.08); color: #00ff64; border: 1px solid #00ff6444; }
-
-        .ecran-vide {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            min-height: 50vh; gap: 18px; text-align: center; padding: 30px;
-        }
-        .ecran-vide .icone { font-size: 70px; }
-        .ecran-vide h2 { font-size: 22px; margin: 0; }
-        .ecran-vide p { color: var(--details-color); font-size: 16px; margin: 0; }
-    </style>
     <script src="scripts/js/script1.js" defer></script>
 </head>
 <body>
@@ -483,9 +215,9 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
     <main class="page">
         <?php if (!$acces_resto): ?>
             <div class="ecran-vide">
-                <div class="icone">ðŸ”’</div>
-                <h2>AccÃ¨s non autorisÃ©</h2>
-                <p>Vous devez Ãªtre connectÃ© en tant que restaurateur.</p>
+                <div class="icone">🔒</div>
+                <h2>Accès non autorisé</h2>
+                <p>Vous devez être connecté en tant que restaurateur.</p>
             </div>
         <?php else: ?>
         <header class="header">
@@ -499,10 +231,10 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
         </header>
 
         <?php if (!empty($message_succes)): ?>
-            <div class="alerte alerte-succes">âœ“ <?= $message_succes ?></div>
+            <div class="alerte alerte-succes">✓ <?= $message_succes ?></div>
         <?php endif; ?>
         <?php if (!empty($message_erreur)): ?>
-            <div class="alerte alerte-erreur">âœ— <?= $message_erreur ?></div>
+            <div class="alerte alerte-erreur">✗ <?= $message_erreur ?></div>
         <?php endif; ?>
         <div id="message-statut"
              class="message-statut"
@@ -515,7 +247,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
 
         <?php if ($commande_detail !== null): ?>
         <!-- ============================================================ -->
-        <!-- VUE DÃ‰TAIL D'UNE COMMANDE                                   -->
+        <!-- VUE DÉTAIL D'UNE COMMANDE                                   -->
         <!-- ============================================================ -->
 
         <?php
@@ -529,17 +261,17 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
             $action_detail    = action_statut_restaurateur($statut_detail);
             $peut_avancer    = $action_detail !== null;
 
-            // Commande planifiÃ©e pour plus tard : bloquer si la date n'est pas encore passÃ©e
+            // Commande planifiée pour plus tard : bloquer si la date n'est pas encore passée
             $est_bloquee_date = false;
             $temps_restant    = '';
             if ($peut_avancer && ($commande_detail['type_preparation'] ?? '') === 'plus_tard') {
                 $date_prev_brute = $commande_detail['date_livraison_prevue'] ?? '';
-                // Le format stockÃ© est "dd/mm/YYYY Ã  HH:ii" â†’ on le convertit
+                // Le format stocké est "dd/mm/YYYY à  HH:ii" → on le convertit
                 $date_prev_ts = null;
-                if (!empty($date_prev_brute) && $date_prev_brute !== 'DÃ¨s que possible') {
-                    // "05/04/2026 Ã  18:30" â†’ strtotime ne comprend pas le "Ã "
-                    $date_propre = str_replace(' Ã  ', ' ', $date_prev_brute);
-                    // format dd/mm/YYYY HH:ii â†’ convertir en YYYY-mm-dd HH:ii
+                if (!empty($date_prev_brute) && $date_prev_brute !== 'Dès que possible') {
+                    // "05/04/2026 à  18:30" → strtotime ne comprend pas le "à "
+                    $date_propre = str_replace(' à  ', ' ', $date_prev_brute);
+                    // format dd/mm/YYYY HH:ii → convertir en YYYY-mm-dd HH:ii
                     $parts_date = explode(' ', $date_propre);
                     if (count($parts_date) === 2) {
                         $jma = explode('/', $parts_date[0]);
@@ -560,11 +292,11 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
         ?>
 
         <a href="index_commande.php?filtre=<?= urlencode($filtre_statut) ?>"
-           class="btn-retour">â† Retour Ã  la liste</a>
+           class="btn-retour">← Retour à  la liste</a>
 
         <div class="detail-wrapper">
 
-            <!-- En-tÃªte commande -->
+            <!-- En-tête commande -->
             <div class="detail-card">
                 <h3>Commande</h3>
                 <div class="detail-ligne">
@@ -597,15 +329,15 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                 <div class="detail-ligne">
                     <span class="detail-label">Montant total</span>
                     <span class="detail-valeur prix">
-                        <?= number_format((float)$montant_detail, 2, ',', ' ') ?> â‚¬
+                        <?= number_format((float)$montant_detail, 2, ',', ' ') ?> €
                     </span>
                 </div>
                 <?php endif; ?>
                 <?php if (!empty($commande_detail['type_preparation'])): ?>
                 <div class="detail-ligne">
-                    <span class="detail-label">PrÃ©paration</span>
+                    <span class="detail-label">Préparation</span>
                     <span class="detail-valeur">
-                        <?= $commande_detail['type_preparation'] === 'immediat' ? 'ImmÃ©diate' : 'PlanifiÃ©e : ' . htmlspecialchars($commande_detail['date_preparation'] ?? '') ?>
+                        <?= $commande_detail['type_preparation'] === 'immediat' ? 'Immédiate' : 'Planifiée : ' . htmlspecialchars($commande_detail['date_preparation'] ?? '') ?>
                     </span>
                 </div>
                 <?php endif; ?>
@@ -630,7 +362,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                         <span class="detail-valeur"><?= htmlspecialchars($client_detail['adresse'] ?? '-') ?></span>
                     </div>
                     <div class="detail-ligne">
-                        <span class="detail-label">TÃ©lÃ©phone</span>
+                        <span class="detail-label">Téléphone</span>
                         <span class="detail-valeur"><?= htmlspecialchars($client_detail['tel'] ?? '-') ?></span>
                     </div>
                     <?php if (!empty($client_detail['infos'])): ?>
@@ -650,12 +382,12 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
             <!-- Articles -->
             <?php if (!empty($articles_detail)): ?>
             <div class="detail-card">
-                <h3>Articles commandÃ©s</h3>
+                <h3>Articles commandés</h3>
                 <table class="table-articles">
                     <thead>
                         <tr>
                             <th>Article</th>
-                            <th class="col-qte">QtÃ©</th>
+                            <th class="col-qte">Qté</th>
                             <th class="col-prix">Prix unit.</th>
                         </tr>
                     </thead>
@@ -665,7 +397,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                             <td><?= htmlspecialchars($art['nom']) ?></td>
                             <td class="col-qte"><?= $art['qte'] ?></td>
                             <td class="col-prix">
-                                <?= $art['prix'] !== null ? number_format((float)$art['prix'], 2, ',', ' ') . ' â‚¬' : 'â€”' ?>
+                                <?= $art['prix'] !== null ? number_format((float)$art['prix'], 2, ',', ' ') . ' €' : '—' ?>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -682,7 +414,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                     <?php if ($peut_avancer): ?>
 
                         <?php if ($est_bloquee_date): ?>
-                            <!-- Commande planifiÃ©e : date pas encore atteinte -->
+                            <!-- Commande planifiée : date pas encore atteinte -->
                             <div style="
                                 background: rgba(255,165,0,0.1);
                                 border: 1px solid rgba(255,165,0,0.4);
@@ -692,8 +424,8 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                                 font-size: 14px;
                                 line-height: 1.6;
                             ">
-                                â³ <strong>Commande planifiÃ©e</strong><br>
-                                PrÃ©paration prÃ©vue le <strong><?= htmlspecialchars($commande_detail['date_livraison_prevue']) ?></strong><br>
+                                ⏳ <strong>Commande planifiée</strong><br>
+                                Préparation prévue le <strong><?= htmlspecialchars($commande_detail['date_livraison_prevue']) ?></strong><br>
                                 <span style="font-size:12px;opacity:0.8;">Le bouton sera disponible <?= $temps_restant ?>.</span>
                             </div>
                         <?php else: ?>
@@ -707,21 +439,21 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
 
 
                     <?php else: ?>
-                        <!-- Commande terminÃ©e -->
+                        <!-- Commande terminée -->
                         <div class="statut-final <?= classe_statut($statut_detail) ?>">
                             <?php if ($statut_detail === 'livree'): ?>
-                                âœ“ Commande livrÃ©e avec succÃ¨s
+                                ✓ Commande livrée avec succès
                             <?php elseif ($statut_detail === 'prete'): ?>
-                                âœ“ Commande prÃªte
+                                ✓ Commande prête
                             <?php else: ?>
-                                âœ— Commande abandonnÃ©e
+                                ✗ Commande abandonnée
                             <?php endif; ?>
                         </div>
                     <?php endif; ?>
 
                     <?php if ($statut_detail === 'prete'): ?>
                     <div class="assignation-livreur" data-assignation-commande="<?= htmlspecialchars(get_id($commande_detail)) ?>">
-                        <label>Assigner Ã  un livreur</label>
+                        <label>Assigner à  un livreur</label>
                         <?php if (empty($livreurs)): ?>
                             <p class="aucun-livreur">Aucun livreur disponible</p>
                         <?php else: ?>
@@ -756,12 +488,12 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
             <?php
             $filtres = [
                 'tous'             => 'Toutes',
-                'acceptee'         => 'AcceptÃ©es',
-                'preparation'      => 'PrÃ©paration',
-                'prete'            => 'PrÃªtes',
+                'acceptee'         => 'Acceptées',
+                'preparation'      => 'Préparation',
+                'prete'            => 'Prêtes',
                 'en-cours'         => 'En livraison',
-                'livree'           => 'LivrÃ©es',
-                'abandonnee'       => 'AbandonnÃ©es',
+                'livree'           => 'Livrées',
+                'abandonnee'       => 'Abandonnées',
             ];
             foreach ($filtres as $val => $lbl):
                 $nb    = $comptages[$val] ?? 0;
@@ -781,8 +513,8 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
 
                 <?php if (empty($commandes_filtrees)): ?>
                     <div class="commandes-vides">
-                        <div class="icone">ðŸ“­</div>
-                        <p>Aucune commande <?= $filtre_statut !== 'tous' ? 'avec ce statut' : 'enregistrÃ©e' ?>.</p>
+                        <div class="icone">📭­</div>
+                        <p>Aucune commande <?= $filtre_statut !== 'tous' ? 'avec ce statut' : 'enregistrée' ?>.</p>
                     </div>
 
                 <?php else: ?>
@@ -815,7 +547,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                                         (<?= htmlspecialchars($login_c) ?>)
                                     </span>
                                 <?php else: ?>
-                                    <?= htmlspecialchars($login_c ?: 'â€”') ?>
+                                    <?= htmlspecialchars($login_c ?: '—') ?>
                                 <?php endif; ?>
                             </p>
                             <?php if (!empty($date_c)): ?>
@@ -825,7 +557,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                             <p>
                                 <strong>Montant :</strong>
                                 <span style="color:var(--main-color);font-weight:bold;">
-                                    <?= number_format((float)$montant_c, 2, ',', ' ') ?> â‚¬
+                                    <?= number_format((float)$montant_c, 2, ',', ' ') ?> €
                                 </span>
                             </p>
                             <?php endif; ?>
@@ -845,7 +577,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                         <div class="container_btn" style="margin-top:10px;">
                             <a href="index_commande.php?detail=<?= urlencode($id_cmd) ?>&filtre=<?= urlencode($filtre_statut) ?>"
                                class="action-btn" style="text-decoration:none;display:inline-block;">
-                                Voir le dÃ©tail â†’
+                                Voir le détail →
                             </a>
                         </div>
                         <?php if ($action_cmd): ?>
@@ -860,7 +592,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                         <?php endif; ?>
                         <?php if ($statut_cmd === 'prete'): ?>
                         <div class="assignation-livreur" data-assignation-commande="<?= htmlspecialchars($id_cmd) ?>">
-                            <label>Assigner Ã  un livreur</label>
+                            <label>Assigner à  un livreur</label>
                             <?php if (empty($livreurs)): ?>
                                 <p class="aucun-livreur">Aucun livreur disponible</p>
                             <?php else: ?>
@@ -896,7 +628,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
         <div id="container_footer">
             <p id="copyright">
                 <span class="commentaires">//</span>
-                Â© 2026 Silicon Carne. auteurs : Radouane HADJ RABAH, Rayene FREJ, Matthieu VANNEREAU
+                 © 2026 Silicon Carne. auteurs : Radouane HADJ RABAH, Rayene FREJ, Matthieu VANNEREAU
             </p>
         </div>
     </footer>

@@ -1,113 +1,331 @@
-
-/* Styles page Admin */
-
-.header {
-  margin-bottom: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 120px;
-  min-width: 400px;
+/* Styles globaux page Admin */
+ .header {
+     margin-bottom: 16px;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: space-between;
+     min-height: 120px;
+     min-width: 400px;
 }
-
-#container_text_btn{
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  height: auto;
-  width: 100%;
+ #container_text_btn {
+     display: flex;
+     justify-content: space-around;
+     align-items: center;
+     height: auto;
+     width: 100%;
 }
-
-.header h1 {
-  font-size: 24px;
-  margin-bottom: 6px;
-  color: var(--text-color);
+ .header h1 {
+     font-size: 24px;
+     margin-bottom: 6px;
+     color: var(--text-color);
 }
-
-.header p {
-  color: var(--details-color);
+ .header p {
+     color: var(--details-color);
 }
-
-.filter-btn {
-  background-color: var(--bg-button);
-  box-shadow: 0px 0px 8px 2px var(--main-color);
-  color: var(--text-color);
-  border: none;
-  padding: 10px 14px;
-  border-radius: 6px;
-  font-size: 14px;
-  cursor: pointer;
-  transition-duration: 0.5s;
+ .filter-btn {
+     background-color: var(--bg-button);
+     box-shadow: 0px 0px 8px 2px var(--main-color);
+     color: var(--text-color);
+     border: none;
+     padding: 10px 14px;
+     border-radius: 6px;
+     font-size: 14px;
+     cursor: pointer;
+     transition-duration: 0.5s;
 }
-
-.filter-btn:hover {
-  transform: scale(1.03);
-  background-color: var(--bg-button);
+ .filter-btn:hover {
+     transform: scale(1.03);
+     background-color: ar(--bg-button-hover);
 }
-
-.card {
-  background: var(--background-color);
-  border: 1px solid var(--main-color);
-  border-radius: 8px;
-  padding: 12px;
-  box-sizing: border-box;
-  max-width: 100%;
+ .card {
+     background: var(--background-color);
+     border: 1px solid var(--main-color);
+     border-radius: 8px;
+     padding: 12px;
+     box-sizing: border-box;
+     max-width: 100%;
 }
-
-.table {
-  display: block;
-  border: 1px solid var(--main-color);
-  border-radius: 6px;
-  overflow: hidden;
-  overflow-x: auto;
+ .table {
+     display: block;
+     border: 1px solid var(--main-color);
+     border-radius: 6px;
+     overflow: hidden;
+     overflow-x: auto;
 }
-
-.row {
-  display: grid;
-  grid-template-columns: 80px 1fr 1fr 60px 1fr 110px 100px;
-  border-bottom: 1px solid var(--details-color);
-  align-items: center;
-  min-width: 800px;
+/* Grille Admin */
+ .row {
+     display: grid;
+     grid-template-columns: 110px 1fr 1fr 55px 1fr 100px 90px 80px 90px 160px;
+     border-bottom: 1px solid var(--details-color);
+     align-items: center;
+     min-width: 800px;
 }
-
-.row:not(.header-row) {
-  background: rgba(17, 17, 17, 0.6);
+ .row:not(.header-row) {
+     background: var(--bg-row-dark);
 }
-
-.row:not(.header-row):nth-child(even) {
-  background: rgba(255, 51, 51, 0.1);
+ .row:not(.header-row):nth-child(even) {
+     background: var(--bg-danger-light);
 }
-
-.cell {
-  padding: 10px 12px;
-  color: var(--text-color);
-  text-align: center;
+ .cell {
+     padding: 10px 12px;
+     color: var(--text-color);
+     text-align: center;
 }
-
-.header-row .cell {
-  font-weight: 700;
-  background: var(--bg-button);
-  color: var(--text-color);
+ .header-row .cell {
+     font-weight: 700;
+     background: var(--bg-button);
+     color: var(--text-color);
 }
-
-.row:last-child .cell {
-  border-bottom: none;
+ .row:last-child .cell {
+     border-bottom: none;
 }
-
-.btn-modifier {
-  display: block;
-  background-color: transparent;
-  color: var(--main-color);
-  border: 1px solid var(--main-color);
-  padding: 5px 10px;
-  border-radius: 4px;
-  width: 100%;
-  cursor: pointer;
+/* Surcharges index_admin */
+ .page {
+     padding: 20px;
 }
-
-.btn-modifier:hover{
-  background-color: var(--main-color);
-  color: var(--background-color);
-  box-shadow: 0 0 10px var(--main-color);
+/* Alertes */
+ .alerte {
+     padding: 10px 16px;
+     border-radius: 6px;
+     margin-bottom: 14px;
+     font-size: 14px;
+     box-sizing: border-box;
+}
+ .alerte-succes {
+     background: var(--bg-success-light);
+     border: 1px solid var(--success-color);
+     color: var(--success-color);
+}
+ .alerte-erreur {
+     background: rgba(255,51,51,0.1);
+     border: 1px solid var(--main-color);
+     color: var(--main-color);
+}
+/* Badges */
+ .badge-role {
+     display: inline-block;
+     padding: 2px 8px;
+     border-radius: 4px;
+     border: 1px solid currentColor;
+     font-size: 12px;
+     font-weight: 700;
+}
+ .badge-statut {
+     display: inline-block;
+     padding: 2px 8px;
+     border-radius: 4px;
+     border: 1px solid currentColor;
+     font-size: 12px;
+     font-weight: 700;
+}
+ .badge-statut.basique {
+     color: var(--details-color);
+     border-color: var(--details-color);
+}
+ .badge-statut.premium {
+     color: var(--premium-color);
+     border-color: var(--premium-color);
+     background: linear-gradient(135deg, var(--premium-grad-start), var(--premium-grad-end));
+}
+ .badge-statut.vip {
+     color: var(--vip-color);
+     border-color: var(--vip-color);
+     background: var(--vip-bg);
+     box-shadow: 0 0 8px var(--vip-color)66;
+}
+ .badge-blocage {
+     display: inline-block;
+     padding: 2px 8px;
+     border-radius: 4px;
+     border: 1px solid currentColor;
+     font-size: 12px;
+     font-weight: 700;
+}
+ .badge-blocage.actif {
+     color: var(--main-color);
+}
+ .badge-blocage.inactif {
+     color: var(--success-color);
+}
+/* Mode Édition */
+ .row.en-edition {
+     background: var(--bg-edition) !important;
+}
+ .form-edition {
+     display: flex;
+     flex-direction: column;
+     gap: 4px;
+     width: 100%;
+}
+ .form-edition select, .form-edition input[type="number"] {
+     background: var(--bg-input);
+     color: var(--text-color);
+     border: 1px solid var(--main-color);
+     border-radius: 4px;
+     padding: 4px 6px;
+     font-family: "Source Code Pro", monospace;
+     font-size: 12px;
+     width: 100%;
+     box-sizing: border-box;
+}
+ .form-edition select:focus, .form-edition input[type="number"]:focus {
+     outline: none;
+     box-shadow: 0 0 6px var(--main-color);
+}
+/* Compteurs & Données */
+ .nb-cmd {
+     font-weight: bold;
+}
+ .nb-cmd.zero {
+     color: var(--details-color);
+}
+ .nb-cmd.positif {
+     color: var(--info-color);
+     text-shadow: 0 0 6px var(--info-color)66;
+}
+ .user-count {
+     font-size: 13px;
+     color: var(--details-color);
+}
+ .user-count span {
+     color: var(--main-color);
+     font-weight: bold;
+}
+ .remise-display {
+     font-weight: bold;
+     font-size: 14px;
+}
+ .remise-display.zero {
+     color: var(--details-color);
+}
+ .remise-display.actif {
+     color: var(--success-color);
+     text-shadow: 0 0 6px var(--success-color)66;
+}
+/* Boutons d'action */
+ .cell-actions {
+     display: flex;
+     flex-direction: column;
+     gap: 5px;
+}
+ .btn-modifier, .btn-supprimer, .btn-valider, .btn-annuler-edit, .btn-confirm-suppr, .btn-annuler-suppr, .btn-debloquer {
+     display: block;
+     padding: 5px 10px;
+     border-radius: 4px;
+     width: 100%;
+     cursor: pointer;
+     font-family: "Source Code Pro", monospace;
+     font-size: 12px;
+     transition: 0.2s;
+     text-align: center;
+     text-decoration: none;
+     box-sizing: border-box;
+}
+ .btn-modifier {
+     background: transparent;
+     color: var(--main-color);
+     border: 1px solid var(--main-color);
+}
+ .btn-modifier:hover {
+     background: var(--main-color);
+     color: var(--background-color);
+     box-shadow: 0 0 10px var(--main-color);
+}
+ .btn-annuler-edit {
+     background: transparent;
+     color: var(--details-color);
+     border: 1px solid var(--details-color);
+}
+ .btn-annuler-edit:hover {
+     color: var(--text-color);
+     border-color: var(--text-color);
+}
+ .btn-valider {
+     background: var(--bg-success-btn);
+     color: var(--success-color);
+     border: 1px solid var(--success-color);
+}
+ .btn-valider:hover {
+     background: var(--success-color);
+     color: var(--background-color);
+     box-shadow: 0 0 10px var(--success-color);
+}
+ .btn-supprimer {
+     background: transparent;
+     color: var(--main-color);
+     border: 1px solid var(--main-color);
+}
+ .btn-supprimer:hover {
+     background: var(--main-color);
+     color: var(--background-color);
+     box-shadow: 0 0 10px var(--main-color);
+}
+ .btn-debloquer {
+     background: transparent;
+     color: var(--success-color);
+     border: 1px solid var(--success-color);
+}
+ .btn-debloquer:hover {
+     background: var(--success-color);
+     color: var(--background-color);
+     box-shadow: 0 0 10px var(--success-color);
+}
+/* Confirmation suppression */
+ .confirm-suppr-zone {
+     background: var(--bg-danger-zone);
+     border: 1px solid var(--main-color);
+     border-radius: 6px;
+     padding: 8px;
+     display: flex;
+     flex-direction: column;
+     gap: 6px;
+     font-size: 12px;
+     color: var(--text-color);
+}
+ .confirm-suppr-zone p {
+     margin: 0;
+     color: var(--main-color);
+     font-weight: bold;
+}
+ .btn-confirm-suppr {
+     background: var(--main-color);
+     color: var(--background-color);
+     border: none;
+     font-weight: bold;
+}
+ .btn-confirm-suppr:hover {
+     box-shadow: 0 0 12px var(--main-color);
+}
+ .btn-annuler-suppr {
+     background: transparent;
+     color: var(--details-color);
+     border: 1px solid var(--details-color);
+}
+ .btn-annuler-suppr:hover {
+     color: var(--text-color);
+     border-color: var(--text-color);
+}
+/* Écran vide / Accès refusé */
+ .ecran-vide {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     min-height: 50vh;
+     gap: 18px;
+     text-align: center;
+     padding: 30px;
+}
+ .ecran-vide .icone {
+     font-size: 70px;
+}
+ .ecran-vide h2 {
+     font-size: 22px;
+     margin: 0;
+}
+ .ecran-vide p {
+     color: var(--details-color);
+     font-size: 16px;
+     margin: 0;
 }
