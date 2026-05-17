@@ -1,5 +1,5 @@
 
-# Silicon Carne - Projet Web (Phase #1 & #2)
+# Silicon Carne - Projet Web (Phase #1/ #2 & #3)
 
 Bienvenue sur le dépôt du projet **Silicon Carne**.
 Ce projet a pour but de développer le site web d'une chaîne de restaurants au thème **composants de PC** et une charte graphique type "AMD", réalisé dans le cadre du cours d'Informatique 4.
@@ -97,6 +97,15 @@ Le système de navigation intègre un contrôle d'accès strict via les **Sessio
 ---
 
 ##  Historique des Phases de Développement
+
+### Contenu de la Phase #3 (Front-end Dynamique & Requêtes Asynchrones)
+Cette troisième phase se concentre sur l'expérience utilisateur (UX) via JavaScript et des requêtes serveur sans rechargement de page (AJAX/Fetch) :
+* **Validation dynamique des formulaires :** Vérification côté client avant envoi, affichage d'erreurs en temps réel, compteurs de caractères et fonction "afficher/masquer" pour les mots de passe.
+* **Profil interactif :** Modification asynchrone des informations utilisateur (adresse, téléphone) et sélection d'un avatar via une fenêtre modale (Pop-up).
+* **Gestion d'état (Cookies) :** Ajout d'une fonctionnalité de changement de thème/charte graphique sauvegardée dans le navigateur.
+* **Filtres & Catalogue :** Tri asynchrone des produits sur la page de présentation sans rafraîchissement.
+* **Fonctionnalités Staff dynamiques :** * Blocage/Déblocage d'utilisateurs en temps réel par l'administrateur.
+  * Modification dynamique des statuts de commandes (Restaurateur) et validation de livraison (Livreur).
 
 ### Contenu de la Phase #2 (Back-end & Logique)
 La seconde phase a dynamisé l'interface via des technologies côté serveur :
