@@ -214,7 +214,7 @@ body{
     display: block;
     border: none;
     border-radius: 5px;
-    background-color: rgba(255, 51, 51, 0.1);
+    background-color: var(--main-color-transparent);
     box-shadow: 0px 0px 8px 2px var(--main-color);
     color: var(--text-color);
     width:120px;

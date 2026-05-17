@@ -42,6 +42,7 @@
   <meta name="description" content="Page profil">
   <link rel="stylesheet" href="css/profil.css"/> 
   <link rel="stylesheet" href="css/style.css">
+  <script src="scripts/js/theme.js"></script>
   <script src="scripts/js/profil.js" defer > </script>
 </head>
 

@@ -6,10 +6,27 @@
     --main-color: #ff3333;
     --details-color: #b0b0b0;
     --text-color: #f5f5f5;
+    --main-color-transparent: rgba(255, 51, 51, 0.1);
+    --main-color-transparent_lower: rgba(255, 51, 51, 0.5);
+    --bg-image: url('../assets/icones/wallpaper.png');
 }
 
 html{
     scrollbar-color: var(--main-color) #111111;
+}
+
+html[data-theme="rose"] {
+    --main-color: #ff00ff;
+    --bg-image: url('../assets/icones/wallpaper_rose.png');
+    --main-color-transparent: rgba(255, 0, 255, 0.1);
+    --main-color-transparent_lower: rgba(255, 0, 255, 0.5);
+}
+
+html[data-theme="vert"] {
+    --main-color: #00ffcc;
+    --bg-image: url('../assets/icones/wallpaper_vert.png');
+    --main-color-transparent: rgba(0, 255, 204, 0.1);
+    --main-color-transparent_lower: rgba(0, 255, 204, 0.5);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -22,7 +39,7 @@ body{
     margin: 0;
     padding: 0;
     font-family: "Source Code Pro";
-    background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url("../assets/icones/wallpaper.png");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), var(--bg-image);
     background-size: cover;
     color: var(--text-color);
 }
@@ -126,7 +143,7 @@ nav #menu_classique li a:hover{
     display: block;
     border: none;
     border-radius: 5px;
-    background-color: rgba(255, 51, 51, 0.1);
+    background-color: var(--main-color-transparent);
     box-shadow: 0px 0px 8px 2px var(--main-color);
     color: var(--text-color);
     width:120px;
@@ -138,6 +155,40 @@ nav #menu_classique li a:hover{
 .button_log:hover{
     border: solid var(--main-color) 2px;
 }
+
+nav #menu_classique li.container-themes{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100px;
+    height: 30px;
+}
+
+.btn-theme{
+    display: block;
+    border-radius: 15px;
+    border: none;
+    width: 20px;
+    height: 20px;
+    transition-duration: 0.5s;
+}
+
+.btn-theme:hover{
+    transform: scale(1.1);
+}
+
+.btn-theme[data-color="rouge"]{
+    background-color: #ff3333;
+}
+
+.btn-theme[data-color="vert"]{
+    background-color: #00ffcc;
+}
+
+.btn-theme[data-color="rose"]{
+    background-color: #ff00ff;
+}
+
 
 /*menu hamburger pour le responsive*/
 
@@ -222,6 +273,14 @@ nav #menu_classique li a:hover{
     .menu-checkbox:checked ~ .hamburger .line:nth-child(3) {
       transform: translateY(-10px) rotate(-45deg);
     }
+
+    .nav-menu li.container-themes {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100px;
+    margin: 0 auto;
+}
 }
 
 @media (max-width: 768px) {

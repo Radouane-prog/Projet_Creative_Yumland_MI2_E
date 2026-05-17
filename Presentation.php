@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Présentation</title>
+    <script src="scripts/js/theme.js"></script>
 </head>
 <body>
     
@@ -130,6 +131,8 @@
     ?>
 
     <script>
+        // je met les balises scripts ici car j'utilise les variables php que j'ai déclaré juste au dessus donc à la fin du body. C'est pour ça que je ne les mets pas dans le head pour ce 
+        // fichier, j'aurai dû arranger le php pour mettre tout le php avant la balise html et là j'aurai pu mettre les balises script dans le head.
         const donneesInitiales = {
             menus: <?= json_encode($menus_pour_js) ?>,
             plats: <?= json_encode($plats) ?>

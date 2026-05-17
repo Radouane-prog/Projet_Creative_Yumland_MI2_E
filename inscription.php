@@ -114,7 +114,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/inscription.css"/>
   <link rel="stylesheet" href="css/style.css">
-    <script src="scripts/js/inscription.js" defer> </script>
+  <script src="scripts/js/theme.js"></script>
+  <script src="scripts/js/inscription.js" defer> </script>
 
 </head>
 

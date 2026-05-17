@@ -206,6 +206,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
     <link rel="stylesheet" href="css/style_commande.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Commandes - Silicon Carne</title>
+    <script src="scripts/js/theme.js"></script>
     <style>
         /* === Surcharges page restaurateur === */
 

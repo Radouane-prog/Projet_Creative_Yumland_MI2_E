@@ -106,6 +106,7 @@ if ($login_livreur) {
     <link rel="stylesheet" href="css/style_livraison.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Livraison - Silicon Carne</title>
+    <script src="scripts/js/theme.js"></script>
     <style>
         /* === Surcharges spécifiques livreur === */
 

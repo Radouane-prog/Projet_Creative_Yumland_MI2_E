@@ -12,6 +12,11 @@
         </div>
 
         <ul id="menu_classique">
+            <li class="container-themes">
+                <button class="btn-theme" data-color="rouge"></button>
+                <button class="btn-theme" data-color="rose"></button>
+                <button class="btn-theme" data-color="vert"></button>
+            </li>
             <li><a href="Accueil.php">Accueil</a></li>
             <li><a href="Presentation.php">Présentation</a></li>
 
@@ -42,6 +47,11 @@
         </label>
 
         <ul class="nav-menu">
+            <li class="container-themes">
+                <button class="btn-theme" data-color="rouge"></button>
+                <button class="btn-theme" data-color="rose"></button>
+                <button class="btn-theme" data-color="vert"></button>
+            </li>
             <li><a href="Accueil.php">Accueil</a></li>
             <li><a href="Presentation.php">Présentation</a></li>
 

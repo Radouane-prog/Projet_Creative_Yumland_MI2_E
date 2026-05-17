@@ -138,6 +138,7 @@ $couleurs_role = [
     <link rel="stylesheet" href="css/style.css"/>
     <link rel="stylesheet" href="css/style_admin.css"/>
     <title>Administrateur - Silicon Carne</title>
+    <script src="scripts/js/theme.js"></script>
     <style>
         .page { padding: 20px; }
 

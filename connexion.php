@@ -73,6 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta name="description" content="Page connexion">
   <link rel="stylesheet" href="css/connexion.css"/>
   <link rel="stylesheet" href="css/style.css"/>
+  <script src="scripts/js/theme.js"></script>
   <script src="scripts/js/connexion.js" defer></script>
 </head>
 
