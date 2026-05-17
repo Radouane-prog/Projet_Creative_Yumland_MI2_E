@@ -96,3 +96,82 @@ main a:hover {
         margin-bottom: 15px;
         border: 1px solid #ff3333;
      }
+
+     /* ========================================= */
+/* DYNAMISME ET ANIMATIONS (PHASE 3)         */
+/* ========================================= */
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.input-wrapper input {
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 40px; 
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    filter: grayscale(100%);
+    transition: 0.3s;
+}
+
+.toggle-password:hover {
+    filter: grayscale(0%);
+    transform: scale(1.2);
+}
+
+.error-js {
+    display: block;
+    color: var(--main-color);
+    font-size: 13px;
+    margin-top: -10px;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(255, 51, 51, 0.5);
+    min-height: 15px; 
+}
+
+/*animation de secousse grâce*/
+.shake {
+    animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-2px, 0, 0); }
+    20%, 80% { 
+        transform: translate3d(4px, 0, 0); 
+        box-shadow: 0px 0px 25px 5px var(--main-color); /* Flash rouge vif */
+    }
+    30%, 50%, 70% { transform: translate3d(-8px, 0, 0); }
+    40%, 60% { transform: translate3d(8px, 0, 0); }
+}
+
+
+.styled {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.styled::before {
+    content: '';
+    position: absolute;
+    top: 0; 
+    left: -100%;
+    width: 50%; 
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: 0.5s ease-in-out;
+    transform: skewX(-20deg);
+    z-index: -1;
+}
+
+.styled:hover::before {
+    left: 150%;
+}

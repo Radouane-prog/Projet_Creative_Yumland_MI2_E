@@ -29,6 +29,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         
                         if (password_verify($password_saisi, $user['password'])) {
                             $mot_de_passe_correct = true;
+
+                            if (isset($user['suspended']) && $user['suspended'] === true) {
+                                $erreurs[] = "Accès refusé : Votre compte a été suspendu par le système.";
+                            } 
+                            else {
+
                             
                             $_SESSION['connecte'] = true;
                             $_SESSION['login'] = $user['login'];
@@ -42,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             
                             header("Location: Accueil.php");
                             exit; 
+                            }
                         }
                         break;  
                     }
@@ -66,6 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta name="description" content="Page connexion">
   <link rel="stylesheet" href="css/connexion.css"/>
   <link rel="stylesheet" href="css/style.css"/>
+  <script src="scripts/js/connexion.js" defer></script>
 </head>
 
 <body>
@@ -85,14 +93,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         <?php endif; ?>
         
-        <form action="connexion.php" method="POST"> 
+        <form action="connexion.php" method="POST" id="form_connexion"> 
             <label for="user">Nom d'utilisateur :</label>
-            <input type="text" id="user" name="user" value="<?= $login_saisi ?>" placeholder="kikoudu95" required><br>
+            <input type="text" id="user" name="user" value="<?= htmlspecialchars($login_saisi) ?>" placeholder="kikoudu95" >
+            <span class="error-js" id="err_user"></span>
             
             <label for="password">Mot de passe :</label>
-            <input type="password" id="password" name="password" placeholder="••••••••" required><br>
+            <div class="input-wrapper">
+                <input type="password" id="password" name="password" placeholder="••••••••" >
+                <span class="toggle-password" onclick="togglePassword('password', this)">👁️</span>
+            </div>
+            <span class="error-js" id="err_password"></span>
             
-            <input class="styled" type="submit" value="Se connecter" />
+            <input class="styled" type="submit" value="[ S'IDENTIFIER ]" />
         </form>
     </div>
     
