@@ -51,8 +51,8 @@ if ($acces_admin && $_SERVER['REQUEST_METHOD'] === 'POST' && in_array(($_POST['a
         if ($modifie) {
             file_put_contents($fichier_users, json_encode($utilisateurs, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
             $message_succes = ($_POST['action'] ?? '') === 'bloquer'
-                ? "Utilisateur \"$login_cible\" bloquÃ©."
-                : "Utilisateur \"$login_cible\" dÃ©bloquÃ©.";
+                ? "Utilisateur \"$login_cible\" bloqué."
+                : "Utilisateur \"$login_cible\" déloqué.";
         } else {
             $message_erreur = "Utilisateur introuvable.";
         }
@@ -84,16 +84,16 @@ if ($acces_admin && $_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?
         }
         unset($u);
         file_put_contents($fichier_users, json_encode($utilisateurs, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-        $message_succes = "Utilisateur \"$login_cible\" mis Ã  jour.";
+        $message_succes = "Utilisateur \"$login_cible\" mis à  jour.";
         // On redirige pour vider le POST et fermer le formulaire
         header("Location: index_admin.php?succes=" . urlencode($message_succes));
         exit;
     } else {
-        $message_erreur = "DonnÃ©es invalides.";
+        $message_erreur = "Données invalides.";
     }
 }
 
-// Rechargement aprÃ¨s action POST
+// Rechargement aprés action POST
 if (file_exists($fichier_users)) {
     $u = json_decode(file_get_contents($fichier_users), true);
     if (is_array($u)) $utilisateurs = $u;
@@ -298,9 +298,9 @@ $couleurs_role = [
     <main class="page">
         <?php if (!$acces_admin): ?>
             <div class="ecran-vide">
-                <div class="icone">ðŸ”’</div>
-                <h2>AccÃ¨s non autorisÃ©</h2>
-                <p>Vous devez Ãªtre connectÃ© en tant qu'administrateur.</p>
+                <div class="icone">🔒</div>
+                <h2>Accès non autorisé</h2>
+                <p>Vous devez être connecté en tant qu'administrateur.</p>
             </div>
         <?php else: ?>
         <header class="header">
@@ -309,11 +309,11 @@ $couleurs_role = [
                 <p class="user-count">
                     <span><?= count($utilisateurs) ?></span>
                     utilisateur<?= count($utilisateurs) > 1 ? 's' : '' ?>
-                    enregistrÃ©<?= count($utilisateurs) > 1 ? 's' : '' ?>
+                    enregistré<?= count($utilisateurs) > 1 ? 's' : '' ?>
                 </p>
                 <?php if ($filtre_actif): ?>
                     <a href="index_admin.php" class="filter-btn" style="text-decoration:none;background:rgba(255,51,51,0.4);">
-                        &gt;0 commandes âœ•
+                        &gt;0 commandes ✖
                     </a>
                 <?php else: ?>
                     <a href="index_admin.php?filtre=1" class="filter-btn" style="text-decoration:none;">
@@ -324,10 +324,10 @@ $couleurs_role = [
         </header>
 
         <?php if (!empty($message_succes)): ?>
-            <div class="alerte alerte-succes">âœ“ <?= $message_succes ?></div>
+            <div class="alerte alerte-succes">✓ <?= $message_succes ?></div>
         <?php endif; ?>
         <?php if (!empty($message_erreur)): ?>
-            <div class="alerte alerte-erreur">âœ— <?= $message_erreur ?></div>
+            <div class="alerte alerte-erreur">✗ <?= $message_erreur ?></div>
         <?php endif; ?>
 
         <section class="card">
@@ -337,9 +337,9 @@ $couleurs_role = [
                 <div class="row header-row">
                     <div class="cell">Login</div>
                     <div class="cell">Nom</div>
-                    <div class="cell">PrÃ©nom</div>
-                    <div class="cell">Ã‚ge</div>
-                    <div class="cell">RÃ´le</div>
+                    <div class="cell">Prénom</div>
+                    <div class="cell">Âge</div>
+                    <div class="cell">Rôle</div>
                     <div class="cell">Statut</div>
                     <div class="cell">Blocage</div>
                     <div class="cell">Remise</div>
@@ -350,7 +350,7 @@ $couleurs_role = [
                 <?php if (empty($utilisateurs)): ?>
                     <div class="row">
                         <div class="cell" style="grid-column:1/-1;color:var(--details-color);text-align:center;">
-                            Aucun utilisateur enregistrÃ©.
+                            Aucun utilisateur enregistré.
                         </div>
                     </div>
                 <?php else: ?>
@@ -378,7 +378,7 @@ $couleurs_role = [
                         <div class="cell"><?= calculer_age($user['naissance']  ?? '') ?></div>
 
                         <?php if ($est_en_edition): ?>
-                            <!-- ===== MODE Ã‰DITION ===== -->
+                            <!-- ===== MODE ÉDITION ===== -->
 
                             <!-- Cellule RÃ´le : select -->
                             <div class="cell">
@@ -406,7 +406,7 @@ $couleurs_role = [
 
                             <div class="cell">
                                 <span class="badge-blocage <?= $suspended ? 'actif' : 'inactif' ?>">
-                                    <?= $suspended ? 'bloquÃ©' : 'actif' ?>
+                                    <?= $suspended ? 'bloqué' : 'actif' ?>
                                 </span>
                             </div>
 
@@ -422,7 +422,7 @@ $couleurs_role = [
 
                             <!-- Cellule Actions en Ã©dition -->
                             <div class="cell cell-actions">
-                                <button type="submit" class="btn-valider" form="form-edit-<?= $safe ?>">âœ“ Valider</button>
+                                <button type="submit" class="btn-valider" form="form-edit-<?= $safe ?>">✓ Valider</button>
                                 </form>
                                 <a href="index_admin.php<?= $filtre_actif ? '?filtre=1' : '' ?>"
                                    class="btn-annuler-edit">Annuler</a>
@@ -448,7 +448,7 @@ $couleurs_role = [
 
                             <div class="cell">
                                 <span class="badge-blocage <?= $suspended ? 'actif' : 'inactif' ?>">
-                                    <?= $suspended ? 'bloquÃ©' : 'actif' ?>
+                                    <?= $suspended ? 'bloqué' : 'actif' ?>
                                 </span>
                             </div>
 
@@ -469,7 +469,7 @@ $couleurs_role = [
                                 <?php if ($est_a_confirmer): ?>
                                     <!-- Confirmation blocage inline -->
                                     <div class="confirm-suppr-zone">
-                                        <p>âš  Bloquer ?</p>
+                                        <p>⚠️  Bloquer ?</p>
                                         <form method="POST" action="index_admin.php">
                                             <input type="hidden" name="action" value="bloquer"/>
                                             <input type="hidden" name="login"  value="<?= $safe ?>"/>
@@ -479,17 +479,17 @@ $couleurs_role = [
                                            class="btn-annuler-suppr">Annuler</a>
                                     </div>
                                 <?php else: ?>
-                                    <!-- Bouton Modifier â†’ active le mode Ã©dition via GET -->
+                                    <!-- Bouton Modifier → active le mode Ã©dition via GET -->
                                     <a href="index_admin.php?edit=<?= urlencode($login) ?><?= $filtre_actif ? '&filtre=1' : '' ?>"
                                        class="btn-modifier">Modifier</a>
                                     <?php if ($suspended): ?>
                                         <form method="POST" action="index_admin.php">
                                             <input type="hidden" name="action" value="debloquer"/>
                                             <input type="hidden" name="login" value="<?= $safe ?>"/>
-                                            <button type="submit" class="btn-debloquer">DÃ©bloquer</button>
+                                            <button type="submit" class="btn-debloquer">Débloquer</button>
                                         </form>
                                     <?php else: ?>
-                                        <!-- Bouton Bloquer â†’ demande confirmation via GET -->
+                                        <!-- Bouton Bloquer → demande confirmation via GET -->
                                         <a href="index_admin.php?confirm_suppr=<?= urlencode($login) ?><?= $filtre_actif ? '&filtre=1' : '' ?>"
                                            class="btn-supprimer">Bloquer</a>
                                     <?php endif; ?>
@@ -511,7 +511,7 @@ $couleurs_role = [
         <div id="container_footer">
             <p id="copyright">
                 <span class="commentaires">//</span>
-                Â© 2026 Silicon Carne. auteurs : Radouane HADJ RABAH, Rayene FREJ, Matthieu VANNEREAU
+                © 2026 Silicon Carne. auteurs : Radouane HADJ RABAH, Rayene FREJ, Matthieu VANNEREAU
             </p>
         </div>
     </footer>

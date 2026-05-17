@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 date_default_timezone_set('Europe/Paris');
 
-//  Fichiers de donnÃ©es 
+//  Fichiers de données 
 $fichier_commandes = __DIR__ . '/data/commandes.json';
 $fichier_users     = __DIR__ . '/data/utilisateurs.json';
 
@@ -20,7 +20,7 @@ if (file_exists($fichier_users)) {
     if (is_array($u)) $utilisateurs = $u;
 }
 
-//  Identification du livreur connectÃ© 
+//  Identification du livreur connecté 
 $connecte      = $_SESSION['connecte'] ?? false;
 $login_livreur = $_SESSION['login'] ?? null;
 $role_connecte = $_SESSION['role']  ?? null;
@@ -52,7 +52,7 @@ if (
             $fichier_commandes,
             json_encode($commandes, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
         );
-        // Rechargement aprÃ¨s Ã©criture
+        // Rechargement aprés écriture
         $commandes = json_decode(file_get_contents($fichier_commandes), true) ?? [];
     }
 }
@@ -79,7 +79,7 @@ function lien_maps_client(?array $client): string
     return '#';
 }
 
-// Recherche des commandes attribuÃ©es au livreur
+// Recherche des commandes attribuées au livreur
 $commandes_actives = [];
 if ($login_livreur) {
     foreach ($commandes as $cmd) {
@@ -107,7 +107,7 @@ if ($login_livreur) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Livraison - Silicon Carne</title>
     <style>
-        /* === Surcharges spÃ©cifiques livreur === */
+        /* === Surcharges spécifiques livreur === */
 
         .page {
             max-width: 480px;
@@ -115,7 +115,7 @@ if ($login_livreur) {
             padding: 15px;
         }
 
-        /* NumÃ©ro de commande */
+        /* Numéro de commande */
         .livraison-info {
             text-align: center;
             margin-bottom: 20px;
@@ -183,7 +183,7 @@ if ($login_livreur) {
             font-weight: normal;
         }
 
-        /* Boutons - min 90px, police 22px+, impossibles Ã  rater avec des gants */
+        /* Boutons - min 90px, police 22px+, impossibles à  rater avec des gants */
         .boutons-container {
             display: flex;
             flex-direction: column;
@@ -222,7 +222,7 @@ if ($login_livreur) {
         }
         .btn-maps:hover { box-shadow: 0 0 25px rgba(0,229,255,0.4); }
 
-        /* LivrÃ© */
+        /* Livré */
         .btn-livre {
             background-color: rgba(57,255,20,0.2);
             border: 2px solid rgba(57,255,20,0.35) !important;
@@ -258,7 +258,7 @@ if ($login_livreur) {
             background: rgba(255,51,51,0.14);
         }
 
-        /* Ã‰cran vide / non connectÃ© */
+        /* écran vide / non connecté */
         .ecran-vide {
             display: flex;
             flex-direction: column;
@@ -274,7 +274,7 @@ if ($login_livreur) {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 100%; /* S'assure que Ã§a ne dÃ©passe pas la boÃ®te parent */
+            max-width: 100%; /* S'assure que n'a ne dépasse pas la boite parent */
         }
         .ecran-vide .icone { font-size: 70px; }
         .ecran-vide h2 { font-size: 22px; margin: 0; }
@@ -288,27 +288,27 @@ if ($login_livreur) {
     <main class="page">
 
         <?php if (!$acces_livreur): ?>
-            <!-- ===== CAS 0 : Pas connectÃ© ou mauvais rÃ´le ===== -->
+            <!-- ===== CAS 0 : Pas connecté ou mauvaise connx ===== -->
             <div class="ecran-vide">
-                <div class="icone">ðŸ”’</div>
-                <h2>AccÃ¨s non autorisÃ©</h2>
-                <p>Vous devez Ãªtre connectÃ© en tant que livreur.</p>
+                <div class="icone">🔒</div>
+                <h2>Accés non autorisé</h2>
+                <p>Vous devez être connecté en tant que livreur.</p>
             </div>
 
         <?php elseif (empty($commandes_actives)): ?>
-            <!-- ===== CAS 1 : ConnectÃ© mais aucune commande attribuÃ©e ===== -->
+            <!-- ===== CAS 1 : Connecté mais aucune commande attribuée ===== -->
             <div class="ecran-vide" data-aucune-livraison>
-                <div class="icone">âœ…</div>
+                <div class="icone">✅</div>
                 <h2>Aucune livraison en cours</h2>
-                <p>Vous n'avez pas de commande attribuÃ©e pour le moment.</p>
+                <p>Vous n'avez pas de commande attribuée pour le moment.</p>
                 <p style="margin-top:8px;">En attente d'une nouvelle mission...</p>
             </div>
 
         <?php else: ?>
             <div class="ecran-vide" data-aucune-livraison style="display:none;">
-                <div class="icone">âœ…</div>
+                <div class="icone">✅</div>
                 <h2>Aucune livraison en cours</h2>
-                <p>Vous n'avez pas de commande attribuÃ©e pour le moment.</p>
+                <p>Vous n'avez pas de commande attribuée pour le moment.</p>
                 <p style="margin-top:8px;">En attente d'une nouvelle mission...</p>
             </div>
 
@@ -319,7 +319,7 @@ if ($login_livreur) {
                     $lien_maps = $livraison['lien_maps'];
                 ?>
                 <section class="carte-livraison" data-carte-livraison>
-                    <!-- NumÃ©ro de commande -->
+                    <!-- Numéro de commande -->
                     <div class="livraison-info">
                         <h1><span class="commentaires">//</span> Livraison en cours</h1>
                         <div class="commande-numero">
@@ -348,11 +348,11 @@ if ($login_livreur) {
                         <div class="info-ligne">
                             <span class="info-label">Adresse</span>
                             <span class="info-valeur">
-                                <?= htmlspecialchars($client['adresse'] ?? 'Adresse non renseignÃ©e') ?>
+                                <?= htmlspecialchars($client['adresse'] ?? 'Adresse non renseignée') ?>
                             </span>
                         </div>
 
-                        <!-- Infos complÃ©mentaires (digicode, Ã©tage...) depuis le champ "infos" -->
+                        <!-- Infos complémentaires (digicode, étage...) depuis le champ "infos" -->
                         <?php if (!empty($client['infos'])): ?>
                         <div class="info-ligne">
                             <span class="info-label">Digicode / Ã‰tage / Infos</span>
@@ -362,21 +362,21 @@ if ($login_livreur) {
                         </div>
                         <?php endif; ?>
 
-                        <!-- TÃ©lÃ©phone cliquable -->
+                        <!-- Téléphone cliquable -->
                         <div class="info-ligne">
-                            <span class="info-label">ðŸ“ž TÃ©lÃ©phone</span>
+                            <span class="info-label">📞 Téléphone</span>
                             <span class="info-valeur tel">
                                 <a href="tel:<?= htmlspecialchars($client['tel'] ?? '') ?>"
                                    style="color:inherit;text-decoration:none;">
-                                    <?= htmlspecialchars($client['tel'] ?? 'Non renseignÃ©') ?>
+                                    <?= htmlspecialchars($client['tel'] ?? 'Non renseigné') ?>
                                 </a>
                             </span>
                         </div>
 
-                        <!-- Articles commandÃ©s -->
+                        <!-- Articles commandés -->
                         <?php if (!empty($commande_active['articles'])): ?>
                         <div class="info-ligne">
-                            <span class="info-label">ðŸ›’ Articles</span>
+                            <span class="info-label">🛒 Articles</span>
                             <span class="info-valeur secondaire">
                                 <?= htmlspecialchars(implode(', ', $commande_active['articles'])) ?>
                             </span>
@@ -386,7 +386,7 @@ if ($login_livreur) {
                         <!-- Montant -->
                         <?php if (isset($commande_active['montant'])): ?>
                         <div class="info-ligne">
-                            <span class="info-label">ðŸ’° Montant</span>
+                            <span class="info-label">💰 Montant</span>
                             <span class="info-valeur">
                                 <?= number_format((float)$commande_active['montant'], 2, ',', ' ') ?> â‚¬
                             </span>
@@ -403,7 +403,7 @@ if ($login_livreur) {
                            target="_blank"
                            rel="noopener noreferrer"
                            class="btn-maps">
-                            <span class="btn-icon">â†’</span>
+                            <span class="btn-icon">→</span>
                             <span>OUVRIR MAPS</span>
                         </a>
 
@@ -413,8 +413,8 @@ if ($login_livreur) {
                                 class="btn-livre"
                                 data-valider-livraison
                                 data-id-commande="<?= htmlspecialchars($commande_active['id']) ?>">
-                            <span class="btn-icon">âœ“</span>
-                            <span>Livraison effectuÃ©e</span>
+                            <span class="btn-icon">✓</span>
+                            <span>Livraison effectuée</span>
                         </button>
 
                         <!-- ADRESSE INTROUVABLE -->
@@ -422,7 +422,7 @@ if ($login_livreur) {
                             <input type="hidden" name="action"      value="abandonnee"/>
                             <input type="hidden" name="commande_id" value="<?= htmlspecialchars($commande_active['id']) ?>"/>
                             <button type="submit" class="btn-abandonne">
-                                <span class="btn-icon">âœ—</span>
+                                <span class="btn-icon">✗</span>
                                 <span>ADRESSE INTROUVABLE</span>
                             </button>
                         </form>
