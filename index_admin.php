@@ -12,7 +12,6 @@ $commandes      = [];
 $message_succes = "";
 $message_erreur = "";
 
-// --- Chargement ---
 if (file_exists($fichier_users)) {
     $u = json_decode(file_get_contents($fichier_users), true);
     if (is_array($u)) $utilisateurs = $u;
@@ -22,20 +21,17 @@ if (file_exists($fichier_commandes)) {
     if (is_array($c)) $commandes = $c;
 }
 
-// Identification de l'admin connecte, meme logique que la page livreur
 $connecte      = $_SESSION['connecte'] ?? false;
 $login_admin   = $_SESSION['login'] ?? null;
 $role_connecte = $_SESSION['role']  ?? null;
 $acces_admin   = ($connecte === true && $login_admin !== null && $role_connecte === 'admin');
 
-// --- Comptage commandes par login ---
 $nb_commandes = [];
 foreach ($commandes as $cmd) {
     $login = $cmd['login_client'] ?? $cmd['login'] ?? $cmd['utilisateur'] ?? null;
     if ($login) $nb_commandes[$login] = ($nb_commandes[$login] ?? 0) + 1;
 }
 
-// --- ACTION POST : Bloquer / Debloquer ---
 if ($acces_admin && $_SERVER['REQUEST_METHOD'] === 'POST' && in_array(($_POST['action'] ?? ''), ['bloquer', 'debloquer'])) {
     $login_cible = trim($_POST['login'] ?? '');
     if (!empty($login_cible)) {
@@ -59,7 +55,6 @@ if ($acces_admin && $_SERVER['REQUEST_METHOD'] === 'POST' && in_array(($_POST['a
     }
 }
 
-// --- ACTION POST : Modifier rÃ´le (+ statut + remise) ---
 if ($acces_admin && $_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'modifier') {
     $login_cible  = trim($_POST['login']  ?? '');
     $nouveau_role = trim($_POST['role']   ?? '');
@@ -93,32 +88,24 @@ if ($acces_admin && $_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?
     }
 }
 
-// Rechargement aprés action POST
 if (file_exists($fichier_users)) {
     $u = json_decode(file_get_contents($fichier_users), true);
     if (is_array($u)) $utilisateurs = $u;
 }
 
-// --- RÃ©cupÃ©ration messages GET (aprÃ¨s redirect) ---
 if (!empty($_GET['succes']))  $message_succes = htmlspecialchars($_GET['succes']);
 if (!empty($_GET['erreur']))  $message_erreur = htmlspecialchars($_GET['erreur']);
 
-// --- ParamÃ¨tres GET de navigation ---
-// Ligne en cours d'Ã©dition
 $login_en_edition   = $_GET['edit']          ?? null;
-// Login en attente de confirmation de blocage
 $login_a_confirmer  = $_GET['confirm_suppr'] ?? null;
-// Filtre >0 commandes
 $filtre_actif       = isset($_GET['filtre']) && $_GET['filtre'] === '1';
 
-// --- Helpers ---
 function calculer_age(string $naissance): string {
     if (empty($naissance)) return '-';
     try { return (string)(new DateTime())->diff(new DateTime($naissance))->y; }
     catch (Exception $e) { return '-'; }
 }
 
-// URL courante sans les paramÃ¨tres de navigation (pour construire les liens proprement)
 function url_base(): string {
     return 'index_admin.php';
 }
@@ -138,6 +125,7 @@ $couleurs_role = [
     <link rel="stylesheet" href="css/style.css"/>
     <link rel="stylesheet" href="css/style_admin.css"/>
     <title>Administrateur - Silicon Carne</title>
+<<<<<<< HEAD
     <script src="scripts/js/theme.js"></script>
     <style>
         .page { padding: 20px; }
@@ -291,6 +279,8 @@ $couleurs_role = [
         .ecran-vide h2 { font-size: 22px; margin: 0; }
         .ecran-vide p { color: var(--details-color); font-size: 16px; margin: 0; }
     </style>
+=======
+>>>>>>> 9ed778ab21c56a74948d48fbbcdf08ade6b2f042
     <script src="scripts/js/script1.js" defer></script>
 </head>
 <body>
@@ -335,7 +325,6 @@ $couleurs_role = [
         <section class="card">
             <div class="table">
 
-                <!-- En-tÃªte -->
                 <div class="row header-row">
                     <div class="cell">Login</div>
                     <div class="cell">Nom</div>
@@ -366,7 +355,7 @@ $couleurs_role = [
                         $nb_cmd  = $nb_commandes[$login] ?? 0;
                         $safe    = htmlspecialchars($login, ENT_QUOTES);
 
-                        // Faut-il afficher cette ligne ? (filtre >0 commandes)
+                        // Appliquer le filtre
                         if ($filtre_actif && $nb_cmd === 0) continue;
 
                         $est_en_edition   = ($login_en_edition   === $login);
@@ -380,8 +369,6 @@ $couleurs_role = [
                         <div class="cell"><?= calculer_age($user['naissance']  ?? '') ?></div>
 
                         <?php if ($est_en_edition): ?>
-                            <!-- ===== MODE ÉDITION ===== -->
-
                             <!-- Cellule RÃ´le : select -->
                             <div class="cell">
                                 <form class="form-edition" method="POST" action="index_admin.php" id="form-edit-<?= $safe ?>">
@@ -407,22 +394,9 @@ $couleurs_role = [
                             </div>
 
                             <div class="cell">
-                                <span class="badge-blocage <?= $suspended ? 'actif' : 'inactif' ?>">
-                                    <?= $suspended ? 'bloqué' : 'actif' ?>
-                                </span>
-                            </div>
-
-                            <!-- Cellule Remise : input number -->
-                            <div class="cell">
-                                    <input type="number" name="remise" min="0" max="100" step="1" value="<?= (int)$remise ?>"/>
-                            </div>
-
-                            <!-- Cellule Commandes (lecture seule) -->
-                            <div class="cell">
                                 <span class="nb-cmd <?= $nb_cmd > 0 ? 'positif' : 'zero' ?>"><?= $nb_cmd ?></span>
                             </div>
 
-                            <!-- Cellule Actions en Ã©dition -->
                             <div class="cell cell-actions">
                                 <button type="submit" class="btn-valider" form="form-edit-<?= $safe ?>">✓ Valider</button>
                                 </form>
@@ -431,9 +405,7 @@ $couleurs_role = [
                             </div>
 
                         <?php else: ?>
-                            <!-- ===== MODE AFFICHAGE ===== -->
 
-                            <!-- RÃ´le -->
                             <div class="cell">
                                 <span class="badge-role"
                                     style="color:<?= $couleur ?>;border-color:<?= $couleur ?>;box-shadow:0 0 6px <?= $couleur ?>44;">
@@ -441,7 +413,6 @@ $couleurs_role = [
                                 </span>
                             </div>
 
-                            <!-- Statut -->
                             <div class="cell">
                                 <span class="badge-statut <?= htmlspecialchars($statut) ?>">
                                     <?= htmlspecialchars($statut) ?>
@@ -449,27 +420,17 @@ $couleurs_role = [
                             </div>
 
                             <div class="cell">
-                                <span class="badge-blocage <?= $suspended ? 'actif' : 'inactif' ?>">
-                                    <?= $suspended ? 'bloqué' : 'actif' ?>
-                                </span>
-                            </div>
-
-                            <!-- Remise -->
-                            <div class="cell">
                                 <span class="remise-display <?= $remise > 0 ? 'actif' : 'zero' ?>">
                                     <?= (int)$remise ?>%
                                 </span>
                             </div>
 
-                            <!-- Commandes -->
                             <div class="cell">
                                 <span class="nb-cmd <?= $nb_cmd > 0 ? 'positif' : 'zero' ?>"><?= $nb_cmd ?></span>
                             </div>
 
-                            <!-- Actions normales -->
                             <div class="cell cell-actions">
                                 <?php if ($est_a_confirmer): ?>
-                                    <!-- Confirmation blocage inline -->
                                     <div class="confirm-suppr-zone">
                                         <p>⚠️ Bloquer ?</p>
                                         <form method="POST" action="index_admin.php">
@@ -481,7 +442,6 @@ $couleurs_role = [
                                            class="btn-annuler-suppr">Annuler</a>
                                     </div>
                                 <?php else: ?>
-                                    <!-- Bouton Modifier → active le mode Ã©dition via GET -->
                                     <a href="index_admin.php?edit=<?= urlencode($login) ?><?= $filtre_actif ? '&filtre=1' : '' ?>"
                                        class="btn-modifier">Modifier</a>
                                     <?php if ($suspended): ?>

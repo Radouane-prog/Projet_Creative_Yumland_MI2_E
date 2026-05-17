@@ -4,7 +4,6 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 date_default_timezone_set('Europe/Paris');
 
-// --- Fichiers de donnÃ©es ---
 $fichier_commandes = 'data/commandes.json';
 $fichier_users     = 'data/utilisateurs.json';
 $fichier_plats     = 'data/plats.json';
@@ -18,8 +17,7 @@ $menus        = [];
 if (file_exists($fichier_commandes)) {
     $c = json_decode(file_get_contents($fichier_commandes), true);
     if (is_array($c)) {
-        // Le restaurateur ne voit pas les commandes en attente de paiement
-        // ni celles refusees : elles ne le concernent pas
+        // Masquer les commandes en attente de paiement et refusées
         $statuts_masques = ["attente_paiement", "refusee"];
         $commandes = array_values(array_filter($c, fn($cmd) => !in_array($cmd["statut"] ?? "", $statuts_masques)));
     }
@@ -37,15 +35,11 @@ if (file_exists($fichier_menus)) {
     if (is_array($m)) $menus = $m;
 }
 
-// Identification du restaurateur connecte, meme logique que la page livreur
 $connecte      = $_SESSION['connecte'] ?? false;
 $login_resto   = $_SESSION['login'] ?? null;
 $role_connecte = $_SESSION['role']  ?? null;
 $acces_resto   = ($connecte === true && $login_resto !== null && $role_connecte === 'resto');
 
-// --- Helpers ---
-
-// Normalise un champ selon les deux formats possibles de commandes.json
 function get_login_client(array $cmd): string {
     return $cmd['login_client'] ?? $cmd['client'] ?? '';
 }
@@ -53,7 +47,6 @@ function get_id(array $cmd): string {
     return $cmd['id'] ?? '';
 }
 
-// Trouve un utilisateur par login
 function trouver_user(array $utilisateurs, string $login): ?array {
     foreach ($utilisateurs as $u) {
         if (($u['login'] ?? '') === $login) return $u;
@@ -67,7 +60,6 @@ function livreurs_disponibles(array $utilisateurs): array {
     }));
 }
 
-// Trouve un plat par id
 function trouver_plat(array $plats, int $id): ?array {
     foreach ($plats as $p) {
         if ((int)($p['id'] ?? 0) === $id) return $p;
@@ -75,7 +67,6 @@ function trouver_plat(array $plats, int $id): ?array {
     return null;
 }
 
-// Trouve un menu par id
 function trouver_menu(array $menus, int $id): ?array {
     foreach ($menus as $m) {
         if ((int)($m['id'] ?? 0) === $id) return $m;
@@ -83,7 +74,6 @@ function trouver_menu(array $menus, int $id): ?array {
     return null;
 }
 
-// Cycle de statuts suivants
 function statut_suivant(string $statut): string {
     $cycle = [
         'acceptee'         => 'preparation',
@@ -94,27 +84,26 @@ function statut_suivant(string $statut): string {
 
 function action_statut_restaurateur(string $statut): ?array {
     $actions = [
-        'acceptee'    => ['statut' => 'preparation', 'label' => 'DÃ©marrer la prÃ©paration'],
-        'preparation' => ['statut' => 'prete', 'label' => 'Commande prÃªte'],
+        'acceptee'    => ['statut' => 'preparation', 'label' => 'Démarrer la préparation'],
+        'preparation' => ['statut' => 'prete', 'label' => 'Commande prête'],
     ];
     return $actions[$statut] ?? null;
 }
 
-// Label lisible d'un statut
+// Afficher un statut en français lisible
 function label_statut(string $statut): string {
     $labels = [
         'attente_paiement' => 'En attente',
-        'acceptee'         => 'AcceptÃ©e',
-        'preparation'      => 'En prÃ©paration',
-        'prete'            => 'PrÃªte',
+        'acceptee'         => 'Acceptée',
+        'preparation'      => 'En préparation',
+        'prete'            => 'Prête',
         'en-cours'         => 'En livraison',
-        'livree'           => 'LivrÃ©e',
-        'abandonnee'       => 'AbandonnÃ©e',
+        'livree'           => 'Livrée',
+        'abandonnee'       => 'Abandonnée',
     ];
     return $labels[$statut] ?? $statut;
 }
 
-// Classe CSS d'un statut
 function classe_statut(string $statut): string {
     $classes = [
         'attente_paiement' => 'attente',
@@ -128,29 +117,23 @@ function classe_statut(string $statut): string {
     return $classes[$statut] ?? '';
 }
 
-// Liste des livreurs disponibles
 $livreurs = livreurs_disponibles($utilisateurs);
 
-// --- Messages dynamiques ---
 $message_succes = '';
 $message_erreur = '';
 
-// RÃ©cupÃ©ration message GET (aprÃ¨s redirect)
 if (!empty($_GET['succes'])) $message_succes = htmlspecialchars($_GET['succes']);
 if (!empty($_GET['erreur'])) $message_erreur = htmlspecialchars($_GET['erreur']);
 
-// --- ParamÃ¨tres GET ---
-$filtre_statut  = $_GET['filtre']  ?? 'tous';   // tous | attente_paiement | preparation | prete | en-cours | livree | abandonnee
-$detail_id      = $_GET['detail']  ?? null;      // ID de la commande Ã  afficher en dÃ©tail
+$filtre_statut  = $_GET['filtre']  ?? 'tous';
+$detail_id      = $_GET['detail']  ?? null;
 
-// --- Filtrage des commandes ---
 $commandes_filtrees = $commandes;
 if ($filtre_statut !== 'tous') {
     $commandes_filtrees = array_filter($commandes, fn($c) => ($c['statut'] ?? '') === $filtre_statut);
 }
 $commandes_filtrees = array_values($commandes_filtrees);
 
-// --- Commande en dÃ©tail ---
 $commande_detail = null;
 if ($detail_id !== null) {
     foreach ($commandes as $cmd) {
@@ -161,18 +144,16 @@ if ($detail_id !== null) {
     }
 }
 
-// --- Comptage par statut (pour les badges de filtre) ---
 $comptages = ['tous' => count($commandes)];
 foreach ($commandes as $cmd) {
     $s = $cmd['statut'] ?? 'inconnu';
     $comptages[$s] = ($comptages[$s] ?? 0) + 1;
 }
 
-// --- RÃ©solution des articles d'une commande ---
 function resoudre_articles(array $cmd, array $plats, array $menus): array {
     $articles = [];
 
-    // Format 1 : contenu = {"plat_3": 2, "menu_1": 1}
+    // Cas 1 : données récentes avec la structure 'contenu'
     if (!empty($cmd['contenu']) && is_array($cmd['contenu'])) {
         foreach ($cmd['contenu'] as $cle => $qte) {
             $parts = explode('_', $cle);
@@ -188,7 +169,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
         }
     }
 
-    // Format 2 : articles = ["RTX 5090 Chocolat", ...]
+    // Format ancien (rétrocompatibilité)
     if (empty($articles) && !empty($cmd['articles']) && is_array($cmd['articles'])) {
         foreach ($cmd['articles'] as $art) {
             $articles[] = ['nom' => $art, 'prix' => null, 'qte' => 1];
@@ -484,9 +465,9 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
     <main class="page">
         <?php if (!$acces_resto): ?>
             <div class="ecran-vide">
-                <div class="icone">ðŸ”’</div>
-                <h2>AccÃ¨s non autorisÃ©</h2>
-                <p>Vous devez Ãªtre connectÃ© en tant que restaurateur.</p>
+                <div class="icone">🔒</div>
+                <h2>Accès non autorisé</h2>
+                <p>Vous devez être connecté en tant que restaurateur.</p>
             </div>
         <?php else: ?>
         <header class="header">
@@ -500,10 +481,10 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
         </header>
 
         <?php if (!empty($message_succes)): ?>
-            <div class="alerte alerte-succes">âœ“ <?= $message_succes ?></div>
+            <div class="alerte alerte-succes">✓ <?= $message_succes ?></div>
         <?php endif; ?>
         <?php if (!empty($message_erreur)): ?>
-            <div class="alerte alerte-erreur">âœ— <?= $message_erreur ?></div>
+            <div class="alerte alerte-erreur">✗ <?= $message_erreur ?></div>
         <?php endif; ?>
         <div id="message-statut"
              class="message-statut"
@@ -516,7 +497,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
 
         <?php if ($commande_detail !== null): ?>
         <!-- ============================================================ -->
-        <!-- VUE DÃ‰TAIL D'UNE COMMANDE                                   -->
+        <!-- VUE DÉTAIL D'UNE COMMANDE                                   -->
         <!-- ============================================================ -->
 
         <?php
@@ -530,17 +511,17 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
             $action_detail    = action_statut_restaurateur($statut_detail);
             $peut_avancer    = $action_detail !== null;
 
-            // Commande planifiÃ©e pour plus tard : bloquer si la date n'est pas encore passÃ©e
+            // Commande planifiée pour plus tard : bloquer si la date n'est pas encore passée
             $est_bloquee_date = false;
             $temps_restant    = '';
             if ($peut_avancer && ($commande_detail['type_preparation'] ?? '') === 'plus_tard') {
                 $date_prev_brute = $commande_detail['date_livraison_prevue'] ?? '';
-                // Le format stockÃ© est "dd/mm/YYYY Ã  HH:ii" â†’ on le convertit
+                // Le format stocké est "dd/mm/YYYY à  HH:ii" → on le convertit
                 $date_prev_ts = null;
-                if (!empty($date_prev_brute) && $date_prev_brute !== 'DÃ¨s que possible') {
-                    // "05/04/2026 Ã  18:30" â†’ strtotime ne comprend pas le "Ã "
-                    $date_propre = str_replace(' Ã  ', ' ', $date_prev_brute);
-                    // format dd/mm/YYYY HH:ii â†’ convertir en YYYY-mm-dd HH:ii
+                if (!empty($date_prev_brute) && $date_prev_brute !== 'Dès que possible') {
+                    // "05/04/2026 à  18:30" → strtotime ne comprend pas le "à "
+                    $date_propre = str_replace(' à  ', ' ', $date_prev_brute);
+                    // format dd/mm/YYYY HH:ii → convertir en YYYY-mm-dd HH:ii
                     $parts_date = explode(' ', $date_propre);
                     if (count($parts_date) === 2) {
                         $jma = explode('/', $parts_date[0]);
@@ -561,11 +542,11 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
         ?>
 
         <a href="index_commande.php?filtre=<?= urlencode($filtre_statut) ?>"
-           class="btn-retour">â† Retour Ã  la liste</a>
+           class="btn-retour">← Retour à  la liste</a>
 
         <div class="detail-wrapper">
 
-            <!-- En-tÃªte commande -->
+            <!-- En-tête commande -->
             <div class="detail-card">
                 <h3>Commande</h3>
                 <div class="detail-ligne">
@@ -598,15 +579,15 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                 <div class="detail-ligne">
                     <span class="detail-label">Montant total</span>
                     <span class="detail-valeur prix">
-                        <?= number_format((float)$montant_detail, 2, ',', ' ') ?> â‚¬
+                        <?= number_format((float)$montant_detail, 2, ',', ' ') ?> €
                     </span>
                 </div>
                 <?php endif; ?>
                 <?php if (!empty($commande_detail['type_preparation'])): ?>
                 <div class="detail-ligne">
-                    <span class="detail-label">PrÃ©paration</span>
+                    <span class="detail-label">Préparation</span>
                     <span class="detail-valeur">
-                        <?= $commande_detail['type_preparation'] === 'immediat' ? 'ImmÃ©diate' : 'PlanifiÃ©e : ' . htmlspecialchars($commande_detail['date_preparation'] ?? '') ?>
+                        <?= $commande_detail['type_preparation'] === 'immediat' ? 'Immédiate' : 'Planifiée : ' . htmlspecialchars($commande_detail['date_preparation'] ?? '') ?>
                     </span>
                 </div>
                 <?php endif; ?>
@@ -631,7 +612,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                         <span class="detail-valeur"><?= htmlspecialchars($client_detail['adresse'] ?? '-') ?></span>
                     </div>
                     <div class="detail-ligne">
-                        <span class="detail-label">TÃ©lÃ©phone</span>
+                        <span class="detail-label">Téléphone</span>
                         <span class="detail-valeur"><?= htmlspecialchars($client_detail['tel'] ?? '-') ?></span>
                     </div>
                     <?php if (!empty($client_detail['infos'])): ?>
@@ -651,12 +632,12 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
             <!-- Articles -->
             <?php if (!empty($articles_detail)): ?>
             <div class="detail-card">
-                <h3>Articles commandÃ©s</h3>
+                <h3>Articles commandés</h3>
                 <table class="table-articles">
                     <thead>
                         <tr>
                             <th>Article</th>
-                            <th class="col-qte">QtÃ©</th>
+                            <th class="col-qte">Qté</th>
                             <th class="col-prix">Prix unit.</th>
                         </tr>
                     </thead>
@@ -666,7 +647,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                             <td><?= htmlspecialchars($art['nom']) ?></td>
                             <td class="col-qte"><?= $art['qte'] ?></td>
                             <td class="col-prix">
-                                <?= $art['prix'] !== null ? number_format((float)$art['prix'], 2, ',', ' ') . ' â‚¬' : 'â€”' ?>
+                                <?= $art['prix'] !== null ? number_format((float)$art['prix'], 2, ',', ' ') . ' €' : '—' ?>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -683,7 +664,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                     <?php if ($peut_avancer): ?>
 
                         <?php if ($est_bloquee_date): ?>
-                            <!-- Commande planifiÃ©e : date pas encore atteinte -->
+                            <!-- Commande planifiée : date pas encore atteinte -->
                             <div style="
                                 background: rgba(255,165,0,0.1);
                                 border: 1px solid rgba(255,165,0,0.4);
@@ -693,8 +674,8 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                                 font-size: 14px;
                                 line-height: 1.6;
                             ">
-                                â³ <strong>Commande planifiÃ©e</strong><br>
-                                PrÃ©paration prÃ©vue le <strong><?= htmlspecialchars($commande_detail['date_livraison_prevue']) ?></strong><br>
+                                ⏳ <strong>Commande planifiée</strong><br>
+                                Préparation prévue le <strong><?= htmlspecialchars($commande_detail['date_livraison_prevue']) ?></strong><br>
                                 <span style="font-size:12px;opacity:0.8;">Le bouton sera disponible <?= $temps_restant ?>.</span>
                             </div>
                         <?php else: ?>
@@ -708,21 +689,21 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
 
 
                     <?php else: ?>
-                        <!-- Commande terminÃ©e -->
+                        <!-- Commande terminée -->
                         <div class="statut-final <?= classe_statut($statut_detail) ?>">
                             <?php if ($statut_detail === 'livree'): ?>
-                                âœ“ Commande livrÃ©e avec succÃ¨s
+                                ✓ Commande livrée avec succès
                             <?php elseif ($statut_detail === 'prete'): ?>
-                                âœ“ Commande prÃªte
+                                ✓ Commande prête
                             <?php else: ?>
-                                âœ— Commande abandonnÃ©e
+                                ✗ Commande abandonnée
                             <?php endif; ?>
                         </div>
                     <?php endif; ?>
 
                     <?php if ($statut_detail === 'prete'): ?>
                     <div class="assignation-livreur" data-assignation-commande="<?= htmlspecialchars(get_id($commande_detail)) ?>">
-                        <label>Assigner Ã  un livreur</label>
+                        <label>Assigner à  un livreur</label>
                         <?php if (empty($livreurs)): ?>
                             <p class="aucun-livreur">Aucun livreur disponible</p>
                         <?php else: ?>
@@ -757,12 +738,12 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
             <?php
             $filtres = [
                 'tous'             => 'Toutes',
-                'acceptee'         => 'AcceptÃ©es',
-                'preparation'      => 'PrÃ©paration',
-                'prete'            => 'PrÃªtes',
+                'acceptee'         => 'Acceptées',
+                'preparation'      => 'Préparation',
+                'prete'            => 'Prêtes',
                 'en-cours'         => 'En livraison',
-                'livree'           => 'LivrÃ©es',
-                'abandonnee'       => 'AbandonnÃ©es',
+                'livree'           => 'Livrées',
+                'abandonnee'       => 'Abandonnées',
             ];
             foreach ($filtres as $val => $lbl):
                 $nb    = $comptages[$val] ?? 0;
@@ -782,8 +763,8 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
 
                 <?php if (empty($commandes_filtrees)): ?>
                     <div class="commandes-vides">
-                        <div class="icone">ðŸ“­</div>
-                        <p>Aucune commande <?= $filtre_statut !== 'tous' ? 'avec ce statut' : 'enregistrÃ©e' ?>.</p>
+                        <div class="icone">📭­</div>
+                        <p>Aucune commande <?= $filtre_statut !== 'tous' ? 'avec ce statut' : 'enregistrée' ?>.</p>
                     </div>
 
                 <?php else: ?>
@@ -816,7 +797,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                                         (<?= htmlspecialchars($login_c) ?>)
                                     </span>
                                 <?php else: ?>
-                                    <?= htmlspecialchars($login_c ?: 'â€”') ?>
+                                    <?= htmlspecialchars($login_c ?: '—') ?>
                                 <?php endif; ?>
                             </p>
                             <?php if (!empty($date_c)): ?>
@@ -826,7 +807,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                             <p>
                                 <strong>Montant :</strong>
                                 <span style="color:var(--main-color);font-weight:bold;">
-                                    <?= number_format((float)$montant_c, 2, ',', ' ') ?> â‚¬
+                                    <?= number_format((float)$montant_c, 2, ',', ' ') ?> €
                                 </span>
                             </p>
                             <?php endif; ?>
@@ -846,7 +827,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                         <div class="container_btn" style="margin-top:10px;">
                             <a href="index_commande.php?detail=<?= urlencode($id_cmd) ?>&filtre=<?= urlencode($filtre_statut) ?>"
                                class="action-btn" style="text-decoration:none;display:inline-block;">
-                                Voir le dÃ©tail â†’
+                                Voir le détail →
                             </a>
                         </div>
                         <?php if ($action_cmd): ?>
@@ -861,7 +842,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
                         <?php endif; ?>
                         <?php if ($statut_cmd === 'prete'): ?>
                         <div class="assignation-livreur" data-assignation-commande="<?= htmlspecialchars($id_cmd) ?>">
-                            <label>Assigner Ã  un livreur</label>
+                            <label>Assigner à  un livreur</label>
                             <?php if (empty($livreurs)): ?>
                                 <p class="aucun-livreur">Aucun livreur disponible</p>
                             <?php else: ?>
@@ -897,7 +878,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
         <div id="container_footer">
             <p id="copyright">
                 <span class="commentaires">//</span>
-                Â© 2026 Silicon Carne. auteurs : Radouane HADJ RABAH, Rayene FREJ, Matthieu VANNEREAU
+                 © 2026 Silicon Carne. auteurs : Radouane HADJ RABAH, Rayene FREJ, Matthieu VANNEREAU
             </p>
         </div>
     </footer>

@@ -4,7 +4,6 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 date_default_timezone_set('Europe/Paris');
 
-//  Fichiers de données 
 $fichier_commandes = __DIR__ . '/data/commandes.json';
 $fichier_users     = __DIR__ . '/data/utilisateurs.json';
 
@@ -20,13 +19,11 @@ if (file_exists($fichier_users)) {
     if (is_array($u)) $utilisateurs = $u;
 }
 
-//  Identification du livreur connecté 
 $connecte      = $_SESSION['connecte'] ?? false;
 $login_livreur = $_SESSION['login'] ?? null;
 $role_connecte = $_SESSION['role']  ?? null;
 $acces_livreur = ($connecte === true && $login_livreur !== null && $role_connecte === 'livreur');
 
-// Changer le statut d'une commande
 if (
     $_SERVER['REQUEST_METHOD'] === 'POST' &&
     isset($_POST['action'], $_POST['commande_id']) &&
@@ -52,7 +49,6 @@ if (
             $fichier_commandes,
             json_encode($commandes, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
         );
-        // Rechargement aprés écriture
         $commandes = json_decode(file_get_contents($fichier_commandes), true) ?? [];
     }
 }
@@ -290,7 +286,6 @@ if ($login_livreur) {
     <main class="page">
 
         <?php if (!$acces_livreur): ?>
-            <!-- ===== CAS 0 : Pas connecté ou mauvaise connx ===== -->
             <div class="ecran-vide">
                 <div class="icone">🔒</div>
                 <h2>Accés non autorisé</h2>
@@ -298,7 +293,6 @@ if ($login_livreur) {
             </div>
 
         <?php elseif (empty($commandes_actives)): ?>
-            <!-- ===== CAS 1 : Connecté mais aucune commande attribuée ===== -->
             <div class="ecran-vide" data-aucune-livraison>
                 <div class="icone">✅</div>
                 <h2>Aucune livraison en cours</h2>
@@ -321,7 +315,6 @@ if ($login_livreur) {
                     $lien_maps = $livraison['lien_maps'];
                 ?>
                 <section class="carte-livraison" data-carte-livraison>
-                    <!-- Numéro de commande -->
                     <div class="livraison-info">
                         <h1><span class="commentaires">//</span> Livraison en cours</h1>
                         <div class="commande-numero">
@@ -332,10 +325,8 @@ if ($login_livreur) {
                         </div>
                     </div>
 
-                    <!-- Informations client -->
                     <div class="client-info">
 
-                        <!-- Nom complet -->
                         <h2>
                             <?php
                                 $nom_complet = trim(
@@ -346,7 +337,6 @@ if ($login_livreur) {
                             ?>
                         </h2>
 
-                        <!-- Adresse -->
                         <div class="info-ligne">
                             <span class="info-label">Adresse</span>
                             <span class="info-valeur">
@@ -354,7 +344,6 @@ if ($login_livreur) {
                             </span>
                         </div>
 
-                        <!-- Infos complémentaires (digicode, étage...) depuis le champ "infos" -->
                         <?php if (!empty($client['infos'])): ?>
                         <div class="info-ligne">
                             <span class="info-label">Digicode / Ã‰tage / Infos</span>
@@ -364,7 +353,6 @@ if ($login_livreur) {
                         </div>
                         <?php endif; ?>
 
-                        <!-- Téléphone cliquable -->
                         <div class="info-ligne">
                             <span class="info-label">📞 Téléphone</span>
                             <span class="info-valeur tel">
@@ -375,7 +363,6 @@ if ($login_livreur) {
                             </span>
                         </div>
 
-                        <!-- Articles commandés -->
                         <?php if (!empty($commande_active['articles'])): ?>
                         <div class="info-ligne">
                             <span class="info-label">🛒 Articles</span>
@@ -385,7 +372,6 @@ if ($login_livreur) {
                         </div>
                         <?php endif; ?>
 
-                        <!-- Montant -->
                         <?php if (isset($commande_active['montant'])): ?>
                         <div class="info-ligne">
                             <span class="info-label">💰 Montant</span>
@@ -397,10 +383,8 @@ if ($login_livreur) {
 
                     </div>
 
-                    <!-- Boutons d'action -->
                     <div class="boutons-container">
 
-                        <!-- MAPS - lien direct, pas de formulaire -->
                         <a href="<?= htmlspecialchars($lien_maps) ?>"
                            target="_blank"
                            rel="noopener noreferrer"
@@ -439,7 +423,7 @@ if ($login_livreur) {
         <div id="container_footer">
             <p id="copyright">
                 <span class="commentaires">//</span>
-                Â© 2026 Silicon Carne. auteurs : Radouane HADJ RABAH, Rayene FREJ, Matthieu VANNEREAU
+                © 2026 Silicon Carne. auteurs : Radouane HADJ RABAH, Rayene FREJ, Matthieu VANNEREAU
             </p>
         </div>
     </footer>
