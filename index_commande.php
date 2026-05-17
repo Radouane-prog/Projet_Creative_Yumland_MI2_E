@@ -900,7 +900,7 @@ function resoudre_articles(array $cmd, array $plats, array $menus): array {
         </div>
     </footer>
 
-    <script src="js/script1.js" defer></script>
+    <script src="scripts/js/script1.js" defer></script>
 
 </body>
 </html>

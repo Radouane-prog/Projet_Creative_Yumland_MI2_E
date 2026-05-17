@@ -29,7 +29,9 @@
         "role": "admin",
         "suspended": false,
         "date_inscription": "2026-03-30 22:25:28",
-        "xp": 0
+        "xp": 0,
+        "statut": "vip",
+        "remise": 100
     },
     {
         "login": "livreur_test",
@@ -121,7 +123,7 @@
         "email": "b@gmail.com",
         "password": "$2y$10$xylTw3eTq.aVi571QYfdR.rz1kQ8zuPk533Of3dqGBie9LTUfMha.",
         "role": "client",
-        "suspended": false,
+        "suspended": true,
         "date_inscription": "2026-04-14 09:22:16",
         "xp": 0
     },

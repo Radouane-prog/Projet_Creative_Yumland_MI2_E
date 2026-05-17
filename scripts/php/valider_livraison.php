@@ -51,7 +51,7 @@ if ($commande_id === '') {
     reponse_json(false, 'Identifiant de commande manquant.');
 }
 
-$fichier_commandes = __DIR__ . '/../data/commandes.json';
+$fichier_commandes = __DIR__ . '/../../data/commandes.json';
 if (!file_exists($fichier_commandes)) {
     reponse_json(false, 'Fichier des commandes introuvable.');
 }

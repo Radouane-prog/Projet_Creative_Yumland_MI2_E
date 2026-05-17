@@ -37,8 +37,8 @@ if ($id_commande === '' || $login_livreur === '') {
     reponse_json(false, 'Commande ou livreur manquant.', null, null, 400);
 }
 
-$fichier_commandes = __DIR__ . '/../data/commandes.json';
-$fichier_users = __DIR__ . '/../data/utilisateurs.json';
+$fichier_commandes = __DIR__ . '/../../data/commandes.json';
+$fichier_users = __DIR__ . '/../../data/utilisateurs.json';
 
 if (!file_exists($fichier_commandes) || !file_exists($fichier_users)) {
     reponse_json(false, 'Fichier de données introuvable.', null, null, 500);

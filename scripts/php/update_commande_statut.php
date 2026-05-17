@@ -42,7 +42,7 @@ if (!in_array($nouveau_statut, $transitions_autorisees, true)) {
     reponse_json(false, 'Statut non autorisé.', null, 400);
 }
 
-$fichier_commandes = __DIR__ . '/../data/commandes.json';
+$fichier_commandes = __DIR__ . '/../../data/commandes.json';
 
 if (!file_exists($fichier_commandes)) {
     reponse_json(false, 'Fichier des commandes introuvable.', null, 500);

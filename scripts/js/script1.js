@@ -1,15 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-    initAdminBlocage();
     initCommandesRestaurateur();
     initAssignationLivreur();
     initValidationLivraison();
 });
-
-// Admin : blocage / déblocage
-function initAdminBlocage() {
-    const boutons = document.querySelectorAll('.btn-confirm-suppr, .btn-debloquer');
-    if (boutons.length === 0) return;
-}
 
 // Restaurateur : changement de statut
 function initCommandesRestaurateur() {
@@ -25,13 +18,14 @@ function initCommandesRestaurateur() {
         bouton.disabled = true;
         const idCommande = bouton.dataset.id;
         const nouveauStatut = bouton.dataset.statut;
+
         const body = new URLSearchParams({
             id_commande: idCommande,
             nouveau_statut: nouveauStatut
         });
 
         try {
-            const response = await fetch('scripts/update_commande_statut.php', {
+            const response = await fetch('scripts/php/update_commande_statut.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body
@@ -44,6 +38,7 @@ function initCommandesRestaurateur() {
                 return;
             }
 
+            // Mettre à jour les badges de statut
             document.querySelectorAll(`[data-statut-commande="${cssEscape(idCommande)}"]`).forEach((badge) => {
                 badge.textContent = statutLabels[data.statut] || data.statut;
                 remplacerClassesStatut(badge, data.statut);
@@ -52,20 +47,18 @@ function initCommandesRestaurateur() {
             mettreAJourBoutons(idCommande, data.statut);
             afficherAssignationSiPrete(idCommande, data.statut);
             afficherMessageStatut(data.message || 'Statut mis à jour avec succès.', 'succes');
+
         } catch (error) {
             bouton.disabled = false;
             afficherMessageStatut('Erreur réseau lors de la mise à jour du statut.', 'erreur');
+            console.error('Erreur fetch update statut:', error);
         }
     });
 }
 
 // Restaurateur : assignation livreur
 function initAssignationLivreur() {
-    const boutonsAssignation = document.querySelectorAll('.js-assigner-livreur');
-    if (boutonsAssignation.length === 0 && !document.getElementById('message-statut')) return;
-
-    const statutLabels = getStatutLabels();
-
+    // Écoute au niveau document pour les éléments créés dynamiquement
     document.addEventListener('click', async (event) => {
         const bouton = event.target.closest('.js-assigner-livreur');
         if (!bouton) return;
@@ -86,7 +79,7 @@ function initAssignationLivreur() {
         });
 
         try {
-            const response = await fetch('scripts/assign_livreur.php', {
+            const response = await fetch('scripts/php/assign_livreur.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body
@@ -95,10 +88,11 @@ function initAssignationLivreur() {
 
             if (!response.ok || !data.success) {
                 bouton.disabled = false;
-                afficherMessageStatut(data.message || 'Erreur lors de l’assignation du livreur.', 'erreur');
+                afficherMessageStatut(data.message || "Erreur lors de l'assignation du livreur.", 'erreur');
                 return;
             }
 
+            const statutLabels = getStatutLabels();
             document.querySelectorAll(`[data-statut-commande="${cssEscape(idCommande)}"]`).forEach((badge) => {
                 badge.textContent = statutLabels[data.statut] || data.statut;
                 remplacerClassesStatut(badge, data.statut);
@@ -108,25 +102,24 @@ function initAssignationLivreur() {
             afficherLivreurAssigne(idCommande, data.livreur);
             retirerAssignation(idCommande);
             afficherMessageStatut(data.message || 'Commande assignée au livreur avec succès.', 'succes');
+
         } catch (error) {
             bouton.disabled = false;
-            afficherMessageStatut('Erreur réseau lors de l’assignation du livreur.', 'erreur');
+            afficherMessageStatut("Erreur réseau lors de l'assignation du livreur.", 'erreur');
+            console.error('Erreur fetch assign livreur:', error);
         }
     });
 }
 
 // Livreur : livraison effectuée
 function initValidationLivraison() {
-    const boutonsLivraison = document.querySelectorAll('[data-valider-livraison]');
-    if (boutonsLivraison.length === 0) return;
-
     document.addEventListener('click', async (event) => {
         const bouton = event.target.closest('[data-valider-livraison]');
         if (!bouton) return;
 
         const carte = bouton.closest('[data-carte-livraison]');
         const message = carte ? carte.querySelector('[data-message-livraison]') : null;
-        const statut = carte ? carte.querySelector('[data-statut-livraison]') : null;
+        const statut  = carte ? carte.querySelector('[data-statut-livraison]')  : null;
 
         bouton.disabled = true;
         if (message) {
@@ -139,7 +132,7 @@ function initValidationLivraison() {
             const formData = new FormData();
             formData.append('commande_id', bouton.dataset.idCommande);
 
-            const response = await fetch('scripts/valider_livraison.php', {
+            const response = await fetch('scripts/php/valider_livraison.php', {
                 method: 'POST',
                 body: formData
             });
@@ -156,88 +149,85 @@ function initValidationLivraison() {
                 statut.textContent = 'Statut : Livrée';
             }
             bouton.style.display = 'none';
+
             setTimeout(() => {
-                if (carte) {
-                    carte.remove();
-                }
+                if (carte) carte.remove();
                 afficherEtatVideLivraisonSiBesoin();
-            }, 900);
+            }, 1200);
+
         } catch (error) {
             bouton.disabled = false;
             if (message) {
                 message.classList.add('erreur');
+                message.style.display = 'block';
                 message.textContent = error.message || 'Erreur lors de la validation de la livraison.';
             }
+            console.error('Erreur fetch valider livraison:', error);
         }
     });
 }
 
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
 function getStatutLabels() {
     return {
-        acceptee: 'Acceptée',
+        acceptee:    'Acceptée',
         preparation: 'En préparation',
-        prete: 'Prête',
-        'en-cours': 'En livraison',
-        en_cours: 'En livraison',
-        en_livraison: 'En livraison',
-        livree: 'Livrée',
-        abandonnee: 'Abandonnée'
+        prete:       'Prête',
+        'en-cours':  'En livraison',
+        en_cours:    'En livraison',
+        en_livraison:'En livraison',
+        livree:      'Livrée',
+        abandonnee:  'Abandonnée'
     };
 }
 
 function getActionsRestaurateur() {
     return {
-        acceptee: { statut: 'preparation', label: 'Démarrer la préparation' },
-        preparation: { statut: 'prete', label: 'Commande prête' }
+        acceptee:    { statut: 'preparation', label: 'Démarrer la préparation' },
+        preparation: { statut: 'prete',       label: 'Commande prête' }
     };
 }
 
 function getLivreursDisponibles() {
     const source = document.getElementById('message-statut');
     if (!source || !source.dataset.livreurs) return [];
-
     try {
         const livreurs = JSON.parse(source.dataset.livreurs);
         return Array.isArray(livreurs) ? livreurs : [];
-    } catch (error) {
-        return [];
-    }
+    } catch { return []; }
 }
 
 function afficherMessageStatut(message, type) {
-    const messageStatut = document.getElementById('message-statut');
-    if (!messageStatut) return;
-    messageStatut.textContent = message;
-    messageStatut.className = 'message-statut ' + type;
+    const el = document.getElementById('message-statut');
+    if (!el) return;
+    el.textContent = message;
+    el.className = 'message-statut ' + type;
 }
 
 function remplacerClassesStatut(element, nouveauStatut) {
-    Object.keys(getStatutLabels()).forEach((statut) => element.classList.remove(statut));
+    Object.keys(getStatutLabels()).forEach(s => element.classList.remove(s));
     element.classList.add(nouveauStatut);
 }
 
 function mettreAJourBoutons(idCommande, statut) {
     const action = getActionsRestaurateur()[statut] || null;
+
     document.querySelectorAll(`.js-update-statut[data-id="${cssEscape(idCommande)}"]`).forEach((bouton) => {
         if (!action) {
             const zone = bouton.closest('[data-actions-commande]');
-            if (zone) {
-                zone.remove();
-            } else {
-                bouton.remove();
-            }
+            if (zone) { zone.remove(); } else { bouton.remove(); }
             return;
         }
         bouton.dataset.statut = action.statut;
-        bouton.textContent = action.label;
-        bouton.disabled = false;
+        bouton.textContent    = action.label;
+        bouton.disabled       = false;
     });
 }
 
 function retirerAssignation(idCommande) {
-    document.querySelectorAll(`[data-assignation-commande="${cssEscape(idCommande)}"]`).forEach((zone) => {
-        zone.remove();
-    });
+    document.querySelectorAll(`[data-assignation-commande="${cssEscape(idCommande)}"]`)
+        .forEach(zone => zone.remove());
 }
 
 function afficherLivreurAssigne(idCommande, livreur) {
@@ -269,7 +259,7 @@ function creerBlocAssignation(idCommande) {
     const select = document.createElement('select');
     select.className = 'js-livreur-select';
     select.dataset.id = idCommande;
-    livreursDisponibles.forEach((livreur) => {
+    livreursDisponibles.forEach(livreur => {
         const option = document.createElement('option');
         option.value = livreur.login;
         option.textContent = livreur.label;
@@ -278,7 +268,7 @@ function creerBlocAssignation(idCommande) {
     zone.appendChild(select);
 
     const bouton = document.createElement('button');
-    bouton.type = 'button';
+    bouton.type      = 'button';
     bouton.className = 'btn-avancer js-assigner-livreur';
     bouton.dataset.id = idCommande;
     bouton.textContent = 'Assigner';
@@ -288,17 +278,17 @@ function creerBlocAssignation(idCommande) {
 }
 
 function afficherAssignationSiPrete(idCommande, statut) {
-    if (statut !== 'prete' || document.querySelector(`[data-assignation-commande="${cssEscape(idCommande)}"]`)) {
-        return;
-    }
+    if (statut !== 'prete') return;
+    if (document.querySelector(`[data-assignation-commande="${cssEscape(idCommande)}"]`)) return;
 
     document.querySelectorAll(`[data-statut-commande="${cssEscape(idCommande)}"]`).forEach((badge) => {
+        // Vue liste : insérer dans la carte
         const carte = badge.closest('.commande-item');
         if (carte) {
             carte.appendChild(creerBlocAssignation(idCommande));
             return;
         }
-
+        // Vue détail : insérer dans la zone actions
         const actions = document.querySelector('.detail-actions');
         if (actions) {
             actions.appendChild(creerBlocAssignation(idCommande));

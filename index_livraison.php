@@ -5,8 +5,8 @@ if (session_status() === PHP_SESSION_NONE) {
 date_default_timezone_set('Europe/Paris');
 
 //  Fichiers de donnÃ©es 
-$fichier_commandes = 'data/commandes.json';
-$fichier_users     = 'data/utilisateurs.json';
+$fichier_commandes = __DIR__ . '/data/commandes.json';
+$fichier_users     = __DIR__ . '/data/utilisateurs.json';
 
 $commandes    = [];
 $utilisateurs = [];
@@ -442,7 +442,7 @@ if ($login_livreur) {
         </div>
     </footer>
 
-    <script src="js/script1.js" defer></script>
+    <script src="scripts/js/script1.js" defer></script>
 
 </body>
 </html>
