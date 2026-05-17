@@ -125,7 +125,6 @@ $couleurs_role = [
     <link rel="stylesheet" href="css/style.css"/>
     <link rel="stylesheet" href="css/style_admin.css"/>
     <title>Administrateur - Silicon Carne</title>
-<<<<<<< HEAD
     <script src="scripts/js/theme.js"></script>
     <style>
         .page { padding: 20px; }
@@ -166,7 +165,6 @@ $couleurs_role = [
         .badge-blocage.inactif { color: #00ff64; }
 
         /* Ligne en Ã©dition */
-        .row.en-edition { background: rgba(255,51,51,0.07) !important; }
 
         /* Formulaire inline d'Ã©dition */
         .form-edition {
@@ -279,8 +277,6 @@ $couleurs_role = [
         .ecran-vide h2 { font-size: 22px; margin: 0; }
         .ecran-vide p { color: var(--details-color); font-size: 16px; margin: 0; }
     </style>
-=======
->>>>>>> 9ed778ab21c56a74948d48fbbcdf08ade6b2f042
     <script src="scripts/js/script1.js" defer></script>
 </head>
 <body>

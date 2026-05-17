@@ -50,6 +50,7 @@ file_put_contents($chemin_json, json_encode($commandes, JSON_PRETTY_PRINT | JSON
     <title>Résultat du paiement</title>
     <link rel="stylesheet" href="../../css/style.css"> 
     <link rel="stylesheet" href="../../css/retour_paiement.css">
+    <script src="../js/theme.js"></script>
 </head>
 <body>
     <main>

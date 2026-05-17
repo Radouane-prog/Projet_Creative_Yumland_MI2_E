@@ -130,7 +130,7 @@ if ($login_livreur) {
             font-weight: bold;
             color: var(--main-color);
             padding: 12px;
-            background: rgba(255,51,51,0.1);
+            background: var(--main-color-transparent);
             border-radius: 8px;
             letter-spacing: 2px;
         }
@@ -150,7 +150,7 @@ if ($login_livreur) {
             font-size: 22px;
             margin: 0;
             padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255,51,51,0.3);
+            border-bottom: 1px solid var(--main-color-transparent_lower);
         }
         .info-ligne {
             display: flex;
@@ -251,8 +251,8 @@ if ($login_livreur) {
             font-weight: bold;
         }
         .livraison-message.erreur {
-            border-color: rgba(255,51,51,0.45);
-            background: rgba(255,51,51,0.14);
+            border-color: var(--main-color-transparent_lower);
+            background: var(--main-color-transparent);
         }
 
         /* écran vide / non connecté */

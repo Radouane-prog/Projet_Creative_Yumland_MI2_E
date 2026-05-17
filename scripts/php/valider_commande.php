@@ -72,6 +72,7 @@ file_put_contents($chemin_json, json_encode($commandes_actuelles, JSON_PRETTY_PR
     <title>Redirection vers CY Bank...</title>
     <link rel="stylesheet" href="../../css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../js/theme.js"></script>
 </head>
 <body>
     <main>

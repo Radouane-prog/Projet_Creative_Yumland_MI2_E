@@ -32,7 +32,7 @@
      width: 100%;
 }
  .action-btn {
-     background-color: var(--bg-button);
+     background-color: var(--main-color-transparent);
      box-shadow: 0px 0px 8px 2px var(--main-color);
      color: var(--text-color);
      border: none;
@@ -44,7 +44,7 @@
 }
  .action-btn:hover {
      transform: scale(1.03);
-     background-color: var(--main-alpha-3);
+     background-color: var(--main-color-transparent_lower);
 }
  .card {
      width: 80%;
@@ -74,7 +74,7 @@
 }
  .commande-item:hover {
      transform: translateY(-5px);
-     box-shadow: 0px 0px 15px 3px var(--main-alpha-3);
+     box-shadow: 0px 0px 15px 3px var(--main-color-transparent_lower);
 }
  .commande-header {
      display: flex;
@@ -162,8 +162,8 @@
      font-size: 13px;
      text-decoration: none;
      color: var(--text-color);
-     background: var(--bg-danger-light);
-     border: 1px solid var(--main-alpha-3);
+     background: var(--main-color-transparent);
+     border: 1px solid var(--main_color_transparent_lower);
      transition: 0.2s;
 }
  .filtre-lien:hover {
@@ -171,7 +171,7 @@
      border-color: var(--main-color);
 }
  .filtre-lien.actif {
-     background: var(--bg-filtre-actif);
+     background: var(--main-color-transparent_lower);
      border-color: var(--main-color);
      box-shadow: 0 0 8px var(--main-alpha-3);
 }

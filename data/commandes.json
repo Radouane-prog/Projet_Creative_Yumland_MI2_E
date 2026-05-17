@@ -70,7 +70,7 @@
         "login_livreur": "livreur_test",
         "date": "2026-04-05 16:04:44",
         "type_preparation": "plus_tard",
-        "date_livraison_prevue": "04\/02\/2069 à 11:09",
+        "date_livraison_prevue": "04/02/2069 à 11:09",
         "contenu": {
             "plat_4": 1
         },
@@ -155,5 +155,70 @@
         },
         "montant": 489.99,
         "statut": "en-cours"
+    },
+    {
+        "id": "SHTD45GMXwNqOQt",
+        "login_client": "client_test",
+        "login_livreur": null,
+        "date": "2026-05-17 19:31:10",
+        "type_preparation": "immediat",
+        "date_livraison_prevue": "Dès que possible",
+        "contenu": {
+            "plat_2": 1
+        },
+        "montant": 329.99,
+        "statut": "refusee"
+    },
+    {
+        "id": "WVlH15KSB9uUtiq",
+        "login_client": "client_test",
+        "login_livreur": null,
+        "date": "2026-05-17 19:36:08",
+        "type_preparation": "immediat",
+        "date_livraison_prevue": "Dès que possible",
+        "contenu": {
+            "plat_2": 1
+        },
+        "montant": 329.99,
+        "statut": "attente_paiement"
+    },
+    {
+        "id": "r1gi4ANKEZjdGHs",
+        "login_client": "client_test",
+        "login_livreur": null,
+        "date": "2026-05-17 19:36:18",
+        "type_preparation": "immediat",
+        "date_livraison_prevue": "Dès que possible",
+        "contenu": {
+            "plat_2": 1
+        },
+        "montant": 329.99,
+        "statut": "refusee"
+    },
+    {
+        "id": "Ia6XOtUHlNvyP9S",
+        "login_client": "client_test",
+        "login_livreur": null,
+        "date": "2026-05-17 19:38:26",
+        "type_preparation": "immediat",
+        "date_livraison_prevue": "Dès que possible",
+        "contenu": {
+            "plat_2": 1
+        },
+        "montant": 329.99,
+        "statut": "refusee"
+    },
+    {
+        "id": "lOks6JFqwWA5y9T",
+        "login_client": "client_test",
+        "login_livreur": null,
+        "date": "2026-05-17 19:42:26",
+        "type_preparation": "immediat",
+        "date_livraison_prevue": "Dès que possible",
+        "contenu": {
+            "plat_2": 1
+        },
+        "montant": 329.99,
+        "statut": "refusee"
     }
 ]

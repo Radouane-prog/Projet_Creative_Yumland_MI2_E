@@ -29,8 +29,8 @@ main{
 }
 
 .titre_echec {
-    color: var(--main-color);
-    text-shadow: 0 0 10px var(--main-color);
+    color: #ff3333;
+    text-shadow: 0 0 10px #ff3333;
 }
 
 .btn_retour {
