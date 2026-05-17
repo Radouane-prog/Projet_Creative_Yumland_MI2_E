@@ -155,6 +155,8 @@
         "role": "client",
         "suspended": false,
         "date_inscription": "2026-05-16 01:11:26",
-        "xp": 0
+        "xp": 0,
+        "statut": "basique",
+        "remise": 100
     }
 ]

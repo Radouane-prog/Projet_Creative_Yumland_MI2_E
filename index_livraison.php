@@ -280,6 +280,7 @@ if ($login_livreur) {
         .ecran-vide h2 { font-size: 22px; margin: 0; }
         .ecran-vide p  { color: var(--details-color); font-size: 16px; margin: 0; }
     </style>
+    <script src="scripts/js/script1.js" defer></script>
 </head>
 <body>
 
@@ -442,7 +443,6 @@ if ($login_livreur) {
         </div>
     </footer>
 
-    <script src="scripts/js/script1.js" defer></script>
 
 </body>
 </html>

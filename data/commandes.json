@@ -23,7 +23,8 @@
             "plat_3": 1
         },
         "montant": 389.99,
-        "statut": "en-cours"
+        "statut": "abandonnee",
+        "date_fin": "2026-05-17 13:57:30"
     },
     {
         "id": "DFl1CiAGUnsgZv4",
@@ -75,7 +76,7 @@
             "plat_4": 1
         },
         "montant": 489.99,
-        "statut": "en-cours"
+        "statut": "livree"
     },
     {
         "id": "sneVB26KwJO38S7",
@@ -102,7 +103,7 @@
             "plat_4": 1
         },
         "montant": 489.99,
-        "statut": "en-cours"
+        "statut": "livree"
     },
     {
         "id": "bC9miesuPcn4xSX",
@@ -128,7 +129,7 @@
             "plat_4": 1
         },
         "montant": 489.99,
-        "statut": "en-cours"
+        "statut": "livree"
     },
     {
         "id": "DPXEz4eKITGxMn8",
@@ -141,7 +142,7 @@
             "plat_4": 1
         },
         "montant": 489.99,
-        "statut": "en-cours"
+        "statut": "livree"
     },
     {
         "id": "fKJ1Wo9yF0SLiPX",
@@ -154,6 +155,33 @@
             "plat_4": 1
         },
         "montant": 489.99,
-        "statut": "en-cours"
+        "statut": "abandonnee",
+        "date_fin": "2026-05-17 14:08:02"
+    },
+    {
+        "id": "sIOvEXciAlBD2PZ",
+        "login_client": "eeb",
+        "login_livreur": "livreur_test",
+        "date": "2026-05-17 13:42:43",
+        "type_preparation": "immediat",
+        "date_livraison_prevue": "Dès que possible",
+        "contenu": {
+            "plat_1": 1
+        },
+        "montant": 329.99,
+        "statut": "livree"
+    },
+    {
+        "id": "kZK2XtGMRmze1Yb",
+        "login_client": "eeb",
+        "login_livreur": "livreur_test",
+        "date": "2026-05-17 14:08:26",
+        "type_preparation": "immediat",
+        "date_livraison_prevue": "Dès que possible",
+        "contenu": {
+            "plat_4": 1
+        },
+        "montant": 489.99,
+        "statut": "livree"
     }
 ]

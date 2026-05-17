@@ -132,7 +132,7 @@ $couleurs_role = [
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-<head>
+<head
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="css/style.css"/>
@@ -290,6 +290,7 @@ $couleurs_role = [
         .ecran-vide h2 { font-size: 22px; margin: 0; }
         .ecran-vide p { color: var(--details-color); font-size: 16px; margin: 0; }
     </style>
+    <script src="scripts/js/script1.js" defer></script>
 </head>
 <body>
 
@@ -469,7 +470,7 @@ $couleurs_role = [
                                 <?php if ($est_a_confirmer): ?>
                                     <!-- Confirmation blocage inline -->
                                     <div class="confirm-suppr-zone">
-                                        <p>⚠️  Bloquer ?</p>
+                                        <p>⚠️ Bloquer ?</p>
                                         <form method="POST" action="index_admin.php">
                                             <input type="hidden" name="action" value="bloquer"/>
                                             <input type="hidden" name="login"  value="<?= $safe ?>"/>
@@ -515,8 +516,6 @@ $couleurs_role = [
             </p>
         </div>
     </footer>
-
-    <script src="scripts/js/script1.js" defer></script>
 
 </body>
 </html>
