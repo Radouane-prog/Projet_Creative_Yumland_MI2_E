@@ -70,7 +70,7 @@
         "login_livreur": "livreur_test",
         "date": "2026-04-05 16:04:44",
         "type_preparation": "plus_tard",
-        "date_livraison_prevue": "04/02/2069 à 11:09",
+        "date_livraison_prevue": "04\/02\/2069 à 11:09",
         "contenu": {
             "plat_4": 1
         },
@@ -220,5 +220,18 @@
         },
         "montant": 329.99,
         "statut": "refusee"
+    },
+    {
+        "id": "1vEHCr0bl89podN",
+        "login_client": "client_test",
+        "login_livreur": "livreur_95",
+        "date": "2026-05-31 16:32:23",
+        "type_preparation": "immediat",
+        "date_livraison_prevue": "Dès que possible",
+        "contenu": {
+            "plat_4": 1
+        },
+        "montant": 489.99,
+        "statut": "en-cours"
     }
 ]

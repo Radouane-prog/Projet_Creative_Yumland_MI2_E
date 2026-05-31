@@ -172,5 +172,37 @@
         "date_inscription": "2026-05-17 14:15:08",
         "xp": 0,
         "avatar": "cs.png"
+    },
+    {
+        "login": "livreur_95",
+        "nom": "liv",
+        "prenom": "reur",
+        "naissance": "1111-01-01",
+        "adresse": "12 du 12",
+        "tel": "0606060606",
+        "infos": "",
+        "email": "livreur_95@gmail.com",
+        "password": "$2y$10$1GBSXP.80FxQhvImqMx2xukcFRpKjYxxmahDBWtspK3TsN0VklKiy",
+        "role": "livreur",
+        "date_inscription": "2026-05-31 14:52:22",
+        "xp": 0,
+        "statut": "basique",
+        "remise": 0
+    },
+    {
+        "login": "livreur_92",
+        "nom": "liv",
+        "prenom": "reur",
+        "naissance": "1111-01-01",
+        "adresse": "22 rue de la rue",
+        "tel": "0606060606",
+        "infos": "",
+        "email": "livreur_92@gmail.com",
+        "password": "$2y$10$UXC3QGGAjIBhj8UlCcAfYeS7fvBcCWcxQ5D8fCuUrfetXqAqiDSye",
+        "role": "livreur",
+        "date_inscription": "2026-05-31 14:53:14",
+        "xp": 0,
+        "statut": "basique",
+        "remise": 0
     }
 ]
