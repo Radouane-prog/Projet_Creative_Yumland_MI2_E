@@ -203,5 +203,19 @@
         "role": "client",
         "date_inscription": "2026-05-31 19:30:59",
         "xp": 0
+    },
+    {
+        "login": "leprof",
+        "nom": "prof",
+        "prenom": "duProd",
+        "naissance": "2005-01-01",
+        "adresse": "12 RUE DU PROF",
+        "tel": "0606060606",
+        "infos": "",
+        "email": "prof@gmail.com",
+        "password": "$2y$10$CiiHl16TZcH24roPLsXkOu3mD7TE3mpnoWZ0t.aRvkwUF.sGZ0EJe",
+        "role": "client",
+        "date_inscription": "2026-05-31 21:16:29",
+        "xp": 0
     }
 ]
