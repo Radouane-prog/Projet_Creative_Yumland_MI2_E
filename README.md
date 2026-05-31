@@ -27,7 +27,7 @@ php -S localhost:8000
 4. Ouvrez votre navigateur web et rendez-vous à l'adresse : **http://localhost:8000/Accueil.php**
 
 
-5. ### Pour tester les différents profils et pages :
+   ### 5. Pour tester les différents profils et pages :
    
 nom d'utilisateur : client_test
 
