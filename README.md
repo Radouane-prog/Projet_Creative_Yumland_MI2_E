@@ -1,5 +1,5 @@
 
-# Silicon Carne - Projet Web (Phase #1/ #2 & #3)
+# Silicon Carne - Projet Web (Phase finale 1-4)
 
 Bienvenue sur le dépôt du projet **Silicon Carne**.
 Ce projet a pour but de développer le site web d'une chaîne de restaurants au thème **composants de PC** et une charte graphique type "AMD", réalisé dans le cadre du cours d'Informatique 4.
@@ -97,6 +97,10 @@ Le système de navigation intègre un contrôle d'accès strict via les **Sessio
 ---
 
 ##  Historique des Phases de Développement
+
+### Contenu Phase #4 (correction, ajouts spéciaux)
+**Site encore plus dynamique (js)**
+**Easter egg**
 
 ### Contenu de la Phase #3 (Front-end Dynamique & Requêtes Asynchrones)
 Cette troisième phase se concentre sur l'expérience utilisateur (UX) via JavaScript et des requêtes serveur sans rechargement de page (AJAX/Fetch) :
