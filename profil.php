@@ -4,34 +4,9 @@
         session_start();
     }
 
+    require_once __DIR__ . '/includes/client_access.php';
+    $user_data = require_active_client_session();
 
-    if (!isset($_SESSION['connecte']) || $_SESSION['connecte'] !== true) {
-        header("Location: connexion.php");
-        exit;
-    }
-
-    $login_connecte = $_SESSION['login'];
-    $fichier_users = 'data/utilisateurs.json';
-    $user_data = null;
-
-    if (file_exists($fichier_users)) {
-        $utilisateurs = json_decode(file_get_contents($fichier_users), true);
-        if (is_array($utilisateurs)) {
-            foreach ($utilisateurs as $u) {
-                if (isset($u['login']) && $u['login'] === $login_connecte) {
-                    $user_data = $u;
-                    break;
-                }
-            }
-        }
-    }
-
-
-    if (!$user_data) {
-        session_destroy();
-        header("Location: connexion.php");
-        exit;
-    }
 ?>
 
 <!DOCTYPE html> 
