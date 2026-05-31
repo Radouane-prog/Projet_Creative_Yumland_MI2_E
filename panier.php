@@ -21,6 +21,22 @@
     
     <?php include "includes/header.php"; ?>
 
+    <?php
+    $remise_client = 0;
+    if (isset($_SESSION['login'])) {
+        $chemin_users = 'data/utilisateurs.json';
+        if (file_exists($chemin_users)) {
+            $utilisateurs = json_decode(file_get_contents($chemin_users), true);
+            foreach ($utilisateurs as $user) {
+                if ($user['login'] === $_SESSION['login']) {
+                    $remise_client = isset($user['remise']) ? (int)$user['remise'] : 0;
+                    break;
+                }
+            }
+        }
+    }
+    ?>
+
     <main>
         
         <h1 class="titre_panier">Mon Panier</h1>
@@ -78,7 +94,8 @@
 
                     if ($article_trouve) : 
                         $prix_ligne = $prix_unitaire * $quantite;
-                        $total_global += $prix_ligne; 
+                        $total_global += $prix_ligne;
+                        $total_global = $total_global - ($total_global * ($remise_client / 100)); 
                 ?>
 
                     <div class="carte_article_panier">
@@ -109,6 +126,7 @@
                             
                             <div class="bloc_prix_total">
                                 <span class="label_total">Total :</span>
+                                <span class="label_total">Remise : <?= $remise_client ?>%</span>
                                 <span class="prix_ligne"><?= number_format($prix_ligne, 2) ?> €</span>
                             </div>
 

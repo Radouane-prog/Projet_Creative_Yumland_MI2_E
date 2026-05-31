@@ -23,6 +23,23 @@ foreach ($_SESSION['panier'] as $id_session => $qte) {
     }
 }
 
+$remise_client = 0;
+$chemin_users = "../../data/utilisateurs.json";
+if (file_exists($chemin_users)) {
+    $utilisateurs = json_decode(file_get_contents($chemin_users), true);
+    foreach ($utilisateurs as $user) {
+        if ($user['login'] === $_SESSION['login']) {
+            $remise_client = isset($user['remise']) ? (int)$user['remise'] : 0;
+            break;
+        }
+    }
+}
+
+if ($remise_client > 0) {
+    $montant_reduit = $total * ($remise_client / 100);
+    $total = $total - $montant_reduit;
+}
+
 $code_vendeur = "MI-2_E";
 $api_key = getAPIKey($code_vendeur);
 $id_transaction = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(15/strlen($x)) )),1,15); 
