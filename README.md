@@ -27,6 +27,15 @@ php -S localhost:8000
 4. Ouvrez votre navigateur web et rendez-vous à l'adresse : **http://localhost:8000/Accueil.php**
 
 ---
+5. Pour tester les différents profils et pages :
+nom d'utilisateur : client_test
+mdp : 1234
+
+nom du restaurateur : resto_test
+mdp : 1234
+
+nom de l'admin : admint_test
+mdp : 1234
 
 ##  Architecture du Projet
 
