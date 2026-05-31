@@ -33,21 +33,7 @@
         "statut": "vip",
         "remise": 100
     },
-    {
-        "login": "livreur_test",
-        "nom": "nom_livreur_test",
-        "prenom": "prenom_livreur_test",
-        "naissance": "2026-03-23",
-        "adresse": "12 rue test",
-        "tel": "0667676767",
-        "infos": "",
-        "email": "livreur_test@gmail.com",
-        "password": "$2y$12$bPu3G4SkBzNEW\/G4Uscb2.xCZdxEP6RRMH\/I01iEIeiTkjCwhwcO6",
-        "role": "livreur",
-        "suspended": false,
-        "date_inscription": "2026-03-30 22:26:24",
-        "xp": 0
-    },
+    
     {
         "login": "resto_test",
         "nom": "nom_resto_test",
