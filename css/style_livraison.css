@@ -23,7 +23,7 @@
      font-weight: bold;
      color: var(--main-color);
      padding: 12px;
-     background: var(--bg-danger-light);
+     background: var(--main-color-transparent);
      border-radius: 8px;
      letter-spacing: 2px;
  }
@@ -42,7 +42,7 @@
      font-size: 22px;
      margin: 0;
      padding-bottom: 12px;
-     border-bottom: 1px solid var(--main-alpha-3);
+     border-bottom: 1px solid var(--main-color-transparent_lower);
 }
  .info-ligne {
      display: flex;
@@ -144,8 +144,8 @@
      font-weight: bold;
 }
  .livraison-message.erreur {
-     border-color: var(--main-alpha-45);
-     background: var(--main-alpha-14);
+     border-color: var(--main-color-transparent_lower);
+     background: var(--main-color-transparent);
 }
 /* Écran vide / non connecté */
  .ecran-vide {

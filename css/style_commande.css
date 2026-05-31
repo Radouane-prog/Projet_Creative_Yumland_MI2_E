@@ -163,7 +163,7 @@
      text-decoration: none;
      color: var(--text-color);
      background: var(--main-color-transparent);
-     border: 1px solid var(--main_color_transparent_lower);
+     border: 1px solid var(--main-color-transparent_lower);
      transition: 0.2s;
 }
  .filtre-lien:hover {
@@ -191,11 +191,21 @@
      color: var(--info-color);
      box-shadow: 0px 0px 8px 1px var(--info-alpha-2);
 }
+ .statut.acceptee {
+     background-color: rgba(0,229,255,0.15);
+     color: #00e5ff;
+     box-shadow: 0px 0px 8px 1px rgba(0,229,255,0.2);
+ }
  .statut.abandonnee {
      background-color: var(--details-alpha-15);
      color: var(--details-color);
      box-shadow: 0px 0px 8px 1px var(--details-alpha-1);
 }
+ .statut.prete {
+     background-color: rgba(0,255,100,0.12);
+     color: #00ff64;
+     box-shadow: 0px 0px 8px 1px rgba(0,255,100,0.2);
+ }
 /* Grille commandes vide */
  .commandes-vides {
      display: flex;
@@ -381,4 +391,72 @@
      color: var(--details-color);
      border: 1px solid var(--details-color)44;
 }
+
+/* Messages de statut dynamiques (affichés via JS) */
+.message-statut {
+    display: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+.message-statut.succes {
+    display: block;
+    background: rgba(0,255,100,0.08);
+    border: 1px solid #00ff64;
+    color: #00ff64;
+}
+.message-statut.erreur {
+    display: block;
+    background: rgba(255,51,51,0.1);
+    border: 1px solid #ff3333;
+    color: #ff3333;
+}
+
+/* Assignation livreur (détail commande) */
+.assignation-livreur {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin-top: 10px;
+}
+.assignation-livreur label {
+    font-size: 12px;
+    color: var(--details-color);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.assignation-livreur select {
+    background: #1a1a1a;
+    color: #f5f5f5;
+    border: 1px solid rgba(0,229,255,0.4);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-family: "Source Code Pro", monospace;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.assignation-livreur .aucun-livreur {
+    color: var(--details-color);
+    font-size: 13px;
+    margin: 0;
+}
+
+/* Écran vide (aucune commande) */
+.ecran-vide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    gap: 18px;
+    text-align: center;
+    padding: 30px;
+}
+.ecran-vide .icone { font-size: 70px; }
+.ecran-vide h2 { font-size: 22px; margin: 0; }
+.ecran-vide p { color: var(--details-color); font-size: 16px; margin: 0; }
  
