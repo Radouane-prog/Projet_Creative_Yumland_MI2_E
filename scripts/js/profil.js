@@ -1,8 +1,9 @@
-// --- 1. GESTION DES MODIFICATIONS INLINE (ADRESSE & TEL) ---
+// GESTION DES MODIFICATIONS INLINE SÉCURISÉES (PHASE 4)
 function toggleEdit(field) {
     const textSpan = document.getElementById(`text_${field}`);
     const inputField = document.getElementById(`input_${field}`);
     const btn = document.getElementById(`btn_${field}`);
+    const errSpan = document.getElementById(`err_${field}`);
 
     if (inputField.style.display === "none") {
         // Passer en mode édition
@@ -10,21 +11,58 @@ function toggleEdit(field) {
         inputField.style.display = "inline-block";
         inputField.focus();
         btn.innerHTML = "<b style='color:#00ff64; font-size:14px;'>[VALIDER]</b>";
+        
+        if (errSpan) errSpan.style.display = "none"; // On cache l'erreur quand il recommence à taper
     } else {
-        // Sauvegarder et repasser en mode texte
+        // Mode Sauvegarde
         const newValue = inputField.value.trim();
+        let isValid = true;
+        let errorMsg = "";
+
+        // Vérifications Regex selon le champ (comme dans l'inscription)
+        if (field === 'code_postal') {
+            if (!/^\d{5}$/.test(newValue)) {
+                isValid = false;
+                errorMsg = "> Erreur : Le code postal doit contenir 5 chiffres.";
+            }
+        } else if (field === 'ville') {
+            if (!/^[a-zA-ZÀ-ÿ\s\-']+$/.test(newValue) && newValue !== "") {
+                isValid = false;
+                errorMsg = "> Erreur : Lettres, espaces et tirets uniquement.";
+            }
+        } else if (field === 'tel') {
+            const numTel = newValue.replace(/\s/g, '');
+            if (numTel.length > 0 && !/^\d{10}$/.test(numTel)) {
+                isValid = false;
+                errorMsg = "> Erreur : Le numéro doit contenir exactement 10 chiffres.";
+            }
+        } else if (field === 'adresse') {
+            if (newValue === "") {
+                isValid = false;
+                errorMsg = "> Erreur : L'adresse ne peut pas être vide.";
+            }
+        }
+
+        if (!isValid) {
+            if (errSpan) {
+                errSpan.textContent = errorMsg;
+                errSpan.style.display = "block";
+            }
+            return; // Arrête la fonction ici : pas de Fetch, pas de modif
+        }
+
+        if (errSpan) errSpan.style.display = "none";
         textSpan.textContent = newValue || "Non renseigné(e)";
         
         textSpan.style.display = "inline-block";
         inputField.style.display = "none";
         btn.innerHTML = '<img src="assets/icones/modifier.png" alt="Modifier" width="18" style="vertical-align: middle;">';
 
-        // Lancer la requête asynchrone (AJAX) pour sauvegarder côté serveur
         sauvegarderDonnee(field, newValue);
     }
 }
 
-// --- 2. GESTION DE L'AVATAR ---
+
 function ouvrirModalAvatar() {
     document.getElementById("modal-avatar").style.display = "flex";
 }
@@ -34,11 +72,8 @@ function fermerModalAvatar() {
 }
 
 function changerAvatar(nomFichier) {
-    // Met à jour l'image visuellement tout de suite
     document.getElementById("avatar-img").src = `assets/avatars/${nomFichier}`;
     fermerModalAvatar();
-    
-    // Sauvegarde en asynchrone
     sauvegarderDonnee('avatar', nomFichier);
 }
 
@@ -46,7 +81,6 @@ function changerAvatar(nomFichier) {
 function sauvegarderDonnee(champ, valeur) {
     const statusText = document.getElementById("save-status");
 
-    // Création du paquet de données à envoyer
     const data = {
         champ: champ,
         valeur: valeur
@@ -62,7 +96,6 @@ function sauvegarderDonnee(champ, valeur) {
     .then(response => response.json())
     .then(result => {
         if (result.success) {
-            // Afficher le petit texte "✓ Sauvegardé" pendant 2 secondes
             statusText.style.display = "inline";
             setTimeout(() => { statusText.style.display = "none"; }, 2000);
         } else {

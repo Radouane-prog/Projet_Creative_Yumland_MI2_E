@@ -5,7 +5,7 @@
         "prenom": "prenom_client_test",
         "naissance": "2026-03-23",
         "adresse": "12 rue test",
-        "tel": "0667676767",
+        "tel": "0667",
         "infos": "",
         "email": "client_test@gmail.com",
         "password": "$2y$12$X0Q4Iu7k6t1K6dtOpPrVKeffSQqT6PysiqrebUexDgUwgaD5ZTLF.",
@@ -14,7 +14,10 @@
         "date_inscription": "2026-03-30 22:20:07",
         "xp": 0,
         "statut": "premium",
-        "remise": 5
+        "remise": 5,
+        "avatar": "xbox.png",
+        "code_postal": "85555",
+        "ville": "azafz"
     },
     {
         "login": "admin_test",
@@ -61,7 +64,7 @@
         "email": "rezrarzea@ajfdosf.com",
         "password": "$2y$10$QD8fBiAUuoPPFK75KBog1etirBPtzC.d0Q.K57daG5bNjKBRjF7by",
         "role": "restaurateur",
-        "suspended": false,
+        "suspended": true,
         "date_inscription": "2026-04-04 02:14:29",
         "xp": 0,
         "statut": "basique",
@@ -205,17 +208,19 @@
         "xp": 0
     },
     {
-        "login": "leprof",
-        "nom": "prof",
-        "prenom": "duProd",
-        "naissance": "2005-01-01",
-        "adresse": "12 RUE DU PROF",
-        "tel": "0606060606",
+        "login": "azfhahevf",
+        "nom": "zafaze",
+        "prenom": "avaev",
+        "naissance": "2000-01-01",
+        "adresse": "eaazefazf",
+        "code_postal": "55448",
+        "ville": "afaf",
+        "tel": "",
         "infos": "",
-        "email": "prof@gmail.com",
-        "password": "$2y$10$CiiHl16TZcH24roPLsXkOu3mD7TE3mpnoWZ0t.aRvkwUF.sGZ0EJe",
+        "email": "aefaf@gmail.com",
+        "password": "$2y$12$aTVrvNFwN1QF6MyDRziXHOi9.387ONn2RnlQ9hh7o7WK7YxiPCRMK",
         "role": "client",
-        "date_inscription": "2026-05-31 21:16:29",
+        "date_inscription": "2026-05-31 22:49:25",
         "xp": 0
     }
 ]

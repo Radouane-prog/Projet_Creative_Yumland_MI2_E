@@ -266,3 +266,13 @@ main hr {
     transform: scale(1.1);
     box-shadow: 0 0 10px var(--main-color);
 }
+
+
+.error-js {
+    display: block;
+    color: var(--main-color);
+    font-size: 13px;
+    font-weight: bold;
+    font-family: "Source Code Pro", monospace;
+    text-shadow: 0 0 5px rgba(255, 51, 51, 0.5);
+}

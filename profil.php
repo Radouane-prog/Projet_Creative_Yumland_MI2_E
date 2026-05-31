@@ -58,6 +58,27 @@
                         <a href="#" class="edit-btn" id="btn_adresse" onclick="toggleEdit('adresse')">
                             <img src="assets/icones/modifier.png" alt="Modifier" width="18" style="vertical-align: middle;">
                         </a>
+                        <span class="error-js" id="err_adresse" style="display:none; margin-top: 5px;"></span>
+                    </p>
+
+                    <p>
+                        <b>Code Postal :</b> 
+                        <span id="text_code_postal"><?= htmlspecialchars($user_data['code_postal'] ?? 'Non renseigné') ?></span>
+                        <input type="text" id="input_code_postal" value="<?= htmlspecialchars($user_data['code_postal'] ?? '') ?>" style="display:none; width: 30%; font-family: 'Source Code Pro';" maxlength="5">
+                        <a href="#" class="edit-btn" id="btn_code_postal" onclick="toggleEdit('code_postal')">
+                            <img src="assets/icones/modifier.png" alt="Modifier" width="18" style="vertical-align: middle;">
+                        </a>
+                        <span class="error-js" id="err_code_postal" style="display:none; margin-top: 5px;"></span>
+                    </p>
+
+                    <p>
+                        <b>Ville :</b> 
+                        <span id="text_ville"><?= htmlspecialchars($user_data['ville'] ?? 'Non renseignée') ?></span>
+                        <input type="text" id="input_ville" value="<?= htmlspecialchars($user_data['ville'] ?? '') ?>" style="display:none; width: 50%; font-family: 'Source Code Pro';" maxlength="50">
+                        <a href="#" class="edit-btn" id="btn_ville" onclick="toggleEdit('ville')">
+                            <img src="assets/icones/modifier.png" alt="Modifier" width="18" style="vertical-align: middle;">
+                        </a>
+                        <span class="error-js" id="err_ville" style="display:none; margin-top: 5px;"></span>
                     </p>
 
                     <p>
@@ -67,6 +88,7 @@
                         <a href="#" class="edit-btn" id="btn_tel" onclick="toggleEdit('tel')">
                             <img src="assets/icones/modifier.png" alt="Modifier" width="18" style="vertical-align: middle;">
                         </a>
+                        <span class="error-js" id="err_tel" style="display:none; margin-top: 5px;"></span>
                     </p>
 
                     <p><b>Date d'inscription :</b> <?= date('d/m/Y', strtotime($user_data['date_inscription'] ?? 'now')) ?></p>
