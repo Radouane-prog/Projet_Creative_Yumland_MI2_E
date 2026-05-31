@@ -33,7 +33,6 @@
         "statut": "vip",
         "remise": 100
     },
-    
     {
         "login": "resto_test",
         "nom": "nom_resto_test",
@@ -190,5 +189,19 @@
         "xp": 0,
         "statut": "basique",
         "remise": 0
+    },
+    {
+        "login": "livreur_77",
+        "nom": "dupont",
+        "prenom": "duponnier",
+        "naissance": "1111-01-01",
+        "adresse": "12 rue de la rue",
+        "tel": "0606060060",
+        "infos": "",
+        "email": "livreur_77@gmail.com",
+        "password": "$2y$10$awk\/NC4GeCG9UHE4B7uqCujGe6Ih69kfsyMFOTUBwbGkU1PMwqVUO",
+        "role": "client",
+        "date_inscription": "2026-05-31 19:30:59",
+        "xp": 0
     }
 ]
