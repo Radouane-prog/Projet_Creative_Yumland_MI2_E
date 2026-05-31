@@ -4,6 +4,31 @@
     }
 ?>
 
+<?php
+$commandes_json = file_get_contents('data/commandes.json');
+$commandes = json_decode($commandes_json, true);
+
+$compteur_plats = [];
+
+foreach ($commandes as $commande) {
+    if (isset($commande['contenu']) && is_array($commande['contenu'])) {
+        foreach ($commande['contenu'] as $id_article => $quantite) {
+            if (!isset($compteur_plats[$id_article])) {
+                $compteur_plats[$id_article] = 0;
+            }
+            $compteur_plats[$id_article] += $quantite;
+        }
+    }
+}
+
+arsort($compteur_plats);
+
+$top_3_ids = array_slice(array_keys($compteur_plats), 0, 3);
+
+$plats_json = file_get_contents('data/plats.json');
+$tous_les_plats = json_decode($plats_json, true);
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -81,35 +106,29 @@
         <h2>Fréquemment commandés</h2>
         <div id="container_cards">
 
-            <div class="card">
-                <div class="img_card">
-                    <img src="<?= $plats[0]['image'] ?>" width="300dvh" alt="<?= $plats[0]['alt'] ?>"/>
-                </div>
-                <p class="titre"><?=  $plats[0]['nom'] ?></p>
-                <p class="description"><?= $plats[0]['description'] ?></p>
-                <p class="text_prix">Prix : <span class="prix"><?= $plats[0]['prix'] ?>€</span></p>
-                <a class="acheter acheter_card" href="scripts/php/ajouter_panier.php?id=plat_1">Acheter</a>
-            </div>
+            <?php foreach ($top_3_ids as $id_gagnant) : ?>
+            <?php 
+            $plat_a_afficher = null;
+            foreach ($plats as $plat) {
+                if ("plat_" . $plat['id'] === $id_gagnant || $plat['id'] == $id_gagnant) {
+                    $plat_a_afficher = $plat;
+                    break;
+                }
+            }
+            ?>
 
+            <?php if ($plat_a_afficher) : ?>
             <div class="card">
-                <div class="img_card">
-                    <img src="<?= $plats[1]['image'] ?>" width="300dvh" alt="<?= $plats[1]['alt'] ?>"/>
-                </div>
-                <p class="titre"><?=  $plats[1]['nom'] ?></p>
-                <p class="description"><?= $plats[1]['description'] ?></p>
-                <p class="text_prix">Prix : <span class="prix"><?= $plats[1]['prix'] ?>€</span></p>
-                <a class="acheter acheter_card" href="scripts/php/ajouter_panier.php?id=plat_2">Acheter</a>
+            <div class="img_card">
+                <img src="<?= htmlspecialchars($plat_a_afficher['image']) ?>" width="300dvh" alt="<?= htmlspecialchars($plat_a_afficher['alt']) ?>"/>
             </div>
-
-            <div class="card">
-                <div class="img_card">
-                    <img src="<?= $plats[2]['image'] ?>" width="300dvh" alt="<?= $plats[2]['alt'] ?>"/>
-                </div>
-                <p class="titre"><?=  $plats[2]['nom'] ?></p>
-                <p class="description"><?= $plats[2]['description'] ?></p>
-                <p class="text_prix">Prix : <span class="prix"><?= $plats[2]['prix'] ?>€</span></p>
-                <a class="acheter acheter_card" href="scripts/php/ajouter_panier.php?id=plat_3">Acheter</a>
+            <p class="titre"><?= htmlspecialchars($plat_a_afficher['nom']) ?></p>
+            <p class="description"><?= htmlspecialchars($plat_a_afficher['description']) ?></p>
+            <p class="text_prix">Prix : <span class="prix"><?= htmlspecialchars($plat_a_afficher['prix']) ?>€</span></p>
+            <a class="acheter acheter_card" href="scripts/php/ajouter_panier.php?id=<?= urlencode($id_gagnant) ?>">Acheter</a>
             </div>
+            <?php endif; ?>
+            <?php endforeach; ?>
 
         </div>
     </main>
