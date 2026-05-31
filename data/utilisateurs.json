@@ -108,7 +108,7 @@
         "email": "a@gmail.com",
         "password": "$2y$10$tCGZ.Nv6fA1R96sBLBNj4urIk\/rKfDoxxo4RMB0kJGUtdMqo6PUOK",
         "role": "client",
-        "suspended": true,
+        "suspended": false,
         "date_inscription": "2026-04-14 09:18:43",
         "xp": 0
     },
@@ -123,7 +123,7 @@
         "email": "b@gmail.com",
         "password": "$2y$10$xylTw3eTq.aVi571QYfdR.rz1kQ8zuPk533Of3dqGBie9LTUfMha.",
         "role": "client",
-        "suspended": true,
+        "suspended": false,
         "date_inscription": "2026-04-14 09:22:16",
         "xp": 0
     },
