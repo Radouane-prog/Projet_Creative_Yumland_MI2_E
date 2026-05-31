@@ -1,94 +1,174 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    
+    // 1. Initialisation des compteurs (le texte 0/50 de la limite max)
     setupCounter("login", "counter_login", 20);
     setupCounter("email", "counter_email", 50);
     setupCounter("password", "counter_password", 50);
     setupCounter("infos", "counter_infos", 150);
+    setupCounter("code_postal", "counter_cp", 5);
+    setupCounter("ville", "counter_ville", 50);
 
-    
+    // ==========================================
+    // 2. VALIDATION EN DIRECT (PENDANT LA FRAPPE)
+    // ==========================================
+
+    // Vérification du Mot de passe (en direct avec COMPTEUR 8 caractères)
+    const pwdInput = document.getElementById("password");
+    if (pwdInput) {
+        pwdInput.addEventListener("input", () => {
+            const errPwd = document.getElementById("err_password");
+            const nbSaisis = pwdInput.value.length;
+            
+            if (nbSaisis > 0 && nbSaisis < 8) {
+                const restants = 8 - nbSaisis;
+                // Affichage dynamique : "Pas assez de caractères (3/8). Il en manque 5."
+                errPwd.textContent = `> Erreur : Pas assez de caractères (${nbSaisis}/8). Il en manque ${restants}.`;
+            } else {
+                errPwd.textContent = "";
+            }
+        });
+    }
+
+    // Vérification de la Confirmation du mot de passe (en direct)
+    const pwdConfInput = document.getElementById("confirmpassword");
+    if (pwdConfInput) {
+        pwdConfInput.addEventListener("input", () => {
+            const errPwdConf = document.getElementById("err_confirmpassword");
+            if (pwdConfInput.value.length > 0 && pwdConfInput.value !== pwdInput.value) {
+                errPwdConf.textContent = "> Erreur : Les mots de passe ne correspondent pas.";
+            } else {
+                errPwdConf.textContent = "";
+            }
+        });
+    }
+
+    // Vérification du Code Postal (en direct)
+    const cpInput = document.getElementById("code_postal");
+    if (cpInput) {
+        cpInput.addEventListener("input", () => {
+            const errCp = document.getElementById("err_code_postal");
+            const nbSaisis = cpInput.value.trim().length;
+            
+            if (nbSaisis > 0 && !/^\d{5}$/.test(cpInput.value)) {
+                // Compteur dynamique pour le code postal aussi !
+                errCp.textContent = `> Erreur : 5 chiffres requis (${nbSaisis}/5).`;
+            } else {
+                errCp.textContent = "";
+            }
+        });
+    }
+
+    // Vérification de la Ville (en direct)
+    const villeInput = document.getElementById("ville");
+    if (villeInput) {
+        villeInput.addEventListener("input", () => {
+            const errVille = document.getElementById("err_ville");
+            const villeRegex = /^[a-zA-ZÀ-ÿ\s\-']+$/;
+            if (villeInput.value.length > 0 && !villeRegex.test(villeInput.value)) {
+                errVille.textContent = "> Erreur : Lettres, espaces et tirets uniquement.";
+            } else {
+                errVille.textContent = "";
+            }
+        });
+    }
+
+    // Vérification du Téléphone (en direct)
+    const telInput = document.getElementById("tel");
+    if (telInput) {
+        telInput.addEventListener("input", () => {
+            const errTel = document.getElementById("err_tel");
+            const valTel = telInput.value.replace(/\s/g, ''); 
+            const nbSaisis = valTel.length;
+            
+            if (nbSaisis > 0 && !/^\d{10}$/.test(valTel)) {
+                // Compteur dynamique pour le téléphone
+                errTel.textContent = `> Erreur : 10 chiffres requis (${nbSaisis}/10).`;
+            } else {
+                errTel.textContent = "";
+            }
+        });
+    }
+
+    // ==========================================
+    // 3. VÉRIFICATION FINALE AU CLIC SUR LE BOUTON
+    // ==========================================
     const form = document.getElementById("form_inscription");
-    
-    form.addEventListener("submit", function(event) {
-        let isValid = true;
-        
-        // Réinitialiser tous les messages d'erreur
-        document.querySelectorAll(".error-js").forEach(el => el.textContent = "");
+    if (form) {
+        form.addEventListener("submit", function(event) {
+            let isValid = true;
+            
+            // On nettoie les anciennes erreurs
+            document.querySelectorAll(".error-js").forEach(el => el.textContent = "");
 
-        // verif de chaque label
-        const telInput = document.getElementById("tel").value.replace(/\s/g, ''); // Enlever les espaces
-        if (telInput.length > 0 && !/^\d{10}$/.test(telInput)) {
-            document.getElementById("err_tel").textContent = "> Erreur : Le numéro doit contenir exactement 10 chiffres.";
-            isValid = false;
-        }
-
-        // verif d'email (elle est là mais sert un peu à rien)
-        const emailInput = document.getElementById("email").value;
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(emailInput)) {
-            document.getElementById("err_email").textContent = "> Erreur : Le format de l'email est invalide.";
-            isValid = false;
-        }
-
-        
-        const naissanceInput = document.getElementById("naissance").value;
-        if (naissanceInput) {
-            const dateSaisie = new Date(naissanceInput);
-            const dateAujourdhui = new Date();
-            if (dateSaisie >= dateAujourdhui) {
-                document.getElementById("err_naissance").textContent = "> Erreur : Vous ne pouvez pas être né(e) dans le futur.";
+            // On revérifie tout avant l'envoi
+            const nbSaisisPwd = pwdInput.value.length;
+            if (nbSaisisPwd < 8) {
+                const restants = 8 - nbSaisisPwd;
+                document.getElementById("err_password").textContent = `> Erreur : Pas assez de caractères (${nbSaisisPwd}/8). Il en manque ${restants}.`;
                 isValid = false;
             }
-        }
+            if (pwdInput.value !== pwdConfInput.value) {
+                document.getElementById("err_confirmpassword").textContent = "> Erreur : Les mots de passe ne correspondent pas.";
+                isValid = false;
+            }
+            if (!/^\d{5}$/.test(cpInput.value)) {
+                document.getElementById("err_code_postal").textContent = `> Erreur : Le code postal doit contenir exactement 5 chiffres.`;
+                isValid = false;
+            }
+            if (!/^[a-zA-ZÀ-ÿ\s\-']+$/.test(villeInput.value)) {
+                document.getElementById("err_ville").textContent = "> Erreur : La ville ne doit contenir que des lettres.";
+                isValid = false;
+            }
+            
+            const numTel = telInput.value.replace(/\s/g, '');
+            if (numTel.length > 0 && !/^\d{10}$/.test(numTel)) {
+                document.getElementById("err_tel").textContent = "> Erreur : 10 chiffres requis.";
+                isValid = false;
+            }
 
-        
-        const pwd = document.getElementById("password").value;
-        const pwdConf = document.getElementById("confirmpassword").value;
-        
-        if (pwd.length < 8) {
-            document.getElementById("err_password").textContent = "> Erreur : Le mot de passe doit faire au moins 8 caractères.";
-            isValid = false;
-        } else if (pwd !== pwdConf) {
-            document.getElementById("err_confirmpassword").textContent = "> Erreur : Les mots de passe ne correspondent pas.";
-            isValid = false;
-        }
+            const emailInput = document.getElementById("email").value;
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput)) {
+                document.getElementById("err_email").textContent = "> Erreur : Format d'email invalide.";
+                isValid = false;
+            }
 
-       
-        if (!isValid) {
-            event.preventDefault(); 
-        }
-    });
+            if (!isValid) {
+                event.preventDefault(); 
+            }
+        });
+    }
 });
 
-// Fonction pour mettre à jour les compteurs mdp
+// ==========================================
+// FONCTIONS UTILITAIRES
+// ==========================================
+
 function setupCounter(inputId, counterId, max) {
     const input = document.getElementById(inputId);
     const counter = document.getElementById(counterId);
     if(!input || !counter) return;
     
-    // Valeur de départ
     counter.textContent = `${input.value.length}/${max}`;
-    
     
     input.addEventListener("input", () => {
         counter.textContent = `${input.value.length}/${max}`;
         if(input.value.length >= max) {
-            counter.style.color = "#ff3333"; // Devient rouge si on atteint la limite
+            counter.style.color = "#ff3333";
         } else {
             counter.style.color = "var(--details-color)";
         }
     });
 }
 
-// Fonction pour Afficher Masquer mdp
-function togglePassword(inputId, eyeElement) {
+function togglePassword(inputId, icon) {
     const input = document.getElementById(inputId);
-    
+    if (!input) return;
+
     if (input.type === "password") {
         input.type = "text";
-        event.target.textContent = "🙈"; 
+        icon.textContent = "🙈"; 
     } else {
         input.type = "password";
-        event.target.textContent = "👁️";
+        icon.textContent = "👁️";
     }
 }

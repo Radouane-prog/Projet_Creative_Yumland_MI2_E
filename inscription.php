@@ -1,13 +1,10 @@
 <?php
-
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 
-
-
-$login = $nom = $prenom = $naissance = $adresse = $tel = $infos = $email = "";
+$login = $nom = $prenom = $naissance = $adresse = $ville = $code_postal = $tel = $infos = $email = "";
 $erreurs = [];
 $succes = "";
 date_default_timezone_set('Europe/Paris');
@@ -20,6 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $prenom = trim($_POST['prenom'] ?? '');
     $naissance = trim($_POST['naissance'] ?? '');
     $adresse = trim($_POST['adresse'] ?? '');
+    $ville = trim($_POST['ville'] ?? '');               // <-- NOUVEAU
+    $code_postal = trim($_POST['code_postal'] ?? '');   // <-- NOUVEAU
     $tel = trim($_POST['tel'] ?? '');
     $infos = trim($_POST['infos'] ?? '');
     $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
@@ -27,33 +26,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'] ?? '';
     $confirmpassword = $_POST['confirmpassword'] ?? '';
 
-
-    if (empty($login) || empty($nom) || empty($prenom) || empty($naissance) || empty($adresse) || empty($email) || empty($password)) {
+    // Vérification des champs obligatoires (ajout de ville et code postal)
+    if (empty($login) || empty($nom) || empty($prenom) || empty($naissance) || empty($adresse) || empty($ville) || empty($code_postal) || empty($email) || empty($password)) {
         $erreurs[] = "Veuillez remplir tous les champs obligatoires.";
     }
 
     if ($password !== $confirmpassword) {
-        $erreurs[] = "nahaah mots de passe différents.";
+        $erreurs[] = "Les mots de passe sont différents.";
+    }
+
+    // Vérification du Code Postal en PHP (Phase 4 Sécurité)
+    if (!empty($code_postal) && !preg_match('/^[0-9]{5}$/', $code_postal)) {
+        $erreurs[] = "Le code postal doit contenir exactement 5 chiffres.";
+    }
+
+    // Vérification de la Ville en PHP (lettres, espaces, tirets et apostrophes)
+    if (!empty($ville) && !preg_match('/^[a-zA-ZÀ-ÿ\s\-\']+$/', $ville)) {
+        $erreurs[] = "La ville ne doit contenir que des lettres.";
     }
 
     if (!empty($tel)) {
         $tel = str_replace(' ', '', $tel);
-        
         if (!preg_match('/^[0-9]{10}$/', $tel)) {
             $erreurs[] = "Le numéro de téléphone doit contenir exactement 10 chiffres !!!!!!!";
         }
     }
-    if (empty($erreurs)) {
 
+    if (empty($erreurs)) {
         $dossier_data = 'data';
         $fichier = $dossier_data . '/utilisateurs.json';
         $utilisateurs = [];
 
-
         if (!is_dir($dossier_data)) {
             mkdir($dossier_data, 0777, true);
         }
-
 
         if (file_exists($fichier)) {
             $contenu_json = file_get_contents($fichier);
@@ -62,7 +68,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $utilisateurs = [];
             }
         }
-
 
         $existe_deja = false;
         foreach ($utilisateurs as $user) {
@@ -75,13 +80,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($existe_deja) {
             $erreurs[] = "NAHAAAh utilisateur existant.";
         } else {
-
             $nouvel_utilisateur = [
                 'login' => $login,
                 'nom' => $nom,
                 'prenom' => $prenom,
                 'naissance' => $naissance,
                 'adresse' => $adresse,
+                'code_postal' => $code_postal,  // <-- NOUVEAU
+                'ville' => $ville,              // <-- NOUVEAU
                 'tel' => $tel,
                 'infos' => $infos,
                 'email' => $email,
@@ -90,6 +96,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'date_inscription' => date('Y-m-d H:i:s'),
                 'xp' => 0
             ];
+            
+           
 
 
             $utilisateurs[] = $nouvel_utilisateur;
@@ -162,9 +170,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="date" id="naissance" name="naissance" value="<?= $naissance ?>" required>
                 <span class="error-js" id="err_naissance"></span>
 
-                <label for="adresse">Adresse de livraison :</label>
-                <input type="text" id="adresse" name="adresse" value="<?= $adresse ?>" placeholder="12 rue du Processeur" required>
+                <label for="adresse">Adresse de livraison (Rue, numéro...) :</label>
+                <input type="text" id="adresse" name="adresse" value="<?= htmlspecialchars($adresse) ?>" placeholder="12 rue du Processeur" required>
                 <span class="error-js" id="err_adresse"></span>
+
+                <label for="code_postal">Code Postal :</label>
+                <div class="input-wrapper">
+                    <input type="text" id="code_postal" name="code_postal" value="<?= htmlspecialchars($code_postal) ?>" placeholder="75000" maxlength="5" required>
+                    <span class="char-counter" id="counter_cp">0/5</span>
+                </div>
+                <span class="error-js" id="err_code_postal"></span>
+
+                <label for="ville">Ville :</label>
+                <div class="input-wrapper">
+                    <input type="text" id="ville" name="ville" value="<?= htmlspecialchars($ville) ?>" placeholder="Paris" maxlength="50" required>
+                    <span class="char-counter" id="counter_ville">0/50</span>
+                </div>
+                <span class="error-js" id="err_ville"></span>
 
                 <label for="tel">Numéro de téléphone :</label>
                 <input type="tel" id="tel" name="tel" value="<?= $tel ?>" placeholder="06 67 67 67 67">
