@@ -41,6 +41,7 @@ function chargerThemeSauvegarde() {
 chargerThemeSauvegarde();
 
 document.addEventListener("DOMContentLoaded", () => {
+
     const boutonsTheme = document.querySelectorAll(".btn-theme");
     
     boutonsTheme.forEach(bouton => {
@@ -49,6 +50,34 @@ document.addEventListener("DOMContentLoaded", () => {
             changerTheme(couleurChoisie);
         });
     });
+    
     const themeActif = document.documentElement.getAttribute('data-theme') || "rouge";
     mettreAJourImages(themeActif);
+
+
+    const btnRecherche = document.getElementById("button_search");
+    const inputRecherche = document.getElementById("input_search");
+
+    if (btnRecherche && inputRecherche) {
+        btnRecherche.addEventListener("click", (e) => {
+            
+            if (inputRecherche.value.trim().toLowerCase() === "sudo") {
+                
+                e.preventDefault();
+
+                fetch("scripts/php/easter_egg.php")
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(" [SUDO] PRIVILÈGES ROOT ACCORDÉS ! 5% de remise à vie !! \n" + data.message);
+                            inputRecherche.value = ""; 
+                        }
+                    })
+                    .catch(err => {
+                        console.clear(); 
+                    });
+            }
+            
+        });
+    }
 });
