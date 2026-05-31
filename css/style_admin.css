@@ -56,7 +56,7 @@
 /* Grille Admin */
  .row {
      display: grid;
-     grid-template-columns: 110px 1fr 1fr 55px 1fr 100px 90px 80px 90px 160px;
+    grid-template-columns: 110px 1fr 1fr 55px 1fr 100px 90px 80px 140px 190px;
      border-bottom: 1px solid var(--details-color);
      align-items: center;
      min-width: 800px;
@@ -209,7 +209,7 @@
 }
  .btn-modifier, .btn-supprimer, .btn-valider, .btn-annuler-edit, .btn-confirm-suppr, .btn-annuler-suppr, .btn-debloquer {
      display: block;
-     padding: 5px 10px;
+    padding: 6px 16px 6px 12px;
      border-radius: 4px;
      width: 100%;
      cursor: pointer;
