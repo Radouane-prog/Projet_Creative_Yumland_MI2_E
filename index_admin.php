@@ -239,6 +239,16 @@ $couleurs_role = [
                             </div>
 
                             <div class="cell">
+                                <span class="badge-blocage <?= $suspended ? 'actif' : 'inactif' ?>">
+                                    <?= $suspended ? 'bloqué' : 'actif' ?>
+                                </span>
+                            </div>
+
+                            <div class="cell">
+                                <input type="number" name="remise" min="0" max="100" value="<?= (int)$remise ?>"/>
+                            </div>
+
+                            <div class="cell">
                                 <span class="nb-cmd <?= $nb_cmd > 0 ? 'positif' : 'zero' ?>"><?= $nb_cmd ?></span>
                             </div>
 
@@ -261,6 +271,12 @@ $couleurs_role = [
                             <div class="cell">
                                 <span class="badge-statut <?= htmlspecialchars($statut) ?>">
                                     <?= htmlspecialchars($statut) ?>
+                                </span>
+                            </div>
+
+                            <div class="cell">
+                                <span class="badge-blocage <?= $suspended ? 'actif' : 'inactif' ?>">
+                                    <?= $suspended ? 'bloqué' : 'actif' ?>
                                 </span>
                             </div>
 
