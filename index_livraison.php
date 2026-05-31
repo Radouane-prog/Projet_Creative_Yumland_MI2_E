@@ -172,7 +172,7 @@ if ($login_livreur) {
 
                         <?php if (!empty($client['infos'])): ?>
                         <div class="info-ligne">
-                            <span class="info-label">Digicode / Ã‰tage / Infos</span>
+                            <span class="info-label">Digicode / Étage / Infos</span>
                             <span class="info-valeur secondaire">
                                 <?= htmlspecialchars($client['infos']) ?>
                             </span>
@@ -202,7 +202,7 @@ if ($login_livreur) {
                         <div class="info-ligne">
                             <span class="info-label">💰 Montant</span>
                             <span class="info-valeur">
-                                <?= number_format((float)$commande_active['montant'], 2, ',', ' ') ?> â‚¬
+                                <?= number_format((float)$commande_active['montant'], 2, ',', ' ') ?> €
                             </span>
                         </div>
                         <?php endif; ?>

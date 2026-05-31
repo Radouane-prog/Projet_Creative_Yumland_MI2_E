@@ -214,7 +214,7 @@ $couleurs_role = [
                         <div class="cell"><?= calculer_age($user['naissance']  ?? '') ?></div>
 
                         <?php if ($est_en_edition): ?>
-                            <!-- Cellule RÃ´le : select -->
+                            <!-- Cellule Rôle : select -->
                             <div class="cell">
                                 <form class="form-edition" method="POST" action="index_admin.php" id="form-edit-<?= $safe ?>">
                                     <input type="hidden" name="action" value="modifier"/>
