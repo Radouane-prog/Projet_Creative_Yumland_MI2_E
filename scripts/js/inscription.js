@@ -8,11 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
     setupCounter("code_postal", "counter_cp", 5);
     setupCounter("ville", "counter_ville", 50);
 
-    // ==========================================
-    // 2. VALIDATION EN DIRECT (PENDANT LA FRAPPE)
-    // ==========================================
 
-    // Vérification du Mot de passe (en direct avec COMPTEUR 8 caractères)
+
+    // Vérification du Mot de passe (compeutr)
     const pwdInput = document.getElementById("password");
     if (pwdInput) {
         pwdInput.addEventListener("input", () => {
@@ -21,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             if (nbSaisis > 0 && nbSaisis < 8) {
                 const restants = 8 - nbSaisis;
-                // Affichage dynamique : "Pas assez de caractères (3/8). Il en manque 5."
+                // Affichage dynamique : copteur
                 errPwd.textContent = `> Erreur : Pas assez de caractères (${nbSaisis}/8). Il en manque ${restants}.`;
             } else {
                 errPwd.textContent = "";
@@ -29,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Vérification de la Confirmation du mot de passe (en direct)
+    // Vérification de la Confirmation du mot de passe 
     const pwdConfInput = document.getElementById("confirmpassword");
     if (pwdConfInput) {
         pwdConfInput.addEventListener("input", () => {
@@ -42,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Vérification du Code Postal (en direct)
+    //code postal
     const cpInput = document.getElementById("code_postal");
     if (cpInput) {
         cpInput.addEventListener("input", () => {
@@ -50,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const nbSaisis = cpInput.value.trim().length;
             
             if (nbSaisis > 0 && !/^\d{5}$/.test(cpInput.value)) {
-                // Compteur dynamique pour le code postal aussi !
+                // Compteur 
                 errCp.textContent = `> Erreur : 5 chiffres requis (${nbSaisis}/5).`;
             } else {
                 errCp.textContent = "";
@@ -58,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Vérification de la Ville (en direct)
+    // Vérification de la Ville (pendant la frappe de l'utilisateur
     const villeInput = document.getElementById("ville");
     if (villeInput) {
         villeInput.addEventListener("input", () => {
@@ -72,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Vérification du Téléphone (en direct)
+    // Vérification du Téléphone (pdt la frappe)
     const telInput = document.getElementById("tel");
     if (telInput) {
         telInput.addEventListener("input", () => {
@@ -81,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const nbSaisis = valTel.length;
             
             if (nbSaisis > 0 && !/^\d{10}$/.test(valTel)) {
-                // Compteur dynamique pour le téléphone
+                // Compteur
                 errTel.textContent = `> Erreur : 10 chiffres requis (${nbSaisis}/10).`;
             } else {
                 errTel.textContent = "";
@@ -89,9 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ==========================================
-    // 3. VÉRIFICATION FINALE AU CLIC SUR LE BOUTON
-    // ==========================================
+   //verif à partir du clic cette fois (et non la frappe de l'utilisateur)
     const form = document.getElementById("form_inscription");
     if (form) {
         form.addEventListener("submit", function(event) {
@@ -139,9 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// ==========================================
-// FONCTIONS UTILITAIRES
-// ==========================================
+
 
 function setupCounter(inputId, counterId, max) {
     const input = document.getElementById(inputId);
