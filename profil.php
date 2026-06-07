@@ -7,6 +7,51 @@
     require_once __DIR__ . '/includes/client_access.php';
     $user_data = require_active_client_session();
 
+
+   
+    $fichier_commandes = 'data/commandes.json';
+    $nouvel_xp = 0;
+
+    if (file_exists($fichier_commandes)) {
+        $commandes = json_decode(file_get_contents($fichier_commandes), true);
+        
+        if (is_array($commandes)) {
+            foreach ($commandes as $cmd) {
+                
+                if (isset($cmd['login_client']) && $cmd['login_client'] === $user_data['login'] && 
+                    isset($cmd['statut']) && $cmd['statut'] === 'livree') {
+                    
+                    // 1 € = 1 XP. floor arrondie
+                    $nouvel_xp += floor($cmd['montant']); 
+                }
+            }
+        }
+    }
+
+   
+    if ($user_data['xp'] !== $nouvel_xp) {
+        $user_data['xp'] = $nouvel_xp; // maj d'XP 
+        
+        $fichier_users = 'data/utilisateurs.json';
+        if (file_exists($fichier_users)) {
+            $utilisateurs = json_decode(file_get_contents($fichier_users), true);
+            $modification = false;
+            
+            foreach ($utilisateurs as &$u) {
+                if ($u['login'] === $user_data['login']) {
+                    $u['xp'] = $nouvel_xp;
+                    $modification = true;
+                    break;
+                }
+            }
+            
+            if ($modification) {
+                file_put_contents($fichier_users, json_encode($utilisateurs, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+            }
+        }
+    }
+    
+
 ?>
 
 <!DOCTYPE html> 
