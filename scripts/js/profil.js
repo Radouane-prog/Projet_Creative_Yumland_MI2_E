@@ -77,7 +77,7 @@ function changerAvatar(nomFichier) {
     sauvegarderDonnee('avatar', nomFichier);
 }
 
-// --- 3. REQUÊTE ASYNCHRONE (FETCH) POUR SAUVER DANS LE JSON ---
+// Asynch save
 function sauvegarderDonnee(champ, valeur) {
     const statusText = document.getElementById("save-status");
 
